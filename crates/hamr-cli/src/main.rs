@@ -797,7 +797,7 @@ PartOf=graphical-session.target
 
 [Service]
 Type=simple
-ExecStart=/bin/sh -c 'runtime="${{XDG_RUNTIME_DIR:-/run/user/$(id -u)}}"; if [ -z "${{NIRI_SOCKET:-}}" ]; then for candidate in "$runtime"/niri.*.sock; do if [ -S "$candidate" ]; then export NIRI_SOCKET="$candidate"; break; fi; done; fi; if [ -z "${{HYPRLAND_INSTANCE_SIGNATURE:-}}" ]; then for candidate in /tmp/hypr/*/.socket.sock /tmp/hypr/*/.socket2.sock; do if [ -S "$candidate" ]; then export HYPRLAND_INSTANCE_SIGNATURE="$(basename "$(dirname "$candidate")")"; break; fi; done; fi; exec "{daemon_path}"'
+ExecStart=/bin/sh -c 'runtime="${{XDG_RUNTIME_DIR:-/run/user/$(id -u)}}"; if [ -z "${{WAYLAND_DISPLAY:-}}" ]; then for candidate in "$runtime"/wayland-*; do if [ -S "$candidate" ]; then export WAYLAND_DISPLAY="$(basename "$candidate")"; break; fi; done; fi; if [ -z "${{NIRI_SOCKET:-}}" ]; then for candidate in "$runtime"/niri.*.sock; do if [ -S "$candidate" ]; then export NIRI_SOCKET="$candidate"; break; fi; done; fi; if [ -z "${{HYPRLAND_INSTANCE_SIGNATURE:-}}" ]; then for candidate in /tmp/hypr/*/.socket.sock /tmp/hypr/*/.socket2.sock; do if [ -S "$candidate" ]; then export HYPRLAND_INSTANCE_SIGNATURE="$(basename "$(dirname "$candidate")")"; break; fi; done; fi; exec "{daemon_path}"'
 Restart=on-failure
 RestartSec=3
 KillMode=process
