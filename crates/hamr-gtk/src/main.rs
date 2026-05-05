@@ -9,6 +9,7 @@ mod compositor;
 mod config;
 mod fab_window;
 mod keybindings;
+mod niri_blur;
 mod niri_ipc;
 mod preview_window;
 mod rpc;

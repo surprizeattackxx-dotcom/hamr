@@ -65,6 +65,14 @@ pub struct AppearanceConfig {
     pub background_transparency: f64,
     #[serde(default = "default_content_transparency")]
     pub content_transparency: f64,
+    #[serde(default)]
+    pub background_blur: bool,
+    #[serde(default = "default_background_blur_passes")]
+    pub background_blur_passes: u32,
+    #[serde(default = "default_background_blur_offset")]
+    pub background_blur_offset: f64,
+    #[serde(default = "default_background_blur_saturation")]
+    pub background_blur_saturation: f64,
     #[serde(default = "default_x_ratio")]
     pub launcher_x_ratio: f64,
     #[serde(default = "default_y_ratio")]
@@ -88,6 +96,15 @@ fn default_bg_transparency() -> f64 {
 fn default_content_transparency() -> f64 {
     0.2
 }
+fn default_background_blur_passes() -> u32 {
+    3
+}
+fn default_background_blur_offset() -> f64 {
+    3.0
+}
+fn default_background_blur_saturation() -> f64 {
+    1.5
+}
 fn default_x_ratio() -> f64 {
     0.5
 }
@@ -106,6 +123,10 @@ impl Default for AppearanceConfig {
         Self {
             background_transparency: default_bg_transparency(),
             content_transparency: default_content_transparency(),
+            background_blur: false,
+            background_blur_passes: default_background_blur_passes(),
+            background_blur_offset: default_background_blur_offset(),
+            background_blur_saturation: default_background_blur_saturation(),
             launcher_x_ratio: default_x_ratio(),
             launcher_y_ratio: default_y_ratio(),
             font_scale: 1.0,

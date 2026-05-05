@@ -222,6 +222,23 @@ binds {
     Mod+Space { spawn "hamr" "toggle"; }
     Mod+V { spawn "hamr" "plugin" "clipboard"; }
 }
+
+// Optional: enable Niri 26.04+ background blur behind Hamr.
+// Hamr uses the layer-shell namespace "hamr".
+layer-rule {
+    match namespace="^hamr$"
+
+    background-effect {
+        blur true
+        xray false
+    }
+}
+
+blur {
+    passes 3
+    offset 3.0
+    saturation 1.5
+}
 ```
 
 **Systemd** (optional):

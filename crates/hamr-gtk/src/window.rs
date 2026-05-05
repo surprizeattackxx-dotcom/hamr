@@ -343,6 +343,7 @@ impl LauncherWindow {
         window.set_anchor(Edge::Right, true);
         window.set_anchor(Edge::Bottom, true);
         window.set_exclusive_zone(-1);
+        crate::niri_blur::sync_blur_config(&theme.config.appearance);
 
         // Handle surface realization to prevent Vulkan swapchain suboptimal warnings
         window.connect_realize(|window| {
@@ -492,7 +493,6 @@ impl LauncherWindow {
 
         // Create click-catcher for detecting clicks outside the launcher
         let click_catcher = ClickCatcher::new(app);
-
         // Create FAB window (visible when launcher is minimized)
         let fab_window = Rc::new(FabWindow::new(app, &theme, state_manager.clone()));
         fab_window.set_monitor(&monitor);
@@ -587,6 +587,7 @@ impl LauncherWindow {
         let drag_state_config = launcher.drag_state.clone();
         config_watcher.set_on_change(move |theme| {
             info!("Config changed, updating styles");
+            crate::niri_blur::sync_blur_config(&theme.config.appearance);
             crate::styles::apply_css(&css_provider_clone, theme);
             let mut view = result_view_clone.borrow_mut();
             view.set_max_height(theme.config.sizes.max_results_height);
@@ -1238,7 +1239,6 @@ impl LauncherWindow {
         let drag_offset_update = drag_offset.clone();
         let preview_window_drag = self.preview_window.window.clone();
         let preview_revealer_drag = self.preview_window.revealer.clone();
-
         drag_gesture.connect_drag_update(move |_, offset_x, offset_y| {
             let mut state = drag_state_update.borrow_mut();
 
