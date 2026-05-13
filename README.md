@@ -1,3 +1,10 @@
+> [!IMPORTANT]
+> **Maintenance status:** Hamr is currently in maintenance mode. I recently started a full-time job and no longer use Linux as my daily operating system, so I am not able to work on the project day to day.
+>
+> Pull requests for feature requests and bug fixes are still welcome and will be reviewed when I have time. If you would like to challenge yourself by resolving open issues, feel free to open a PR.
+>
+> If anyone is interested in taking over maintenance, please let me know. I can add a new maintainer as a code owner.
+
 <p align="center">
   <img src="assets/logo.png" alt="Hamr Logo" width="200">
 </p>
