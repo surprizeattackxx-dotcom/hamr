@@ -19,12 +19,15 @@ features on top. Notable changes since forking from upstream `v1.1.0`:
 - **unicode**: inspect characters, codepoints and names; look up by name.
 - **color**: convert between hex / rgb / hsl (plus CSS color names).
 - **ssh**: connect to hosts from `~/.ssh/config` in your terminal.
-- **websearch**: bang-style dispatcher across 28 engines.
-- **sysinfo**: live CPU/RAM/disk/temp/net/uptime dashboard card.
+- **websearch**: bang-style dispatcher across 35 engines (incl. std, cpp, protondb, gpt, perplexity).
+- **kaomoji**: Japanese emoticons searchable by mood.
+- **sysinfo**: live CPU/RAM/disk/temp/net/uptime dashboard card with top CPU/memory process.
 - **worldclock**: current time in any city or IANA zone.
 - **kill**: find and terminate a process (`!` prefix = SIGKILL).
 - **random**: dice, coin flips, ranges, list picks, lorem ipsum.
-- **devtools**: offline base64/url/hex/jwt/hash/uuid/epoch transforms.
+- **devtools**: offline base64/url/hex/jwt/hash/uuid/epoch transforms, plus JSON pretty/minify and slugify.
+- **random**: dice, coin, ranges, list picks, lorem ipsum and a magic 8-ball.
+- **qrcode**: generate (ASCII + PNG) and decode a QR from the clipboard image.
 - **passgen**: password and passphrase generator.
 - **qrcode**: inline ASCII QR + PNG export.
 - **GTK**: launcher elevation shadow, focus glow, selection accent bar and an
@@ -37,6 +40,7 @@ features on top. Notable changes since forking from upstream `v1.1.0`:
 - `scripts/dev-install.sh` (build + install to `~/.local/bin` + restart) and
   `scripts/smoke-test-plugins.sh` (per-plugin JSON smoke tests).
 - GTK: slim themed scrollbar for the result list/grid.
+- CI: runs on the `donnie/features` branch and smoke-tests the plugins.
 
 ### Changed
 
