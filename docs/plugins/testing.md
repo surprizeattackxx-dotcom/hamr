@@ -59,6 +59,16 @@ echo '{"step": "action", "selected": {"id": "item-1"}}' | ./handler.py
 echo '{"step": "initial"}' | ./handler.py | jq .
 ```
 
+### Smoke-testing the bundled plugins
+
+`scripts/smoke-test-plugins.sh` sends a representative request to each bundled
+stdio plugin and asserts it emits a valid JSON object of the expected type:
+
+```bash
+scripts/smoke-test-plugins.sh        # offline plugins only
+scripts/smoke-test-plugins.sh --net  # also weather/translate/currency
+```
+
 ---
 
 ## Schema Requirements
