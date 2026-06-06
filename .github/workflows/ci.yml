@@ -53,6 +53,9 @@ jobs:
       - name: Smoke-test plugins
         run: ./scripts/smoke-test-plugins.sh
 
+      - name: Plugin logic unit tests
+        run: python3 scripts/test-plugin-logic.py
+
   msrv:
     name: Check MSRV (1.88)
     runs-on: ubuntu-24.04

@@ -69,6 +69,14 @@ scripts/smoke-test-plugins.sh        # offline plugins only
 scripts/smoke-test-plugins.sh --net  # also weather/translate/currency
 ```
 
+`scripts/test-plugin-logic.py` goes further, asserting the actual
+conversion/transform results (units, color, devtools, websearch, unicode,
+worldclock, random) so math regressions are caught:
+
+```bash
+python3 scripts/test-plugin-logic.py
+```
+
 ---
 
 ## Schema Requirements
