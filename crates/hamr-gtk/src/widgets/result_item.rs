@@ -1070,7 +1070,8 @@ pub fn result_item_css(theme: &crate::config::Theme) -> String {
             /* Fade transition - cubic-bezier heavy on brighter side (slow out) */
             transition: background-color 180ms cubic-bezier(0.25, 0.1, 0.25, 1),
                         background 180ms cubic-bezier(0.25, 0.1, 0.25, 1),
-                        border-color 180ms cubic-bezier(0.25, 0.1, 0.25, 1);
+                        border-color 180ms cubic-bezier(0.25, 0.1, 0.25, 1),
+                        box-shadow 140ms cubic-bezier(0.25, 0.1, 0.25, 1);
         }}
 
         overlay.result-item:hover {{
