@@ -1,0 +1,20 @@
+{
+  "name": "Web Search",
+  "description": "Bang-style web search — g, ddg, yt, gh, w, so, aur, npm, crates, mdn, maps, tr and more",
+  "icon": "travel_explore",
+  "frecency": "plugin",
+  "handler": {
+    "type": "stdio",
+    "command": "python3 handler.py"
+  },
+  "match": {
+    "patterns": [
+      "^(g|ddg|b|kagi|yt|gh|ghc|gl|w|so|r|aw|aur|arch|npm|crates|pypi|mdn|docs|maps|img|tr|def|ud|imdb|wa|amazon|wb)\\s+\\S"
+    ],
+    "priority": 60
+  },
+  "supportedPlatforms": [
+    "niri",
+    "hyprland"
+  ]
+}
