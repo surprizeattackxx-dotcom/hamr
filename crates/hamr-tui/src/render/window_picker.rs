@@ -16,7 +16,7 @@ use ratatui::{
 pub fn render_window_picker(f: &mut Frame, picker_state: &WindowPickerState) {
     let area = f.area();
 
-    let bg = Block::default().style(Style::default().bg(colors::BG));
+    let bg = Block::default().style(Style::default().bg(colors::bg()));
     f.render_widget(bg, area);
 
     let picker_width = 60.min(area.width.saturating_sub(4));
@@ -34,11 +34,11 @@ pub fn render_window_picker(f: &mut Frame, picker_state: &WindowPickerState) {
         .title(title)
         .title_style(
             Style::default()
-                .fg(colors::ON_SURFACE)
+                .fg(colors::on_surface())
                 .add_modifier(Modifier::BOLD),
         )
-        .style(Style::default().bg(colors::SURFACE))
-        .border_style(Style::default().fg(colors::PRIMARY));
+        .style(Style::default().bg(colors::surface()))
+        .border_style(Style::default().fg(colors::primary()));
 
     f.render_widget(picker_block.clone(), picker_area);
 
@@ -68,17 +68,17 @@ pub fn render_window_picker(f: &mut Frame, picker_state: &WindowPickerState) {
 
             let style = if is_selected {
                 Style::default()
-                    .fg(colors::ON_SURFACE)
-                    .bg(colors::PRIMARY_CONTAINER)
+                    .fg(colors::on_surface())
+                    .bg(colors::primary_container())
                     .add_modifier(Modifier::BOLD)
             } else {
-                Style::default().fg(colors::SUBTEXT)
+                Style::default().fg(colors::subtext())
             };
 
             let line = Line::from(vec![
-                Span::styled(prefix, Style::default().fg(colors::PRIMARY)),
+                Span::styled(prefix, Style::default().fg(colors::primary())),
                 Span::styled(title, style),
-                Span::styled(workspace, Style::default().fg(colors::OUTLINE)),
+                Span::styled(workspace, Style::default().fg(colors::outline())),
             ]);
 
             ListItem::new(line)
@@ -89,12 +89,12 @@ pub fn render_window_picker(f: &mut Frame, picker_state: &WindowPickerState) {
     f.render_widget(list, chunks[0]);
 
     let help_text = Line::from(vec![
-        Span::styled("j/k", Style::default().fg(colors::PRIMARY)),
-        Span::styled(": navigate  ", Style::default().fg(colors::SUBTEXT)),
-        Span::styled("Enter/1-9", Style::default().fg(colors::PRIMARY)),
-        Span::styled(": select  ", Style::default().fg(colors::SUBTEXT)),
-        Span::styled("Esc", Style::default().fg(colors::PRIMARY)),
-        Span::styled(": cancel", Style::default().fg(colors::SUBTEXT)),
+        Span::styled("j/k", Style::default().fg(colors::primary())),
+        Span::styled(": navigate  ", Style::default().fg(colors::subtext())),
+        Span::styled("Enter/1-9", Style::default().fg(colors::primary())),
+        Span::styled(": select  ", Style::default().fg(colors::subtext())),
+        Span::styled("Esc", Style::default().fg(colors::primary())),
+        Span::styled(": cancel", Style::default().fg(colors::subtext())),
     ]);
     f.render_widget(Paragraph::new(help_text), chunks[1]);
 }

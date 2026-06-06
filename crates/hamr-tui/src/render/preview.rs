@@ -24,11 +24,11 @@ pub fn render_preview_panel(f: &mut Frame, app: &App, area: Rect) {
         .title(format!(" {title} "))
         .title_style(
             Style::default()
-                .fg(colors::ON_SURFACE)
+                .fg(colors::on_surface())
                 .add_modifier(Modifier::BOLD),
         )
-        .style(Style::default().bg(colors::SURFACE))
-        .border_style(Style::default().fg(colors::PRIMARY));
+        .style(Style::default().bg(colors::surface()))
+        .border_style(Style::default().fg(colors::primary()));
 
     f.render_widget(preview_block.clone(), area);
     let inner = preview_block.inner(area);
@@ -37,8 +37,8 @@ pub fn render_preview_panel(f: &mut Frame, app: &App, area: Rect) {
 
     if let Some(image) = &preview.image {
         lines.push(Line::from(vec![
-            Span::styled("Image: ", Style::default().fg(colors::OUTLINE)),
-            Span::styled(image.clone(), Style::default().fg(colors::SUBTEXT)),
+            Span::styled("Image: ", Style::default().fg(colors::outline())),
+            Span::styled(image.clone(), Style::default().fg(colors::subtext())),
         ]));
         lines.push(Line::from(""));
     }
@@ -50,7 +50,7 @@ pub fn render_preview_panel(f: &mut Frame, app: &App, area: Rect) {
         for line in content.lines() {
             lines.push(Line::from(Span::styled(
                 line.to_string(),
-                Style::default().fg(colors::ON_SURFACE),
+                Style::default().fg(colors::on_surface()),
             )));
         }
         lines.push(Line::from(""));
@@ -59,7 +59,7 @@ pub fn render_preview_panel(f: &mut Frame, app: &App, area: Rect) {
     if !preview.metadata.is_empty() {
         lines.push(Line::from(Span::styled(
             "-".repeat(inner.width as usize),
-            Style::default().fg(colors::OUTLINE),
+            Style::default().fg(colors::outline()),
         )));
 
         for meta in &preview.metadata {
@@ -70,10 +70,10 @@ pub fn render_preview_panel(f: &mut Frame, app: &App, area: Rect) {
                 .unwrap_or_default();
 
             lines.push(Line::from(vec![
-                Span::styled(icon, Style::default().fg(colors::OUTLINE)),
-                Span::styled(meta.label.clone(), Style::default().fg(colors::SUBTEXT)),
-                Span::styled(": ", Style::default().fg(colors::OUTLINE)),
-                Span::styled(meta.value.clone(), Style::default().fg(colors::ON_SURFACE)),
+                Span::styled(icon, Style::default().fg(colors::outline())),
+                Span::styled(meta.label.clone(), Style::default().fg(colors::subtext())),
+                Span::styled(": ", Style::default().fg(colors::outline())),
+                Span::styled(meta.value.clone(), Style::default().fg(colors::on_surface())),
             ]));
         }
     }
@@ -82,7 +82,7 @@ pub fn render_preview_panel(f: &mut Frame, app: &App, area: Rect) {
         lines.push(Line::from(""));
         lines.push(Line::from(Span::styled(
             "-".repeat(inner.width as usize),
-            Style::default().fg(colors::OUTLINE),
+            Style::default().fg(colors::outline()),
         )));
 
         let action_spans: Vec<Span> = preview
@@ -92,12 +92,12 @@ pub fn render_preview_panel(f: &mut Frame, app: &App, area: Rect) {
             .flat_map(|(i, a)| {
                 let is_selected = i == app.selected_preview_action;
                 let style = if is_selected {
-                    Style::default().fg(colors::BG).bg(colors::PRIMARY)
+                    Style::default().fg(colors::bg()).bg(colors::primary())
                 } else {
-                    Style::default().fg(colors::ON_SURFACE)
+                    Style::default().fg(colors::on_surface())
                 };
                 vec![
-                    Span::styled(format!("{}:", i + 1), Style::default().fg(colors::PRIMARY)),
+                    Span::styled(format!("{}:", i + 1), Style::default().fg(colors::primary())),
                     Span::styled(a.name.clone(), style),
                     Span::raw(" "),
                 ]

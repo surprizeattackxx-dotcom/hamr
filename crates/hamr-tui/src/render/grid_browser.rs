@@ -36,18 +36,18 @@ fn build_cell_spans(
 
     let style = if is_selected {
         Style::default()
-            .fg(colors::ON_SURFACE)
-            .bg(colors::SURFACE_HIGH)
+            .fg(colors::on_surface())
+            .bg(colors::surface_high())
             .add_modifier(Modifier::BOLD)
     } else {
-        Style::default().fg(colors::ON_SURFACE)
+        Style::default().fg(colors::on_surface())
     };
     let icon_style = if is_selected {
         Style::default()
-            .fg(colors::PRIMARY)
-            .bg(colors::SURFACE_HIGH)
+            .fg(colors::primary())
+            .bg(colors::surface_high())
     } else {
-        Style::default().fg(colors::OUTLINE)
+        Style::default().fg(colors::outline())
     };
 
     let line1 = vec![
@@ -62,10 +62,10 @@ fn build_cell_spans(
     let desc_truncated = truncate_text(desc, cell_width.saturating_sub(2));
     let desc_style = if is_selected {
         Style::default()
-            .fg(colors::SUBTEXT)
-            .bg(colors::SURFACE_HIGH)
+            .fg(colors::subtext())
+            .bg(colors::surface_high())
     } else {
-        Style::default().fg(colors::SUBTEXT)
+        Style::default().fg(colors::subtext())
     };
     let line2 = vec![Span::styled(
         format!(
@@ -88,15 +88,15 @@ fn render_help_bar(f: &mut Frame, area: Rect) {
         1,
     );
     let help = Line::from(vec![
-        Span::styled("<>^v/hjkl", Style::default().fg(colors::PRIMARY)),
-        Span::styled(": nav  ", Style::default().fg(colors::SUBTEXT)),
-        Span::styled("Enter", Style::default().fg(colors::PRIMARY)),
-        Span::styled(": select  ", Style::default().fg(colors::SUBTEXT)),
-        Span::styled("Esc", Style::default().fg(colors::PRIMARY)),
-        Span::styled(": back", Style::default().fg(colors::SUBTEXT)),
+        Span::styled("<>^v/hjkl", Style::default().fg(colors::primary())),
+        Span::styled(": nav  ", Style::default().fg(colors::subtext())),
+        Span::styled("Enter", Style::default().fg(colors::primary())),
+        Span::styled(": select  ", Style::default().fg(colors::subtext())),
+        Span::styled("Esc", Style::default().fg(colors::primary())),
+        Span::styled(": back", Style::default().fg(colors::subtext())),
     ]);
     f.render_widget(
-        Paragraph::new(help).style(Style::default().bg(colors::SURFACE)),
+        Paragraph::new(help).style(Style::default().bg(colors::surface())),
         help_area,
     );
 }
@@ -106,22 +106,22 @@ fn render_help_bar(f: &mut Frame, area: Rect) {
 #[allow(clippy::cast_possible_truncation)]
 pub fn render_grid_browser(f: &mut Frame, state: &GridBrowserState) {
     let area = f.area();
-    let bg = Block::default().style(Style::default().bg(colors::BG));
+    let bg = Block::default().style(Style::default().bg(colors::bg()));
     f.render_widget(bg, area);
 
     let title = state.data.title.as_deref().unwrap_or("Grid Browser");
     let browser_block = Block::default()
         .borders(Borders::ALL)
         .title(format!(" {} ({} items) ", title, state.data.items.len()))
-        .style(Style::default().bg(colors::SURFACE))
-        .border_style(Style::default().fg(colors::PRIMARY));
+        .style(Style::default().bg(colors::surface()))
+        .border_style(Style::default().fg(colors::primary()));
 
     let inner = browser_block.inner(area);
     f.render_widget(browser_block, area);
 
     if state.data.items.is_empty() {
         let empty_msg =
-            Paragraph::new("No items to display").style(Style::default().fg(colors::SUBTEXT));
+            Paragraph::new("No items to display").style(Style::default().fg(colors::subtext()));
         f.render_widget(empty_msg, inner);
         return;
     }

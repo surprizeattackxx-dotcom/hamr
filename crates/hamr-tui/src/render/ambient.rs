@@ -20,18 +20,18 @@ pub fn render_ambient_bar(f: &mut Frame, app: &App, area: Rect) {
         let is_selected = i == app.selected_ambient;
         let style = if is_selected {
             Style::default()
-                .fg(colors::PRIMARY)
+                .fg(colors::primary())
                 .add_modifier(Modifier::BOLD)
         } else {
-            Style::default().fg(colors::ON_SURFACE)
+            Style::default().fg(colors::on_surface())
         };
 
         if i > 0 {
-            spans.push(Span::styled(" | ", Style::default().fg(colors::OUTLINE)));
+            spans.push(Span::styled(" | ", Style::default().fg(colors::outline())));
         }
 
         if is_selected {
-            spans.push(Span::styled("> ", Style::default().fg(colors::PRIMARY)));
+            spans.push(Span::styled("> ", Style::default().fg(colors::primary())));
         } else {
             spans.push(Span::raw("  "));
         }
@@ -39,7 +39,7 @@ pub fn render_ambient_bar(f: &mut Frame, app: &App, area: Rect) {
         if let Some(icon) = &item.icon {
             spans.push(Span::styled(
                 format!("{} ", widgets::icon_to_str(icon)),
-                Style::default().fg(colors::OUTLINE),
+                Style::default().fg(colors::outline()),
             ));
         }
 
@@ -48,19 +48,19 @@ pub fn render_ambient_bar(f: &mut Frame, app: &App, area: Rect) {
         if let Some(desc) = &item.description {
             spans.push(Span::styled(
                 format!(" - {desc}"),
-                Style::default().fg(colors::SUBTEXT),
+                Style::default().fg(colors::subtext()),
             ));
         }
 
         if item.duration > 0 {
-            spans.push(Span::styled(" [T]", Style::default().fg(colors::OUTLINE)));
+            spans.push(Span::styled(" [T]", Style::default().fg(colors::outline())));
         }
 
         for badge in item.badges.iter().take(2) {
             if let Some(text) = badge.text.as_deref() {
                 spans.push(Span::styled(
                     format!(" [{text}]"),
-                    Style::default().fg(colors::SECONDARY),
+                    Style::default().fg(colors::secondary()),
                 ));
             }
         }
@@ -70,11 +70,11 @@ pub fn render_ambient_bar(f: &mut Frame, app: &App, area: Rect) {
             for (idx, action) in item.actions.iter().take(3).enumerate() {
                 spans.push(Span::styled(
                     format!("{}:", idx + 1),
-                    Style::default().fg(colors::PRIMARY),
+                    Style::default().fg(colors::primary()),
                 ));
                 spans.push(Span::styled(
                     &action.name,
-                    Style::default().fg(colors::ON_SURFACE),
+                    Style::default().fg(colors::on_surface()),
                 ));
                 spans.push(Span::raw(" "));
             }
@@ -84,15 +84,15 @@ pub fn render_ambient_bar(f: &mut Frame, app: &App, area: Rect) {
     if !ambient_items.is_empty() {
         spans.push(Span::styled(
             " [x:dismiss]",
-            Style::default().fg(colors::OUTLINE),
+            Style::default().fg(colors::outline()),
         ));
     }
 
     let ambient_block = Block::default()
         .borders(Borders::ALL)
         .title(format!(" Ambient ({}) ", ambient_items.len()))
-        .style(Style::default().bg(colors::SURFACE_HIGH))
-        .border_style(Style::default().fg(colors::SUCCESS));
+        .style(Style::default().bg(colors::surface_high()))
+        .border_style(Style::default().fg(colors::success()));
 
     let ambient_text = Paragraph::new(Line::from(spans)).block(ambient_block);
     f.render_widget(ambient_text, area);

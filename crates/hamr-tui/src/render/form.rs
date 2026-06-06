@@ -21,7 +21,7 @@ use ratatui::{
     clippy::too_many_lines
 )]
 pub fn render_form(f: &mut Frame, form_state: &FormState) {
-    let bg_block = Block::default().style(Style::default().bg(colors::BG));
+    let bg_block = Block::default().style(Style::default().bg(colors::bg()));
     f.render_widget(bg_block, f.area());
 
     let form = &form_state.form;
@@ -48,8 +48,8 @@ pub fn render_form(f: &mut Frame, form_state: &FormState) {
     let form_block = Block::default()
         .borders(Borders::ALL)
         .title(format!(" {} ", form.title))
-        .style(Style::default().bg(colors::SURFACE))
-        .border_style(Style::default().fg(colors::PRIMARY));
+        .style(Style::default().bg(colors::surface()))
+        .border_style(Style::default().fg(colors::primary()));
 
     f.render_widget(Clear, form_area);
     f.render_widget(form_block, form_area);
@@ -87,19 +87,19 @@ pub fn render_form(f: &mut Frame, form_state: &FormState) {
 
         let field_style = if is_focused {
             Style::default()
-                .fg(colors::ON_SURFACE)
+                .fg(colors::on_surface())
                 .add_modifier(Modifier::BOLD)
         } else {
-            Style::default().fg(colors::SUBTEXT)
+            Style::default().fg(colors::subtext())
         };
 
         let is_empty_required = field.required && value.trim().is_empty();
         let border_color = if is_focused {
-            colors::PRIMARY
+            colors::primary()
         } else if is_empty_required {
-            colors::ERROR
+            colors::error()
         } else {
-            colors::OUTLINE
+            colors::outline()
         };
 
         match field.field_type {
@@ -260,15 +260,15 @@ fn render_validated_text_field(
     };
 
     let text_style = if value.is_empty() {
-        Style::default().fg(colors::OUTLINE)
+        Style::default().fg(colors::outline())
     } else if validation_error.is_some() {
-        Style::default().fg(colors::ERROR)
+        Style::default().fg(colors::error())
     } else {
         field_style
     };
 
     let actual_border_color = if validation_error.is_some() && !is_focused {
-        colors::ERROR
+        colors::error()
     } else {
         border_color
     };
@@ -303,20 +303,20 @@ fn render_form_buttons(
 ) {
     let submit_style = if form_state.is_on_submit() {
         Style::default()
-            .fg(colors::BG)
-            .bg(colors::PRIMARY)
+            .fg(colors::bg())
+            .bg(colors::primary())
             .add_modifier(Modifier::BOLD)
     } else {
-        Style::default().fg(colors::PRIMARY)
+        Style::default().fg(colors::primary())
     };
 
     let cancel_style = if form_state.is_on_cancel() {
         Style::default()
-            .fg(colors::BG)
-            .bg(colors::ERROR)
+            .fg(colors::bg())
+            .bg(colors::error())
             .add_modifier(Modifier::BOLD)
     } else {
-        Style::default().fg(colors::SUBTEXT)
+        Style::default().fg(colors::subtext())
     };
 
     let submit_text = format!(" [{}] ", form.submit_label);
@@ -340,14 +340,14 @@ fn render_form_buttons(
     );
 
     let help_text = Line::from(vec![
-        Span::styled("Tab", Style::default().fg(colors::PRIMARY)),
-        Span::styled(": next  ", Style::default().fg(colors::SUBTEXT)),
-        Span::styled("S-Tab", Style::default().fg(colors::PRIMARY)),
-        Span::styled(": prev  ", Style::default().fg(colors::SUBTEXT)),
-        Span::styled("Enter", Style::default().fg(colors::PRIMARY)),
-        Span::styled(": submit  ", Style::default().fg(colors::SUBTEXT)),
-        Span::styled("Esc", Style::default().fg(colors::PRIMARY)),
-        Span::styled(": cancel", Style::default().fg(colors::SUBTEXT)),
+        Span::styled("Tab", Style::default().fg(colors::primary())),
+        Span::styled(": next  ", Style::default().fg(colors::subtext())),
+        Span::styled("S-Tab", Style::default().fg(colors::primary())),
+        Span::styled(": prev  ", Style::default().fg(colors::subtext())),
+        Span::styled("Enter", Style::default().fg(colors::primary())),
+        Span::styled(": submit  ", Style::default().fg(colors::subtext())),
+        Span::styled("Esc", Style::default().fg(colors::primary())),
+        Span::styled(": cancel", Style::default().fg(colors::subtext())),
     ]);
 
     if help_area.y < f.area().height {
@@ -377,7 +377,7 @@ fn render_text_input_field(
     };
 
     let text_style = if value.is_empty() && !matches!(field.field_type, FormFieldType::Password) {
-        Style::default().fg(colors::OUTLINE)
+        Style::default().fg(colors::outline())
     } else {
         field_style
     };
@@ -428,7 +428,7 @@ fn render_datetime_field(
     };
 
     let text_style = if value.is_empty() {
-        Style::default().fg(colors::OUTLINE)
+        Style::default().fg(colors::outline())
     } else {
         field_style
     };
@@ -459,18 +459,18 @@ fn render_switch_field(
 
     let (left_style, right_style, track_char) = if is_on {
         (
-            Style::default().fg(colors::OUTLINE),
+            Style::default().fg(colors::outline()),
             Style::default()
-                .fg(colors::SUCCESS)
+                .fg(colors::success())
                 .add_modifier(Modifier::BOLD),
             '=',
         )
     } else {
         (
             Style::default()
-                .fg(colors::ERROR)
+                .fg(colors::error())
                 .add_modifier(Modifier::BOLD),
-            Style::default().fg(colors::OUTLINE),
+            Style::default().fg(colors::outline()),
             '-',
         )
     };
@@ -479,7 +479,7 @@ fn render_switch_field(
         Span::styled(if is_on { " OFF " } else { "[OFF]" }, left_style),
         Span::styled(
             format!("{track_char}{track_char}{track_char}"),
-            Style::default().fg(colors::OUTLINE),
+            Style::default().fg(colors::outline()),
         ),
         Span::styled(if is_on { "[ON] " } else { " ON  " }, right_style),
     ]);
@@ -523,20 +523,20 @@ fn render_slider_field(
     let empty = bar_width.saturating_sub(filled);
 
     let arrow_color = if is_focused {
-        colors::PRIMARY
+        colors::primary()
     } else {
-        colors::OUTLINE
+        colors::outline()
     };
 
     let slider_line = Line::from(vec![
         Span::styled("<", Style::default().fg(arrow_color)),
-        Span::styled("#".repeat(filled), Style::default().fg(colors::SUCCESS)),
-        Span::styled(".".repeat(empty), Style::default().fg(colors::OUTLINE)),
+        Span::styled("#".repeat(filled), Style::default().fg(colors::success())),
+        Span::styled(".".repeat(empty), Style::default().fg(colors::outline())),
         Span::styled(">", Style::default().fg(arrow_color)),
         Span::styled(
             format!(" {current_val:.1}"),
             Style::default()
-                .fg(colors::ON_SURFACE)
+                .fg(colors::on_surface())
                 .add_modifier(Modifier::BOLD),
         ),
     ]);
@@ -577,8 +577,8 @@ fn render_cancel_confirm_dialog(f: &mut Frame) {
     let block = Block::default()
         .borders(Borders::ALL)
         .title(" Discard Changes? ")
-        .style(Style::default().bg(colors::SURFACE_HIGH))
-        .border_style(Style::default().fg(colors::WARNING));
+        .style(Style::default().bg(colors::surface_high()))
+        .border_style(Style::default().fg(colors::warning()));
 
     let inner = block.inner(dialog_area);
     f.render_widget(block, dialog_area);
@@ -586,14 +586,14 @@ fn render_cancel_confirm_dialog(f: &mut Frame) {
     let text = vec![
         Line::from(Span::styled(
             "You have unsaved changes.",
-            Style::default().fg(colors::ON_SURFACE),
+            Style::default().fg(colors::on_surface()),
         )),
         Line::from(""),
         Line::from(vec![
-            Span::styled("Enter", Style::default().fg(colors::ERROR)),
-            Span::styled(": discard  ", Style::default().fg(colors::SUBTEXT)),
-            Span::styled("Esc", Style::default().fg(colors::PRIMARY)),
-            Span::styled(": keep editing", Style::default().fg(colors::SUBTEXT)),
+            Span::styled("Enter", Style::default().fg(colors::error())),
+            Span::styled(": discard  ", Style::default().fg(colors::subtext())),
+            Span::styled("Esc", Style::default().fg(colors::primary())),
+            Span::styled(": keep editing", Style::default().fg(colors::subtext())),
         ]),
     ];
 

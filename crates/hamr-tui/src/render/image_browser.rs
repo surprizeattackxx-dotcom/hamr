@@ -48,10 +48,10 @@ fn build_image_item_lines(
 ) -> (Line<'_>, Line<'_>) {
     let base_style = if is_selected {
         Style::default()
-            .fg(colors::ON_SURFACE)
-            .bg(colors::SURFACE_HIGH)
+            .fg(colors::on_surface())
+            .bg(colors::surface_high())
     } else {
-        Style::default().fg(colors::ON_SURFACE)
+        Style::default().fg(colors::on_surface())
     };
 
     let filename = img.name.as_deref().unwrap_or_else(|| {
@@ -64,10 +64,10 @@ fn build_image_item_lines(
     let icon = get_file_icon(&img.path);
     let icon_style = if is_selected {
         Style::default()
-            .fg(colors::PRIMARY)
-            .bg(colors::SURFACE_HIGH)
+            .fg(colors::primary())
+            .bg(colors::surface_high())
     } else {
-        Style::default().fg(colors::PRIMARY)
+        Style::default().fg(colors::primary())
     };
 
     let name_style = if is_selected {
@@ -77,10 +77,10 @@ fn build_image_item_lines(
     };
     let path_style = if is_selected {
         Style::default()
-            .fg(colors::SUBTEXT)
-            .bg(colors::SURFACE_HIGH)
+            .fg(colors::subtext())
+            .bg(colors::surface_high())
     } else {
-        Style::default().fg(colors::SUBTEXT)
+        Style::default().fg(colors::subtext())
     };
 
     let path_display = truncate_path(&img.path, max_path_len);
@@ -100,15 +100,15 @@ fn build_image_item_lines(
 /// Render the help bar at the bottom of the image browser.
 fn render_help_bar(f: &mut Frame, area: Rect) {
     let help = Line::from(vec![
-        Span::styled("^v/jk", Style::default().fg(colors::PRIMARY)),
-        Span::styled(": nav  ", Style::default().fg(colors::SUBTEXT)),
-        Span::styled("Enter", Style::default().fg(colors::PRIMARY)),
-        Span::styled(": select  ", Style::default().fg(colors::SUBTEXT)),
-        Span::styled("Esc", Style::default().fg(colors::PRIMARY)),
-        Span::styled(": back", Style::default().fg(colors::SUBTEXT)),
+        Span::styled("^v/jk", Style::default().fg(colors::primary())),
+        Span::styled(": nav  ", Style::default().fg(colors::subtext())),
+        Span::styled("Enter", Style::default().fg(colors::primary())),
+        Span::styled(": select  ", Style::default().fg(colors::subtext())),
+        Span::styled("Esc", Style::default().fg(colors::primary())),
+        Span::styled(": back", Style::default().fg(colors::subtext())),
     ]);
     f.render_widget(
-        Paragraph::new(help).style(Style::default().bg(colors::SURFACE)),
+        Paragraph::new(help).style(Style::default().bg(colors::surface())),
         area,
     );
 }
@@ -118,7 +118,7 @@ fn render_help_bar(f: &mut Frame, area: Rect) {
 #[allow(clippy::cast_possible_truncation)]
 pub fn render_image_browser(f: &mut Frame, state: &ImageBrowserState) {
     let area = f.area();
-    let bg = Block::default().style(Style::default().bg(colors::BG));
+    let bg = Block::default().style(Style::default().bg(colors::bg()));
     f.render_widget(bg, area);
 
     let title = state.data.title.as_deref().unwrap_or("Images");
@@ -132,15 +132,15 @@ pub fn render_image_browser(f: &mut Frame, state: &ImageBrowserState) {
             dir_display,
             state.data.images.len()
         ))
-        .style(Style::default().bg(colors::SURFACE))
-        .border_style(Style::default().fg(colors::PRIMARY));
+        .style(Style::default().bg(colors::surface()))
+        .border_style(Style::default().fg(colors::primary()));
 
     let inner = browser_block.inner(area);
     f.render_widget(browser_block, area);
 
     if state.data.images.is_empty() {
         let empty_msg =
-            Paragraph::new("No images to display").style(Style::default().fg(colors::SUBTEXT));
+            Paragraph::new("No images to display").style(Style::default().fg(colors::subtext()));
         f.render_widget(empty_msg, inner);
         return;
     }
@@ -164,10 +164,10 @@ pub fn render_image_browser(f: &mut Frame, state: &ImageBrowserState) {
         let is_selected = img_idx == state.selected;
         let base_style = if is_selected {
             Style::default()
-                .fg(colors::ON_SURFACE)
-                .bg(colors::SURFACE_HIGH)
+                .fg(colors::on_surface())
+                .bg(colors::surface_high())
         } else {
-            Style::default().fg(colors::ON_SURFACE)
+            Style::default().fg(colors::on_surface())
         };
 
         let (line1, line2) = build_image_item_lines(img, is_selected, max_path_len);

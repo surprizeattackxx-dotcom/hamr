@@ -52,21 +52,21 @@ pub fn render_markdown_to_lines(md: &str, width: usize) -> Vec<Line<'static>> {
             lines.push(Line::from(Span::styled(
                 header.to_string(),
                 Style::default()
-                    .fg(colors::PRIMARY)
+                    .fg(colors::primary())
                     .add_modifier(Modifier::BOLD),
             )));
         } else if let Some(header) = trimmed.strip_prefix("## ") {
             lines.push(Line::from(Span::styled(
                 header.to_string(),
                 Style::default()
-                    .fg(colors::PRIMARY)
+                    .fg(colors::primary())
                     .add_modifier(Modifier::BOLD),
             )));
         } else if let Some(header) = trimmed.strip_prefix("# ") {
             lines.push(Line::from(Span::styled(
                 header.to_string(),
                 Style::default()
-                    .fg(colors::PRIMARY)
+                    .fg(colors::primary())
                     .add_modifier(Modifier::BOLD),
             )));
         }
@@ -83,19 +83,19 @@ pub fn render_markdown_to_lines(md: &str, width: usize) -> Vec<Line<'static>> {
             };
             lines.push(Line::from(Span::styled(
                 truncated,
-                Style::default().fg(colors::ON_SURFACE),
+                Style::default().fg(colors::on_surface()),
             )));
         } else if trimmed.starts_with("```") {
             lines.push(Line::from(Span::styled(
                 "-".repeat(width.min(40)),
-                Style::default().fg(colors::OUTLINE),
+                Style::default().fg(colors::outline()),
             )));
         } else if trimmed.starts_with("**") && trimmed.ends_with("**") && trimmed.len() > 4 {
             let content = &trimmed[2..trimmed.len() - 2];
             lines.push(Line::from(Span::styled(
                 content.to_string(),
                 Style::default()
-                    .fg(colors::ON_SURFACE)
+                    .fg(colors::on_surface())
                     .add_modifier(Modifier::BOLD),
             )));
         } else if !trimmed.is_empty() {
@@ -109,7 +109,7 @@ pub fn render_markdown_to_lines(md: &str, width: usize) -> Vec<Line<'static>> {
             };
             lines.push(Line::from(Span::styled(
                 truncated,
-                Style::default().fg(colors::ON_SURFACE),
+                Style::default().fg(colors::on_surface()),
             )));
         } else {
             lines.push(Line::from(""));

@@ -13,7 +13,7 @@ use ratatui::{
 use super::color::parse_hex_color;
 use super::icon::icon_to_str;
 
-/// Default badge color (matches `main.rs` `colors::SECONDARY`)
+/// Default badge color (matches `main.rs` `colors::secondary()`)
 const DEFAULT_COLOR: Color = Color::Rgb(0xca, 0xc5, 0xc8); // #cac5c8
 
 /// A badge widget - small indicator with text or icon (renders as `[X]`).

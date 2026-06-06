@@ -19,34 +19,34 @@ fn render_card_blocks(blocks: &[CardBlock], width: usize) -> Vec<Line<'static>> 
             CardBlock::Pill { text } => {
                 lines.push(Line::from(vec![Span::styled(
                     format!(" {text} "),
-                    Style::default().fg(colors::BG).bg(colors::PRIMARY),
+                    Style::default().fg(colors::bg()).bg(colors::primary()),
                 )]));
             }
             CardBlock::Separator => {
                 lines.push(Line::from(Span::styled(
                     "-".repeat(width),
-                    Style::default().fg(colors::OUTLINE),
+                    Style::default().fg(colors::outline()),
                 )));
             }
             CardBlock::Message { role, content } => {
                 let prefix = match role.as_str() {
-                    "user" => ("You: ", colors::PRIMARY),
-                    "assistant" => ("AI: ", colors::SUCCESS),
-                    "system" => ("Sys: ", colors::OUTLINE),
-                    _ => ("", colors::ON_SURFACE),
+                    "user" => ("You: ", colors::primary()),
+                    "assistant" => ("AI: ", colors::success()),
+                    "system" => ("Sys: ", colors::outline()),
+                    _ => ("", colors::on_surface()),
                 };
                 lines.push(Line::from(vec![
                     Span::styled(
                         prefix.0.to_string(),
                         Style::default().fg(prefix.1).add_modifier(Modifier::BOLD),
                     ),
-                    Span::styled(content.clone(), Style::default().fg(colors::ON_SURFACE)),
+                    Span::styled(content.clone(), Style::default().fg(colors::on_surface())),
                 ]));
             }
             CardBlock::Note { content } => {
                 lines.push(Line::from(vec![
-                    Span::styled("i ".to_string(), Style::default().fg(colors::PRIMARY)),
-                    Span::styled(content.clone(), Style::default().fg(colors::SUBTEXT)),
+                    Span::styled("i ".to_string(), Style::default().fg(colors::primary())),
+                    Span::styled(content.clone(), Style::default().fg(colors::subtext())),
                 ]));
             }
         }
@@ -60,22 +60,22 @@ fn render_card_actions(f: &mut Frame, actions: &[Action], selected: usize, area:
     for (i, action) in actions.iter().enumerate() {
         let style = if i == selected {
             Style::default()
-                .fg(colors::BG)
-                .bg(colors::PRIMARY)
+                .fg(colors::bg())
+                .bg(colors::primary())
                 .add_modifier(Modifier::BOLD)
         } else {
-            Style::default().fg(colors::PRIMARY)
+            Style::default().fg(colors::primary())
         };
         spans.push(Span::styled(format!(" [{}] ", action.name), style));
         spans.push(Span::raw(" "));
     }
     let close_style = if selected == actions.len() {
         Style::default()
-            .fg(colors::BG)
-            .bg(colors::ERROR)
+            .fg(colors::bg())
+            .bg(colors::error())
             .add_modifier(Modifier::BOLD)
     } else {
-        Style::default().fg(colors::ERROR)
+        Style::default().fg(colors::error())
     };
     spans.push(Span::styled(" [Close] ".to_string(), close_style));
     f.render_widget(Paragraph::new(Line::from(spans)), area);
@@ -86,7 +86,7 @@ fn render_card_actions(f: &mut Frame, actions: &[Action], selected: usize, area:
 #[allow(clippy::cast_possible_truncation, clippy::cast_sign_loss)]
 pub fn render_card(f: &mut Frame, card_state: &CardState) {
     let area = f.area();
-    let bg = Block::default().style(Style::default().bg(colors::BG));
+    let bg = Block::default().style(Style::default().bg(colors::bg()));
     f.render_widget(bg, area);
 
     let card_width = 80.min(area.width.saturating_sub(4));
@@ -102,11 +102,11 @@ pub fn render_card(f: &mut Frame, card_state: &CardState) {
         .title(format!(" {} ", card_state.card.title))
         .title_style(
             Style::default()
-                .fg(colors::ON_SURFACE)
+                .fg(colors::on_surface())
                 .add_modifier(Modifier::BOLD),
         )
-        .style(Style::default().bg(colors::SURFACE))
-        .border_style(Style::default().fg(colors::PRIMARY));
+        .style(Style::default().bg(colors::surface()))
+        .border_style(Style::default().fg(colors::primary()));
     f.render_widget(card_block.clone(), card_area);
 
     let inner = card_block.inner(card_area);
@@ -148,14 +148,14 @@ pub fn render_card(f: &mut Frame, card_state: &CardState) {
     );
     if help_area.y < area.height {
         let help_text = Line::from(vec![
-            Span::styled("j/k", Style::default().fg(colors::PRIMARY)),
-            Span::styled(": scroll  ", Style::default().fg(colors::SUBTEXT)),
-            Span::styled("Tab", Style::default().fg(colors::PRIMARY)),
-            Span::styled(": action  ", Style::default().fg(colors::SUBTEXT)),
-            Span::styled("Enter", Style::default().fg(colors::PRIMARY)),
-            Span::styled(": select  ", Style::default().fg(colors::SUBTEXT)),
-            Span::styled("Esc/q", Style::default().fg(colors::PRIMARY)),
-            Span::styled(": close", Style::default().fg(colors::SUBTEXT)),
+            Span::styled("j/k", Style::default().fg(colors::primary())),
+            Span::styled(": scroll  ", Style::default().fg(colors::subtext())),
+            Span::styled("Tab", Style::default().fg(colors::primary())),
+            Span::styled(": action  ", Style::default().fg(colors::subtext())),
+            Span::styled("Enter", Style::default().fg(colors::primary())),
+            Span::styled(": select  ", Style::default().fg(colors::subtext())),
+            Span::styled("Esc/q", Style::default().fg(colors::primary())),
+            Span::styled(": close", Style::default().fg(colors::subtext())),
         ]);
         f.render_widget(Paragraph::new(help_text), help_area);
     }
