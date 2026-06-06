@@ -54,7 +54,7 @@ EOF
 >
 > List all platforms your plugin supports explicitly. There is no wildcard.
 >
-> **Note:** For stdio plugins, Hamr always runs `handler.py` in the plugin directory, so the `handler` field is optional. Use `handler.command` only for socket/daemon plugins.
+> **Note:** For stdio plugins, the `handler` field is optional — by default Hamr exec's `handler.py` directly (so it must be executable with a valid shebang). Alternatively set `handler.command` (e.g. `"python3 handler.py"`, `"node handler.js"`, `"./run.sh"`) to run it through an interpreter, in which case the handler does **not** need the executable bit. `handler.command` works for both stdio and socket/daemon plugins.
 
 ### Step 3: Create the Handler
 
@@ -205,7 +205,7 @@ flowchart LR
 
 - Each plugin must have a `manifest.json`
 - `supportedPlatforms` must include the current platform
-- Handler must be executable with a valid shebang
+- Handler must be executable with a valid shebang, **or** declare `handler.command` (e.g. `"python3 handler.py"`)
 
 ### Directory Structure
 
@@ -239,7 +239,7 @@ Every plugin needs a `manifest.json`:
 | `description`        | Yes      | Short description                                            |
 | `icon`               | Yes      | Material icon name                                           |
 | `supportedPlatforms` | Yes      | `["niri", "hyprland"]`, `["macos"]`, etc. (list all explicitly) |
-| `handler`            | No       | Handler config. Stdio plugins run `handler.py` by default; socket plugins use `handler.command`. |
+| `handler`            | No       | Handler config. Stdio plugins exec `handler.py` by default, or set `handler.command` (e.g. `"python3 handler.py"`) to run via an interpreter; socket plugins use `handler.command`. |
 | `frecency`           | No       | `"item"`, `"plugin"`, or `"none"` (default: `"item"`)        |
 
 ### Input (What You Receive)
@@ -283,11 +283,9 @@ For drill-down workflows (edit screens, pickers), store state in `context` and c
 
 Plugins can be written in any language. The handler just needs to:
 
-1. Be executable (`chmod +x`)
+1. Be executable (`chmod +x`) with a shebang (`#!/usr/bin/env python3`) — **or** set `handler.command` in the manifest (e.g. `"python3 handler.py"`) to run via an interpreter instead
 
-2. Have a shebang (`#!/usr/bin/env python3`)
-
-3. Read JSON from stdin
+2. Read JSON from stdin
 
 4. Write JSON to stdout
 
@@ -412,10 +410,12 @@ See [Testing Plugins](testing.md) for more details.
    "supportedPlatforms": ["niri", "hyprland"]
    ```
 
-2. **Check file permissions** - Handler must be executable
+2. **Check file permissions** - The handler must be executable, or declare a `handler.command`
 
    ```bash
    chmod +x handler.py
+   # — or, in manifest.json, run it through an interpreter instead:
+   #   "handler": { "type": "stdio", "command": "python3 handler.py" }
    ```
 
 3. **Check for JSON errors** - Validate your manifest
