@@ -48,7 +48,7 @@ Hamr learns from your usage patterns to surface what you need, when you need it.
 | `random` | Dice, coin flips, ranges, list picks, lorem ipsum | `roll 2d6`, `pick a, b, c` |
 | `devtools` | Offline encode/decode/hash — base64, url, hex, jwt, uuid, epoch | `base64 hello`, `jwt <token>` |
 | `passgen` | Password and passphrase generator | `pass 24`, `passphrase 5` |
-| `qrcode` | Inline ASCII QR + opens a PNG | `qr https://...` |
+| `qrcode` | Inline ASCII QR + PNG; decode a QR from the clipboard | `qr https://...`, `qr decode` |
 
 **Core & UI**
 
@@ -97,7 +97,7 @@ Some bundled plugins depend on extra system tools. Hamr will still install witho
 | `snippet`, `emoji` | `ydotool` or `wtype` | Optional direct text typing; clipboard copy still works with `wl-copy` |
 | `ai` | `claude` | Claude Code CLI, signed in (`claude -p`); vision modes also use `grim`/`slurp` |
 | `sysinfo` | `lm_sensors` | Temperatures (CPU/RAM/disk/net/uptime work without it) |
-| `qrcode` | `qrencode` | Generates the QR PNG (inline ASCII preview works without it) |
+| `qrcode` | `qrencode`, `zbarimg` | `qrencode` generates (ASCII preview works without it); `zbarimg` is needed for `qr decode` |
 | `weather`, `translate` | _network_ | wttr.in / Google gtx lookups (cached) |
 | `units`, `kill`, `worldclock`, `random`, `devtools`, `passgen`, `websearch`, `unicode`, `color`, `ssh`, `kaomoji` | _none_ | Pure-Python, offline (units currency needs network on first fetch; ssh needs a terminal) |
 

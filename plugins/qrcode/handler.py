@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 """
-QR Code plugin - generate a QR code from text or a URL.
+QR Code plugin - generate a QR code from text or a URL, or decode one.
 
 From the main search: "qr <text>" -> Enter opens the image.
 Inside the plugin: type any text to see the QR inline, then open or copy.
+"qr decode" reads a QR from an image on the clipboard (needs zbarimg).
 """
 
 import json
@@ -18,10 +19,25 @@ from sdk.hamr_sdk import HamrPlugin
 
 PNG_PATH = "/tmp/hamr-qr.png"
 STATE = {"text": ""}
+DECODE_WORDS = {"decode", "scan", "read"}
 
 
 def emit(data: dict) -> None:
     print(json.dumps(data), flush=True)
+
+
+def decode_clipboard() -> str | None:
+    """Decode a QR from the clipboard image via wl-paste | zbarimg."""
+    try:
+        img = subprocess.run(["wl-paste", "-t", "image/png"], capture_output=True, timeout=3)
+        if img.returncode != 0 or not img.stdout:
+            return None
+        out = subprocess.run(["zbarimg", "-q", "--raw", "-"], input=img.stdout,
+                             capture_output=True, timeout=5)
+        text = out.stdout.decode("utf-8", "replace").strip()
+        return text or None
+    except (FileNotFoundError, subprocess.TimeoutExpired):
+        return None
 
 
 def ascii_qr(text: str) -> str:
@@ -66,7 +82,7 @@ def handle_request(request: dict) -> None:
 
     if step == "match":
         text = strip_prefix(query)
-        if not text:
+        if not text or text.lower() in DECODE_WORDS:
             emit({"type": "match", "result": None})
             return
         emit({"type": "match", "result": {
@@ -79,9 +95,20 @@ def handle_request(request: dict) -> None:
 
     if step in ("initial", "search"):
         text = strip_prefix(query)
+        if text.lower() in DECODE_WORDS:
+            decoded = decode_clipboard()
+            if decoded:
+                STATE["text"] = decoded
+                emit(HamrPlugin.card("QR decoded", markdown=f"`{decoded}`",
+                                     actions=[{"id": "copy", "name": "Copy", "icon": "content_copy"}]))
+            else:
+                emit(HamrPlugin.card("QR decode",
+                                     markdown="_No QR found in the clipboard image. Copy a QR screenshot first._"))
+            return
         if not text:
             emit(HamrPlugin.results(
-                [{"id": "__hint__", "name": "Type text or a URL to encode", "icon": "qr_code_2"}],
+                [{"id": "__hint__", "name": "Type text or a URL to encode", "icon": "qr_code_2",
+                  "description": "…or 'qr decode' to read a QR from a copied image"}],
                 input_mode="realtime", placeholder="text or URL to encode…"))
             return
         STATE["text"] = text
