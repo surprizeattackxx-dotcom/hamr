@@ -1,0 +1,21 @@
+{
+  "name": "Random",
+  "description": "Dice, coin flips, random numbers, list picks and lorem ipsum",
+  "icon": "casino",
+  "frecency": "plugin",
+  "handler": {
+    "type": "stdio",
+    "command": "python3 handler.py"
+  },
+  "match": {
+    "patterns": [
+      "^(rand|random|roll|dice|pick|choose|lorem)(\\s|$)",
+      "^(coin|flip)(\\s|$)"
+    ],
+    "priority": 70
+  },
+  "supportedPlatforms": [
+    "niri",
+    "hyprland"
+  ]
+}
