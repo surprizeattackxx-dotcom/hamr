@@ -450,6 +450,13 @@ impl ResultView {
         }
     }
 
+    /// Set the current query for match highlighting in the list view.
+    pub fn set_query(&self, query: &str) {
+        if let Some(ref list) = self.list {
+            list.set_query(query);
+        }
+    }
+
     /// Select a result by zero-based index. Returns false if out of range.
     pub fn select_index(&self, idx: usize) -> bool {
         match self.mode {

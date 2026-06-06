@@ -55,6 +55,8 @@ pub struct ResultList {
     max_height: Rc<RefCell<i32>>,
     /// Set of currently running app IDs (lowercase) for showing running indicators
     running_app_ids: Rc<RefCell<HashSet<String>>>,
+    /// Current search query, used to highlight matched characters in names
+    query: Rc<RefCell<String>>,
 }
 
 impl ResultList {
@@ -125,6 +127,7 @@ impl ResultList {
             scroll_timer,
             max_height: Rc::new(RefCell::new(600)), // Default from config
             running_app_ids: Rc::new(RefCell::new(HashSet::new())),
+            query: Rc::new(RefCell::new(String::new())),
         }
     }
 
@@ -272,6 +275,7 @@ impl ResultList {
             let running = self.result_is_running(result);
 
             let item = ResultItem::new(result, selected, show_suggestion, running, theme);
+            item.highlight_name(&self.query.borrow(), &theme.colors.primary);
 
             let on_action = on_action.clone();
             item.connect_action_clicked(move |item_id, action_id| {
@@ -402,6 +406,7 @@ impl ResultList {
                 let running = self.result_is_running(result);
                 items[idx].set_running(running, &theme.colors);
                 items[idx].update(result, &theme.colors);
+                items[idx].highlight_name(&self.query.borrow(), &theme.colors.primary);
             }
         }
 
@@ -452,6 +457,11 @@ impl ResultList {
         drop(items);
         self.scroll_to_selected(idx);
         self.notify_selection_change();
+    }
+
+    /// Set the current query used to highlight matched characters in names.
+    pub fn set_query(&self, query: &str) {
+        *self.query.borrow_mut() = query.to_string();
     }
 
     /// Select a specific item by index. Returns false if out of range.

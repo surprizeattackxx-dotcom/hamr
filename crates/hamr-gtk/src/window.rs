@@ -2135,8 +2135,10 @@ impl LauncherWindow {
 
         let event_tx = rpc.event_sender();
         let state = self.state.clone();
+        let result_view_q = self.result_view.clone();
         self.search_entry.connect_changed(move |entry| {
             let query = entry.text().to_string();
+            result_view_q.borrow().set_query(&query);
             let state = state.borrow();
             if state.input_mode == InputMode::Realtime
                 && let Err(e) = event_tx.send_blocking(CoreEvent::QueryChanged { query })
