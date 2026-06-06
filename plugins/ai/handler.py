@@ -3,11 +3,12 @@
 AI plugin - Claude-backed assistant for Hamr via `claude -p`.
 
 Modes (type a prefix to specialize):
-  explain/code/cmd <x>             - explanation / code / one shell command
-  fix/grammar/rewrite/improve <x>  - text cleanup and rewriting
+  explain/eli5/code/cmd <x>        - explanation / simple explanation / code / shell command
+  fix/grammar/proofread/rewrite <x>- text cleanup and rewriting
   shorter/longer/formal/casual <x> - tone and length
-  translate/summarize <x>          - translate / bullet summary
+  translate/summarize/tldr <x>     - translate / bullet summary / one-line TL;DR
   see <question>                   - capture a screen region and ask about it
+  opus/sonnet/haiku <x>            - pick the model for this query
   new <x>                          - fresh thread (otherwise follow-ups continue it)
 
 Plain text is a direct Q&A. "find me a video editor" ranks installed apps.
@@ -68,11 +69,22 @@ MODES = {
     "longer": "Expand the following with more useful detail. Output only the result.",
     "formal": "Rewrite the following in a formal, professional tone. Output only the result.",
     "casual": "Rewrite the following in a casual, friendly tone. Output only the result.",
+    "eli5": "Explain the following simply, as if to a smart five-year-old. Use a short, friendly analogy.",
+    "tldr": "Give a one or two sentence TL;DR of the following. Output only the summary.",
+    "proofread": "Proofread the following: fix grammar, spelling and punctuation, keep the author's voice. Output only the corrected text.",
+}
+
+# Inline model overrides: prefix a query with one of these to pick the model.
+MODEL_ALIASES = {
+    "opus": "claude-opus-4-8",
+    "sonnet": "claude-sonnet-4-6",
+    "haiku": "claude-haiku-4-5-20251001",
 }
 
 # Modes that operate on highlighted/clipboard text when no subject is typed.
 TEXT_INPUT_MODES = {"fix", "grammar", "translate", "summarize", "rewrite",
-                    "improve", "shorter", "longer", "formal", "casual"}
+                    "improve", "shorter", "longer", "formal", "casual",
+                    "tldr", "proofread"}
 VISION_MODES = {"see", "look", "screen", "shot"}
 
 CLIP_WORDS = {"clip", "clipboard", "this", "that"}
@@ -306,25 +318,32 @@ def suggest_apps(query: str, apps: list[dict], config: dict) -> list[dict]:
     return results
 
 
-def parse_query(query: str) -> tuple[str, str, str | None, str]:
-    """Return (effective_prompt, system_prompt, resume_session, kind).
+def parse_query(query: str) -> tuple[str, str, str | None, str, str | None]:
+    """Return (effective_prompt, system_prompt, resume_session, kind, model).
 
     kind is "vision", "mode" (explicit text mode), or "" (plain Q&A).
+    model is an inline model override (e.g. "opus …") or None.
     """
-    words = query.split(maxsplit=1)
-    head = words[0].lower() if words else ""
-    rest = words[1] if len(words) > 1 else ""
+    def split(q):
+        w = q.split(maxsplit=1)
+        return (w[0].lower() if w else ""), (w[1] if len(w) > 1 else "")
+
+    head, rest = split(query)
 
     resume = STATE.get("resume")
     if head == "new":
         resume = None
         query = rest
-        words = query.split(maxsplit=1)
-        head = words[0].lower() if words else ""
-        rest = words[1] if len(words) > 1 else ""
+        head, rest = split(query)
+
+    model = None
+    if head in MODEL_ALIASES and rest.strip():
+        model = MODEL_ALIASES[head]
+        query = rest
+        head, rest = split(query)
 
     if head in VISION_MODES:
-        return rest.strip(), DEFAULT_SYSTEM_PROMPT, resume, "vision"
+        return rest.strip(), DEFAULT_SYSTEM_PROMPT, resume, "vision", model
 
     system_prompt, kind = DEFAULT_SYSTEM_PROMPT, ""
     if head in MODES:
@@ -336,7 +355,7 @@ def parse_query(query: str) -> tuple[str, str, str | None, str]:
     elif not subject and head in TEXT_INPUT_MODES:
         subject = get_selection() or get_clipboard()
 
-    return subject, system_prompt, resume, kind
+    return subject, system_prompt, resume, kind, model
 
 
 def answer_card(title: str, markdown: str, session_id: str | None, streaming: bool) -> dict:
@@ -398,13 +417,15 @@ def handle_search(query: str, apps: list[dict], config: dict) -> None:
     if not query:
         emit(HamrPlugin.results(
             [{"id": "__placeholder__", "name": "Ask Claude anything…", "icon": "neurology",
-              "description": "Ask · find a [tool] · explain/code/cmd/fix/rewrite · see [question]"}],
+              "description": "Ask · find a [tool] · explain/eli5/code/cmd/tldr · opus|sonnet [q] · see [q]"}],
             input_mode="submit",
             placeholder="Ask Claude or describe what you need…",
         ))
         return
 
-    prompt, system_prompt, resume, kind = parse_query(query)
+    prompt, system_prompt, resume, kind, model = parse_query(query)
+    if model:
+        config = {**config, "model": model}
 
     if kind == "vision":
         handle_vision(prompt, config)
@@ -430,7 +451,7 @@ def handle_search(query: str, apps: list[dict], config: dict) -> None:
 
     title = query if len(query) <= 60 else query[:57] + "…"
 
-    cache_key = f"{system_prompt}\x00{prompt}"
+    cache_key = f"{config.get('model', DEFAULT_MODEL)}\x00{system_prompt}\x00{prompt}"
     if not resume and (cached := cache_get(cache_key)) is not None:
         STATE["last_answer"] = cached
         emit(answer_card(title, cached, None, streaming=False))

@@ -33,7 +33,7 @@ Hamr learns from your usage patterns to surface what you need, when you need it.
 
 | Plugin | What it does | Example |
 |--------|--------------|---------|
-| `ai` | Ask Claude or get smart app suggestions via `claude -p` — streaming, conversational, with vision (screenshot/clipboard Q&A) and selected-text actions | `ai explain this regex` |
+| `ai` | Ask Claude or get smart app suggestions via `claude -p` — streaming, conversational, vision (screenshot/clipboard Q&A), selected-text actions, modes (explain/eli5/code/cmd/tldr/proofread/…) and inline model switch (`opus`/`sonnet`/`haiku`) | `eli5 borrow checker`, `opus refactor this` |
 | `units` | Unit, number-base, and **live currency** conversion (rates cached 12h) | `100 km to mi`, `255 to hex`, `100 usd to eur` |
 | `websearch` | Bang-style dispatcher across 28 engines | `g rust async`, `yt lofi`, `gh hamr`, `aur brave` |
 | `kill` | Find a running process and terminate it (`!` prefix = SIGKILL) | `kill firefox` |
