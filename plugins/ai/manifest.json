@@ -1,6 +1,6 @@
 {
   "name": "AI",
-  "description": "Ask AI questions or get smart app suggestions via Ollama",
+  "description": "Ask Claude questions or get smart app suggestions via claude -p",
   "icon": "neurology",
   "handler": {
     "type": "stdio",

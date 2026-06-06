@@ -1,0 +1,20 @@
+{
+  "name": "Password Generator",
+  "description": "Generate strong passwords and passphrases — pass, pw, passphrase",
+  "icon": "password",
+  "frecency": "plugin",
+  "handler": {
+    "type": "stdio",
+    "command": "python3 handler.py"
+  },
+  "match": {
+    "patterns": [
+      "^(pass|pw|passwd|passphrase)(\\s|$)"
+    ],
+    "priority": 80
+  },
+  "supportedPlatforms": [
+    "niri",
+    "hyprland"
+  ]
+}
