@@ -61,6 +61,7 @@ impl GridConfig {
 
 #[derive(Debug, Clone, Deserialize)]
 #[serde(rename_all = "camelCase")]
+#[allow(clippy::struct_excessive_bools)]
 pub struct AppearanceConfig {
     #[serde(default = "default_bg_transparency")]
     pub background_transparency: f64,
