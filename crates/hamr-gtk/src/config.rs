@@ -315,7 +315,11 @@ impl Theme {
             .and_then(|t| {
                 let preset = themes::get_preset(t);
                 if preset.is_none() {
-                    warn!("Unknown theme preset '{}', falling back to colors.json. Available: {}", t, themes::preset_names().join(", "));
+                    warn!(
+                        "Unknown theme preset '{}', falling back to colors.json. Available: {}",
+                        t,
+                        themes::preset_names().join(", ")
+                    );
                 }
                 preset
             })

@@ -73,7 +73,10 @@ pub fn render_preview_panel(f: &mut Frame, app: &App, area: Rect) {
                 Span::styled(icon, Style::default().fg(colors::outline())),
                 Span::styled(meta.label.clone(), Style::default().fg(colors::subtext())),
                 Span::styled(": ", Style::default().fg(colors::outline())),
-                Span::styled(meta.value.clone(), Style::default().fg(colors::on_surface())),
+                Span::styled(
+                    meta.value.clone(),
+                    Style::default().fg(colors::on_surface()),
+                ),
             ]));
         }
     }
@@ -97,7 +100,10 @@ pub fn render_preview_panel(f: &mut Frame, app: &App, area: Rect) {
                     Style::default().fg(colors::on_surface())
                 };
                 vec![
-                    Span::styled(format!("{}:", i + 1), Style::default().fg(colors::primary())),
+                    Span::styled(
+                        format!("{}:", i + 1),
+                        Style::default().fg(colors::primary()),
+                    ),
                     Span::styled(a.name.clone(), style),
                     Span::raw(" "),
                 ]

@@ -447,10 +447,7 @@ fn test_manifest_command() {
     }"#;
 
     let manifest: Manifest = serde_json::from_str(json).unwrap();
-    assert_eq!(
-        manifest.command(),
-        Some("python timer.py --port 5000")
-    );
+    assert_eq!(manifest.command(), Some("python timer.py --port 5000"));
 }
 
 #[test]

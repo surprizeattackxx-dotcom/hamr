@@ -1206,7 +1206,9 @@ fn run_doctor() -> Result<()> {
     if missing == 0 {
         println!("All optional dependencies are installed.");
     } else {
-        println!("{missing} optional tool(s) missing; the listed plugins have reduced functionality.");
+        println!(
+            "{missing} optional tool(s) missing; the listed plugins have reduced functionality."
+        );
     }
     Ok(())
 }

@@ -200,7 +200,9 @@ fn build_result_item<'a>(
                 .bg(colors::surface_high())
                 .fg(colors::on_surface())
         } else {
-            Style::default().bg(colors::surface()).fg(colors::on_surface())
+            Style::default()
+                .bg(colors::surface())
+                .fg(colors::on_surface())
         }
     } else if is_selected {
         Style::default().bg(colors::surface_high())
@@ -365,7 +367,10 @@ fn build_result_line1_right<'a>(
                     .add_modifier(Modifier::BOLD),
             ));
         } else {
-            line1_right.push(Span::styled("[OFF]", Style::default().fg(colors::outline())));
+            line1_right.push(Span::styled(
+                "[OFF]",
+                Style::default().fg(colors::outline()),
+            ));
         }
     } else {
         let verb = if is_selected && selected_action > 0 {
