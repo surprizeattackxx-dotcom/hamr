@@ -51,6 +51,7 @@ Hamr learns from your usage patterns to surface what you need, when you need it.
 - Stdio plugins honor their manifest `command` (e.g. `python3 handler.py`) instead of requiring an executable handler.
 - Matugen theming: both the GTK launcher and the TUI follow your wallpaper palette via `~/.config/hamr/colors.json`.
 - Launcher elevation shadow, focus glow, selection accent bar, and an entrance animation — each toggleable in `appearance` config.
+- **Alt+1…9** jumps to and launches the Nth visible result.
 
 Build from source and install to `~/.local/bin` (then restart the systemd user services):
 

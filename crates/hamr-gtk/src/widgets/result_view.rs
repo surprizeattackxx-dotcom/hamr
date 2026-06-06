@@ -450,6 +450,14 @@ impl ResultView {
         }
     }
 
+    /// Select a result by zero-based index. Returns false if out of range.
+    pub fn select_index(&self, idx: usize) -> bool {
+        match self.mode {
+            ResultViewMode::List => self.list.as_ref().is_some_and(|l| l.select_index(idx)),
+            ResultViewMode::Grid => self.grid.as_ref().is_some_and(|g| g.select_index(idx)),
+        }
+    }
+
     pub fn select_left(&self) {
         if let ResultViewMode::Grid = self.mode
             && let Some(ref grid) = self.grid

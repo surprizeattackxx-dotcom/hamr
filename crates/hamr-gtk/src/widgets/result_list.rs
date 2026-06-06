@@ -454,6 +454,23 @@ impl ResultList {
         self.notify_selection_change();
     }
 
+    /// Select a specific item by index. Returns false if out of range.
+    pub fn select_index(&self, idx: usize) -> bool {
+        let items = self.items.borrow();
+        if idx >= items.len() {
+            return false;
+        }
+        let mut selected = self.selected.borrow_mut();
+        items[*selected].set_selected(false);
+        *selected = idx;
+        items[idx].set_selected(true);
+        drop(selected);
+        drop(items);
+        self.scroll_to_selected(idx);
+        self.notify_selection_change();
+        true
+    }
+
     /// Get the currently selected item ID
     pub fn selected_id(&self) -> Option<String> {
         let items = self.items.borrow();

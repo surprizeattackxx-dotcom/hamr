@@ -423,6 +423,17 @@ impl ResultGrid {
         }
     }
 
+    pub fn select_index(&self, idx: usize) -> bool {
+        let n_items = self.model.n_items();
+        if u32::try_from(idx).map(|i| i >= n_items).unwrap_or(true) {
+            return false;
+        }
+        self.selection_model.set_selected(idx as u32);
+        self.scroll_to_selected();
+        self.notify_selection_change();
+        true
+    }
+
     pub fn select_left(&self) {
         let current = self.selection_model.selected();
         let n_items = self.model.n_items();
