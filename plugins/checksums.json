@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generated": "2026-06-06T15:02:43-04:00",
+  "generated": "2026-06-06T15:06:19-04:00",
   "plugins": {
     "accentcolor": {
       "manifest.json": "1703b638fa7f035a85398cee8902d6514d15009bc146e54b71a855563f394486",
@@ -158,6 +158,10 @@
     "topmem": {
       "manifest.json": "b2138c90c465d22a5d67dafb5d6161e3ac0413c4741dfafb82600ea7a4f6e053",
       "handler.py": "b0b328ea91eb1cc87810832f3836b56773d5ebd224fe7f4c4096b36c206826db"
+    },
+    "translate": {
+      "manifest.json": "4d977cda7677a4c2741b50616f411f05721bbc826ade6da8279789ff3352f2a0",
+      "handler.py": "20789e95e4b4db998b1101fe55b2aaddaee4eacd50f2ea1a6a8695107bdc5d67"
     },
     "units": {
       "manifest.json": "f223b8eb3cc858be7fd95403a90f9f6f35bc32521930c716b8a873cee9e9ccbc",
