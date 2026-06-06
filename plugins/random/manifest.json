@@ -1,6 +1,6 @@
 {
   "name": "Random",
-  "description": "Dice, coin flips, random numbers, list picks and lorem ipsum",
+  "description": "Dice, coin flips, random numbers, list picks, magic 8-ball and lorem ipsum",
   "icon": "casino",
   "frecency": "plugin",
   "handler": {
@@ -10,7 +10,7 @@
   "match": {
     "patterns": [
       "^(rand|random|roll|dice|pick|choose|lorem)(\\s|$)",
-      "^(coin|flip)(\\s|$)"
+      "^(coin|flip|8ball|eightball)(\\s|$)"
     ],
     "priority": 70
   },

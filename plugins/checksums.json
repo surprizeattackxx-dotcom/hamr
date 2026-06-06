@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generated": "2026-06-06T19:07:47-04:00",
+  "generated": "2026-06-06T19:09:40-04:00",
   "plugins": {
     "accentcolor": {
       "manifest.json": "1703b638fa7f035a85398cee8902d6514d15009bc146e54b71a855563f394486",
@@ -108,8 +108,8 @@
       "handler.py": "715284711174dd78d7da85e9d29f8a2f06ad06741deee127c37e8970afbf95ef"
     },
     "random": {
-      "manifest.json": "1706ddcc5fbf194bda5c0bed38a04ffd94e1503ba77caa00cd806ce243852be6",
-      "handler.py": "c04b830b4b6cabb4138cfb86aacf6bf1730a0bb22054174b7918bf121cabbc78"
+      "manifest.json": "8ccf9e256ded3a9991a183243866e7831d47744c6e068009eb3e794d3273dd9b",
+      "handler.py": "a3501c30898eef7ecc7a1e18e60a8f185c1009bb7b77c46ac117d0b8f85d2d9e"
     },
     "screenrecord": {
       "manifest.json": "249f3eb9f9769bff7ce0f32685fb6486d9bc582956a3876fa88ac24ca84f7120",

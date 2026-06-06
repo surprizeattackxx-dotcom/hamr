@@ -17,6 +17,15 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent.parent))
 from sdk.hamr_sdk import HamrPlugin
 
+EIGHTBALL = [
+    "It is certain.", "Without a doubt.", "Yes, definitely.", "You may rely on it.",
+    "Most likely.", "Outlook good.", "Signs point to yes.", "Yes.",
+    "Reply hazy, try again.", "Ask again later.", "Better not tell you now.",
+    "Cannot predict now.", "Concentrate and ask again.",
+    "Don't count on it.", "My reply is no.", "My sources say no.",
+    "Outlook not so good.", "Very doubtful.",
+]
+
 LOREM = (
     "lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod "
     "tempor incididunt ut labore et dolore magna aliqua ut enim ad minim veniam "
@@ -67,6 +76,9 @@ def handle(query):
             return random.choice(["Heads", "Tails"]), "coin flip"
         flips = [random.choice(["H", "T"]) for _ in range(n)]
         return " ".join(flips), f"{n} flips · {flips.count('H')}H {flips.count('T')}T"
+
+    if cmd in ("8ball", "8", "eightball"):
+        return random.choice(EIGHTBALL), "magic 8-ball"
 
     if cmd in ("roll", "dice"):
         spec = arg or "1d6"
