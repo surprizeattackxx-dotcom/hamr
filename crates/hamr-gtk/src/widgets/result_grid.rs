@@ -601,6 +601,25 @@ pub fn result_grid_css(theme: &crate::config::Theme) -> String {
             background-color: transparent;
         }}
 
+        scrolledwindow scrollbar {{
+            background: transparent;
+            background-color: transparent;
+            border: none;
+        }}
+
+        scrolledwindow scrollbar slider {{
+            background-color: alpha({outline}, 0.40);
+            border-radius: 9999px;
+            min-width: 6px;
+            min-height: 24px;
+            margin: 2px;
+            transition: background-color 150ms ease-in-out;
+        }}
+
+        scrolledwindow scrollbar slider:hover {{
+            background-color: alpha({outline}, 0.70);
+        }}
+
         gridview > child:focus {{
             outline: none;
         }}

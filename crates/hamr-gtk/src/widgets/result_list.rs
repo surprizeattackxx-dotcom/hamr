@@ -682,6 +682,25 @@ pub fn result_list_css(theme: &crate::config::Theme) -> String {
             background: transparent;
             background-color: transparent;
         }}
+
+        scrolledwindow scrollbar {{
+            background: transparent;
+            background-color: transparent;
+            border: none;
+        }}
+
+        scrolledwindow scrollbar slider {{
+            background-color: alpha({outline}, 0.40);
+            border-radius: 9999px;
+            min-width: {sb_thickness}px;
+            min-height: {sb_min}px;
+            margin: {sb_margin}px;
+            transition: background-color 150ms ease-in-out;
+        }}
+
+        scrolledwindow scrollbar slider:hover {{
+            background-color: alpha({outline}, 0.70);
+        }}
         ",
         margin_top = theme.scaled(design::spacing::XS), // 4px
         margin_side = theme.scaled(design::spacing::SM), // 8px (mapped from 6, nearest SM=8)
@@ -691,5 +710,8 @@ pub fn result_list_css(theme: &crate::config::Theme) -> String {
         border = theme.scaled(1),
         radius = theme.scaled(design::rounding::SMALL),
         shadow_y = theme.scaled(1),
+        sb_thickness = theme.scaled(6),
+        sb_min = theme.scaled(24),
+        sb_margin = theme.scaled(2),
     )
 }
