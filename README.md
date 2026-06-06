@@ -1,9 +1,5 @@
-> [!IMPORTANT]
-> **Maintenance status:** Hamr is currently in maintenance mode. I recently started a full-time job and no longer use Linux as my daily operating system, so I am not able to work on the project day to day.
->
-> Pull requests for feature requests and bug fixes are still welcome and will be reviewed when I have time. If you would like to challenge yourself by resolving open issues, feel free to open a PR.
->
-> If anyone is interested in taking over maintenance, please let me know. I can add a new maintainer as a code owner.
+> [!NOTE]
+> **This is an actively-developed fork** of [Stewart86/hamr](https://github.com/Stewart86/hamr) (which is in maintenance mode upstream). It tracks upstream while adding a Claude-powered AI plugin, live currency/unit conversion, a process killer, a system dashboard, a world clock, a web-search bang dispatcher, and UI polish. See [What this fork adds](#what-this-fork-adds).
 
 <p align="center">
   <img src="assets/logo.png" alt="Hamr Logo" width="200">
@@ -30,6 +26,29 @@ Hamr learns from your usage patterns to surface what you need, when you need it.
 - **Extensible plugins** - JSON protocol, any language (Python, Bash, Go, Rust)
 - **Live updates** - Plugins emit real-time updates without refreshing the list
 - **Rich UI** - Forms, cards, sliders, gauges, preview panels, grid browsers
+
+## What this fork adds
+
+**New plugins** (all offline unless noted):
+
+| Plugin | What it does | Example |
+|--------|--------------|---------|
+| `ai` | Ask Claude or get smart app suggestions via `claude -p` — streaming, conversational, with vision (screenshot/clipboard Q&A) and selected-text actions | `ai explain this regex` |
+| `units` | Unit, number-base, and **live currency** conversion (rates cached 12h) | `100 km to mi`, `255 to hex`, `100 usd to eur` |
+| `websearch` | Bang-style dispatcher across 28 engines | `g rust async`, `yt lofi`, `gh hamr`, `aur brave` |
+| `kill` | Find a running process and terminate it (`!` prefix = SIGKILL) | `kill firefox` |
+| `sysinfo` | At-a-glance dashboard card — CPU, RAM, disk, temps, net, uptime | `sys` |
+| `worldclock` | Current time in any city or IANA zone | `time tokyo`, `time in london` |
+| `random` | Dice, coin flips, ranges, list picks, lorem ipsum | `roll 2d6`, `pick a, b, c` |
+| `devtools` | Offline encode/decode/hash — base64, url, hex, jwt, uuid, epoch | `base64 hello`, `jwt <token>` |
+| `passgen` | Password and passphrase generator | `pass 24`, `passphrase 5` |
+| `qrcode` | Inline ASCII QR + opens a PNG | `qr https://...` |
+
+**Core & UI**
+
+- Stdio plugins honor their manifest `command` (e.g. `python3 handler.py`) instead of requiring an executable handler.
+- Matugen theming: the GTK launcher follows your wallpaper palette via `~/.config/hamr/colors.json`.
+- Launcher elevation shadow, focus glow, selection accent bar, and an entrance animation.
 
 ## Installation
 
