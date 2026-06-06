@@ -89,8 +89,13 @@ Some bundled plugins depend on extra system tools. Hamr will still install witho
 | `snip` | `grim`, `slurp`, `satty`, `wl-copy` | Screenshot capture, annotation, and clipboard copy |
 | `screenshot` | `tesseract` | OCR search over screenshots |
 | `snippet`, `emoji` | `ydotool` or `wtype` | Optional direct text typing; clipboard copy still works with `wl-copy` |
+| `ai` | `claude` | Claude Code CLI, signed in (`claude -p`); vision modes also use `grim`/`slurp` |
+| `sysinfo` | `lm_sensors` | Temperatures (CPU/RAM/disk/net/uptime work without it) |
+| `qrcode` | `qrencode` | Generates the QR PNG (inline ASCII preview works without it) |
+| `weather` | _network_ | wttr.in lookups (cached 15 min) |
+| `units`, `kill`, `worldclock`, `random`, `devtools`, `passgen`, `websearch` | _none_ | Pure-Python, offline (units currency needs network on first fetch) |
 
-On Arch Linux, common packages are `libqalculate`, `cliphist`, `playerctl`, `fd`, `fzf`, `bitwarden-cli`, `zoxide`, `wf-recorder`, `slurp`, `grim`, `satty`, `wl-clipboard`, `tesseract`, and `ydotool`.
+On Arch Linux, common packages are `libqalculate`, `cliphist`, `playerctl`, `fd`, `fzf`, `bitwarden-cli`, `zoxide`, `wf-recorder`, `slurp`, `grim`, `satty`, `wl-clipboard`, `tesseract`, `ydotool`, `lm_sensors`, and `qrencode`.
 
 ### Manual Download
 
