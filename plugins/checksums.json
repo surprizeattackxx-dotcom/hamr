@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generated": "2026-06-06T15:31:52-04:00",
+  "generated": "2026-06-06T15:33:24-04:00",
   "plugins": {
     "accentcolor": {
       "manifest.json": "1703b638fa7f035a85398cee8902d6514d15009bc146e54b71a855563f394486",
@@ -201,8 +201,8 @@
       "launch-webapp": "697f7094b603c757af3a71121d66fbf8bdc4e14f36b3ea8594f9097bdbd307a6"
     },
     "websearch": {
-      "manifest.json": "a2a16e571633a01028cefd8a0f5529b2dc7ae3fece0a95d53ddb2235cfe0565a",
-      "handler.py": "c6d73f5eabc0578a60842aaf5f50d8efe968f747926d811925033f2cdc9ed6f3"
+      "manifest.json": "0a2af2f68f6106167cd412f9d37870546e48792264e1bdb3124a395ae9e9c213",
+      "handler.py": "09ef1e0356eb43510304ebde2f640390b70fe39c0a26150bab29ccb6a672a4ba"
     },
     "whats-that-word": {
       "manifest.json": "f27b021de276f26677284198c63e92f1a86b0a521ca814a1040207a12f5ad27e",

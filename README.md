@@ -35,7 +35,7 @@ Hamr learns from your usage patterns to surface what you need, when you need it.
 |--------|--------------|---------|
 | `ai` | Ask Claude or get smart app suggestions via `claude -p` — streaming, conversational, vision (screenshot/clipboard Q&A), selected-text actions, modes (explain/eli5/code/cmd/tldr/proofread/…) and inline model switch (`opus`/`sonnet`/`haiku`) | `eli5 borrow checker`, `opus refactor this` |
 | `units` | Unit, number-base, and **live currency** conversion (rates cached 12h) | `100 km to mi`, `255 to hex`, `100 usd to eur` |
-| `websearch` | Bang-style dispatcher across 28 engines | `g rust async`, `yt lofi`, `gh hamr`, `aur brave` |
+| `websearch` | Bang-style dispatcher across 35 engines | `g rust async`, `yt lofi`, `gh hamr`, `aur brave` |
 | `translate` | Instant translation (no LLM), auto-detect source | `tr hola mundo`, `tr hi to french` |
 | `unicode` | Inspect characters, codepoints and names | `char ★`, `u+1f600`, `unicode snowman` |
 | `color` | Convert colors between hex, rgb and hsl | `color #ff5733`, `color tomato` |

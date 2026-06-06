@@ -1,6 +1,6 @@
 {
   "name": "Web Search",
-  "description": "Bang-style web search — g, ddg, yt, gh, w, so, aur, npm, crates, mdn, maps, tr and more",
+  "description": "Bang-style web search — g, ddg, yt, gh, w, so, aur, npm, crates, mdn, std, gpt and more",
   "icon": "travel_explore",
   "frecency": "plugin",
   "handler": {
@@ -9,7 +9,7 @@
   },
   "match": {
     "patterns": [
-      "^(g|ddg|b|kagi|yt|gh|ghc|gl|w|so|r|aw|aur|arch|npm|crates|pypi|mdn|docs|maps|img|tr|def|ud|imdb|wa|amazon|wb)\\s+\\S"
+      "^(g|ddg|b|kagi|yt|gh|ghc|gl|w|so|r|aw|aur|arch|npm|crates|pypi|mdn|docs|maps|img|tr|def|ud|imdb|wa|amazon|wb|std|cpp|protondb|yt-music|gpt|perplexity|phind)\\s+\\S"
     ],
     "priority": 60
   },

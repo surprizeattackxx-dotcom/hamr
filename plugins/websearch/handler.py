@@ -49,6 +49,13 @@ BANGS = {
     "wa": ("Wolfram Alpha", "functions", "https://www.wolframalpha.com/input?i={q}"),
     "amazon": ("Amazon", "shopping_cart", "https://www.amazon.com/s?k={q}"),
     "wb": ("Wayback Machine", "history", "https://web.archive.org/web/*/{q}"),
+    "std": ("Rust std", "menu_book", "https://doc.rust-lang.org/std/?search={q}"),
+    "cpp": ("cppreference", "menu_book", "https://en.cppreference.com/mwiki/index.php?search={q}"),
+    "protondb": ("ProtonDB", "sports_esports", "https://www.protondb.com/search?q={q}"),
+    "yt-music": ("YouTube Music", "music_note", "https://music.youtube.com/search?q={q}"),
+    "gpt": ("ChatGPT", "smart_toy", "https://chatgpt.com/?q={q}"),
+    "perplexity": ("Perplexity", "smart_toy", "https://www.perplexity.ai/search?q={q}"),
+    "phind": ("Phind", "smart_toy", "https://www.phind.com/search?q={q}"),
 }
 
 DEFAULT = "g"
