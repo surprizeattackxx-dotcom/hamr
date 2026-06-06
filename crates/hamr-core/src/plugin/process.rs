@@ -32,14 +32,39 @@ pub struct PluginReceiver {
     plugin_id: String,
 }
 
+/// Build the spawn command. When the manifest supplies a `command`
+/// (e.g. `python3 handler.py`) it is run via the named interpreter so the
+/// handler script need not be executable; otherwise the handler file is
+/// exec'd directly, relying on its shebang and executable bit.
+fn build_command(handler_path: &Path, command: Option<&str>) -> Result<Command> {
+    match command {
+        Some(cmd) => {
+            let parts: Vec<&str> = cmd.split_whitespace().collect();
+            let (program, args) = parts
+                .split_first()
+                .ok_or_else(|| Error::Process("Empty plugin command".to_string()))?;
+            let mut c = Command::new(program);
+            c.args(args);
+            Ok(c)
+        }
+        None => Ok(Command::new(handler_path)),
+    }
+}
+
 impl PluginProcess {
     /// Spawn a new plugin process.
     ///
     /// # Errors
     ///
     /// Returns an error if the process fails to spawn or I/O setup fails.
-    pub fn spawn(plugin_id: &str, handler_path: &Path, working_dir: &Path) -> Result<Self> {
-        let mut child = Command::new(handler_path)
+    pub fn spawn(
+        plugin_id: &str,
+        handler_path: &Path,
+        working_dir: &Path,
+        command: Option<&str>,
+    ) -> Result<Self> {
+        let mut cmd = build_command(handler_path, command)?;
+        let mut child = cmd
             .current_dir(working_dir)
             .stdin(Stdio::piped())
             .stdout(Stdio::piped())
@@ -276,10 +301,11 @@ pub async fn invoke_match(
     plugin_id: &str,
     handler_path: &Path,
     working_dir: &Path,
+    command: Option<&str>,
     query: &str,
     timeout_ms: u64,
 ) -> Option<PluginResponse> {
-    let mut process = match PluginProcess::spawn(plugin_id, handler_path, working_dir) {
+    let mut process = match PluginProcess::spawn(plugin_id, handler_path, working_dir, command) {
         Ok(p) => p,
         Err(e) => {
             trace!("[{}] Failed to spawn for match: {}", plugin_id, e);
@@ -306,5 +332,33 @@ pub async fn invoke_match(
             trace!("[{}] Match timeout after {}ms", plugin_id, timeout_ms);
             None
         }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use std::ffi::OsStr;
+
+    #[test]
+    fn build_command_uses_interpreter_when_given() {
+        let cmd = build_command(Path::new("/p/handler.py"), Some("python3 handler.py")).unwrap();
+        let std = cmd.as_std();
+        assert_eq!(std.get_program(), OsStr::new("python3"));
+        let args: Vec<_> = std.get_args().collect();
+        assert_eq!(args, vec![OsStr::new("handler.py")]);
+    }
+
+    #[test]
+    fn build_command_execs_handler_directly_without_command() {
+        let cmd = build_command(Path::new("/p/handler.py"), None).unwrap();
+        let std = cmd.as_std();
+        assert_eq!(std.get_program(), OsStr::new("/p/handler.py"));
+        assert_eq!(std.get_args().count(), 0);
+    }
+
+    #[test]
+    fn build_command_rejects_empty_command() {
+        assert!(build_command(Path::new("/p/handler.py"), Some("   ")).is_err());
     }
 }

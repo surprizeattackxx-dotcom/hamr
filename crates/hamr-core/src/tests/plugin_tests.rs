@@ -437,7 +437,7 @@ fn test_manifest_is_socket() {
 }
 
 #[test]
-fn test_manifest_socket_command() {
+fn test_manifest_command() {
     let json = r#"{
         "name": "Timer",
         "handler": {
@@ -448,16 +448,16 @@ fn test_manifest_socket_command() {
 
     let manifest: Manifest = serde_json::from_str(json).unwrap();
     assert_eq!(
-        manifest.socket_command(),
+        manifest.command(),
         Some("python timer.py --port 5000")
     );
 }
 
 #[test]
-fn test_manifest_socket_command_none() {
+fn test_manifest_command_none() {
     let json = r#"{"name": "Test", "handler": {"type": "socket"}}"#;
     let manifest: Manifest = serde_json::from_str(json).unwrap();
-    assert!(manifest.socket_command().is_none());
+    assert!(manifest.command().is_none());
 }
 
 #[test]

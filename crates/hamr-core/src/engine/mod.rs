@@ -1183,7 +1183,13 @@ impl HamrCore {
 
             // Try to get inline preview from plugin (e.g., calculator result)
             if let Some(result) = self
-                .try_pattern_match_preview(&plugin.id, &plugin.handler_path, &plugin.path, query)
+                .try_pattern_match_preview(
+                    &plugin.id,
+                    &plugin.handler_path,
+                    &plugin.path,
+                    plugin.manifest.command(),
+                    query,
+                )
                 .await
             {
                 return vec![result];
@@ -1278,12 +1284,14 @@ impl HamrCore {
         plugin_id: &str,
         handler_path: &Path,
         working_dir: &Path,
+        command: Option<&str>,
         query: &str,
     ) -> Option<SearchResult> {
         let response = invoke_match(
             plugin_id,
             handler_path,
             working_dir,
+            command,
             query,
             MATCH_TIMEOUT_MS,
         )
