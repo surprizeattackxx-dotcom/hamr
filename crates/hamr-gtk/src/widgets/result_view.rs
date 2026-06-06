@@ -450,10 +450,13 @@ impl ResultView {
         }
     }
 
-    /// Set the current query for match highlighting in the list view.
+    /// Set the current query for match highlighting in list and grid views.
     pub fn set_query(&self, query: &str) {
         if let Some(ref list) = self.list {
             list.set_query(query);
+        }
+        if let Some(ref grid) = self.grid {
+            grid.set_query(query);
         }
     }
 

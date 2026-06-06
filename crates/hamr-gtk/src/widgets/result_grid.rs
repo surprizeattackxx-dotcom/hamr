@@ -50,6 +50,7 @@ pub struct ResultGrid {
     selected_action: Rc<RefCell<i32>>,
     /// Cached results for selection change callback
     results: Rc<RefCell<Vec<SearchResult>>>,
+    query: Rc<RefCell<String>>,
 }
 
 impl ResultGrid {
@@ -75,12 +76,14 @@ impl ResultGrid {
         let grid_items: Rc<RefCell<HashMap<u32, Rc<GridItem>>>> =
             Rc::new(RefCell::new(HashMap::new()));
         let on_select: Rc<RefCell<Option<SelectCallback>>> = Rc::new(RefCell::new(None));
+        let query = Rc::new(RefCell::new(String::new()));
         let factory = Self::create_factory(
             &on_action,
             &grid_items,
             selection_model.clone(),
             on_select.clone(),
             &theme,
+            &query,
         );
 
         let grid_view = gtk4::GridView::builder()
@@ -144,7 +147,13 @@ impl ResultGrid {
             grid_items,
             selected_action: Rc::new(RefCell::new(-1)),
             results: Rc::new(RefCell::new(Vec::new())),
+            query,
         }
+    }
+
+    /// Set the current query for match highlighting in grid item names.
+    pub fn set_query(&self, query: &str) {
+        *self.query.borrow_mut() = query.to_string();
     }
 
     fn create_factory(
@@ -153,6 +162,7 @@ impl ResultGrid {
         selection_model: gtk4::SingleSelection,
         on_select: Rc<RefCell<Option<SelectCallback>>>,
         theme: &Rc<RefCell<Theme>>,
+        query: &Rc<RefCell<String>>,
     ) -> SignalListItemFactory {
         let factory = SignalListItemFactory::new();
 
@@ -172,6 +182,7 @@ impl ResultGrid {
         let on_action_bind = Rc::clone(on_action);
         let grid_items_bind = Rc::clone(grid_items);
         let theme_bind = theme.clone();
+        let query_bind = Rc::clone(query);
         factory.connect_bind(move |_, list_item| {
             let list_item = list_item
                 .downcast_ref::<gtk4::ListItem>()
@@ -189,6 +200,7 @@ impl ResultGrid {
 
             let theme = theme_bind.borrow();
             let grid_item = Rc::new(GridItem::new(&result, list_item.is_selected(), &theme));
+            grid_item.highlight_name(&query_bind.borrow(), &theme.colors.primary);
             let item_id = result.id.clone();
             let on_action_local = on_action_bind.clone();
             let action_cb: SharedActionCallback = Rc::new(move |item_id, action_id| {

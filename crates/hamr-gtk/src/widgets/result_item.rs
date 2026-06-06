@@ -1024,7 +1024,7 @@ impl AsRef<gtk4::Widget> for ResultItem {
 #[allow(clippy::too_many_lines)]
 /// Build Pango markup highlighting the case-insensitive subsequence of `query`
 /// in `name`. Returns `None` if query is empty or not a full subsequence match.
-fn subsequence_markup(name: &str, query: &str, color: &str) -> Option<String> {
+pub(crate) fn subsequence_markup(name: &str, query: &str, color: &str) -> Option<String> {
     if query.is_empty() {
         return None;
     }
