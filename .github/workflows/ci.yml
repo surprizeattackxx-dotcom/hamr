@@ -2,9 +2,9 @@ name: CI
 
 on:
   push:
-    branches: [main]
+    branches: [main, "donnie/features"]
   pull_request:
-    branches: [main]
+    branches: [main, "donnie/features"]
 
 env:
   CARGO_TERM_COLOR: always
@@ -49,6 +49,9 @@ jobs:
 
       - name: Run tests
         run: cargo test --workspace --exclude hamr-gtk
+
+      - name: Smoke-test plugins
+        run: ./scripts/smoke-test-plugins.sh
 
   msrv:
     name: Check MSRV (1.88)
