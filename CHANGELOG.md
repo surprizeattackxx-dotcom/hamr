@@ -16,6 +16,9 @@ features on top. Notable changes since forking from upstream `v1.1.0`:
   (`100 km to mi`, `255 to hex`, `100 usd to eur`; rates cached 12h).
 - **weather**: current conditions + 3-day forecast card (wttr.in, cached 15m).
 - **translate**: instant no-LLM translation with source auto-detect.
+- **unicode**: inspect characters, codepoints and names; look up by name.
+- **color**: convert between hex / rgb / hsl (plus CSS color names).
+- **ssh**: connect to hosts from `~/.ssh/config` in your terminal.
 - **websearch**: bang-style dispatcher across 28 engines.
 - **sysinfo**: live CPU/RAM/disk/temp/net/uptime dashboard card.
 - **worldclock**: current time in any city or IANA zone.
@@ -32,6 +35,7 @@ features on top. Notable changes since forking from upstream `v1.1.0`:
   palette from `~/.config/hamr/colors.json`.
 - `scripts/dev-install.sh` (build + install to `~/.local/bin` + restart) and
   `scripts/smoke-test-plugins.sh` (per-plugin JSON smoke tests).
+- GTK: slim themed scrollbar for the result list/grid.
 
 ### Changed
 
@@ -45,3 +49,4 @@ features on top. Notable changes since forking from upstream `v1.1.0`:
   exec'ing `handler.py` directly (which had required `chmod +x`).
 - Restored the executable bit on all bundled handlers.
 - `weather`: strip wttr.in descriptions so Markdown bold renders.
+- Core: `is_exact_match` now folds non-ASCII case (café/CAFÉ) consistently.
