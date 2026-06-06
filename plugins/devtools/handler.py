@@ -10,6 +10,7 @@ import base64
 import codecs
 import hashlib
 import json
+import re
 import select
 import signal
 import sys
@@ -53,6 +54,11 @@ def _uuid(s: str) -> str:
     return "\n".join(str(uuid.uuid4()) for _ in range(max(1, min(n, 20))))
 
 
+def _slug(s: str) -> str:
+    out = re.sub(r"[^a-z0-9]+", "-", s.strip().lower())
+    return out.strip("-")
+
+
 OPS = {
     "base64": ("Base64 encode", lambda s: base64.b64encode(s.encode()).decode()),
     "b64": ("Base64 encode", lambda s: base64.b64encode(s.encode()).decode()),
@@ -75,6 +81,9 @@ OPS = {
     "epoch": ("Unix time", _epoch),
     "now": ("Unix time", _epoch),
     "len": ("Length", lambda s: f"{len(s)} chars, {len(s.encode())} bytes, {len(s.split())} words"),
+    "json": ("JSON pretty-print", lambda s: json.dumps(json.loads(s), indent=2, ensure_ascii=False)),
+    "jsonmin": ("JSON minify", lambda s: json.dumps(json.loads(s), separators=(",", ":"), ensure_ascii=False)),
+    "slug": ("Slugify", _slug),
 }
 
 STANDALONE = {"uuid", "epoch", "now"}

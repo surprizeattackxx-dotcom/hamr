@@ -1,6 +1,6 @@
 {
   "name": "Dev Tools",
-  "description": "Encode, decode, hash and convert text — base64, url, hex, jwt, hashes, uuid, epoch",
+  "description": "Encode, decode, hash and convert text — base64, url, hex, jwt, hashes, uuid, epoch, json, slug",
   "icon": "data_object",
   "frecency": "plugin",
   "handler": {
@@ -9,7 +9,7 @@
   },
   "match": {
     "patterns": [
-      "^(base64|b64|unbase64|b64d|url|urld|hex|unhex|md5|sha1|sha256|sha512|jwt|rot13|upper|lower|reverse|len)\\s+\\S",
+      "^(base64|b64|unbase64|b64d|url|urld|hex|unhex|md5|sha1|sha256|sha512|jwt|rot13|upper|lower|reverse|len|json|jsonmin|slug)\\s+\\S",
       "^(uuid|epoch|now)(\\s|$)"
     ],
     "priority": 90
