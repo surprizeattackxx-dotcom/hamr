@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generated": "2026-06-06T15:24:12-04:00",
+  "generated": "2026-06-06T15:31:52-04:00",
   "plugins": {
     "accentcolor": {
       "manifest.json": "1703b638fa7f035a85398cee8902d6514d15009bc146e54b71a855563f394486",
@@ -66,6 +66,10 @@
     "hyprland": {
       "manifest.json": "a2afec47ecb83ef1c5911fca4ba3ec87771acff461c19d279952a5da875d5a13",
       "handler.py": "49fd90866e5aca956a42cab5071aa4cd4b1f486ab7c87fafd060be23068d0df9"
+    },
+    "kaomoji": {
+      "manifest.json": "5287d63f84e7340d8ee83aec7fccaefead89aa778cf68546c53d4a8a59dc1a35",
+      "handler.py": "d08f0b6f4ec2065790ae34451b5cbd77a05488c853056cca0a6506443bb4c837"
     },
     "kill": {
       "manifest.json": "1022bacade0e5e91c71299e6dd202222dc617e6ce6d605aa4945d0ff86099606",

@@ -1,0 +1,20 @@
+{
+  "name": "Kaomoji",
+  "description": "Japanese emoticons searchable by mood — kao shrug, kao happy, kao table",
+  "icon": "sentiment_satisfied",
+  "frecency": "item",
+  "handler": {
+    "type": "stdio",
+    "command": "python3 handler.py"
+  },
+  "match": {
+    "patterns": [
+      "^(kao|kaomoji)(\\s|$)"
+    ],
+    "priority": 55
+  },
+  "supportedPlatforms": [
+    "niri",
+    "hyprland"
+  ]
+}
