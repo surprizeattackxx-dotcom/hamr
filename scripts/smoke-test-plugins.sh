@@ -40,6 +40,7 @@ check worldclock match   '{"step":"match","query":"time tokyo"}'
 check websearch  match   '{"step":"match","query":"g rust"}'
 check kill       results '{"step":"search","query":"init"}'
 check sysinfo    card    '{"step":"initial","query":""}'
+check unicode    match   '{"step":"match","query":"char A"}'
 
 if [ "$NET" = 1 ]; then
     echo "Network plugins:"

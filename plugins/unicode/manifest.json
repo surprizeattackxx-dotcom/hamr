@@ -1,0 +1,21 @@
+{
+  "name": "Unicode",
+  "description": "Inspect characters, codepoints and names — char ★, u+1f600, unicode snowman",
+  "icon": "tag",
+  "frecency": "plugin",
+  "handler": {
+    "type": "stdio",
+    "command": "python3 handler.py"
+  },
+  "match": {
+    "patterns": [
+      "^(char|unicode|uni)\\s+\\S",
+      "^u\\+[0-9a-fA-F]{2,6}\\s*$"
+    ],
+    "priority": 60
+  },
+  "supportedPlatforms": [
+    "niri",
+    "hyprland"
+  ]
+}

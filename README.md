@@ -37,6 +37,7 @@ Hamr learns from your usage patterns to surface what you need, when you need it.
 | `units` | Unit, number-base, and **live currency** conversion (rates cached 12h) | `100 km to mi`, `255 to hex`, `100 usd to eur` |
 | `websearch` | Bang-style dispatcher across 28 engines | `g rust async`, `yt lofi`, `gh hamr`, `aur brave` |
 | `translate` | Instant translation (no LLM), auto-detect source | `tr hola mundo`, `tr hi to french` |
+| `unicode` | Inspect characters, codepoints and names | `char ★`, `u+1f600`, `unicode snowman` |
 | `kill` | Find a running process and terminate it (`!` prefix = SIGKILL) | `kill firefox` |
 | `sysinfo` | At-a-glance dashboard card — CPU, RAM, disk, temps, net, uptime | `sys` |
 | `weather` | Current conditions + 3-day forecast card (wttr.in, cached) | `weather`, `weather tokyo` |

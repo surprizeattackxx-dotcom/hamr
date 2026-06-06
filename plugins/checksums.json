@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generated": "2026-06-06T15:06:19-04:00",
+  "generated": "2026-06-06T15:15:35-04:00",
   "plugins": {
     "accentcolor": {
       "manifest.json": "1703b638fa7f035a85398cee8902d6514d15009bc146e54b71a855563f394486",
@@ -162,6 +162,10 @@
     "translate": {
       "manifest.json": "4d977cda7677a4c2741b50616f411f05721bbc826ade6da8279789ff3352f2a0",
       "handler.py": "20789e95e4b4db998b1101fe55b2aaddaee4eacd50f2ea1a6a8695107bdc5d67"
+    },
+    "unicode": {
+      "manifest.json": "41cb3eb62d4c9804801e0dd30e7d5f424fae7af7aa6c498cd5ea8c83f8add63d",
+      "handler.py": "09fee46edd95494aa9ad1a42b06eceb6d47bece8bd621338e6030cc12d41579c"
     },
     "units": {
       "manifest.json": "f223b8eb3cc858be7fd95403a90f9f6f35bc32521930c716b8a873cee9e9ccbc",
