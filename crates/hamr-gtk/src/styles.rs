@@ -26,10 +26,19 @@ pub(crate) fn apply_css(provider: &gtk4::CssProvider, theme: &Theme) {
                 background: transparent;
             }}
 
+            @keyframes launcher-in {{
+                from {{ opacity: 0; transform: translateY({enter_shift}px) scale(0.985); }}
+                to {{ opacity: 1; transform: translateY(0) scale(1); }}
+            }}
+
             box.launcher-container {{
                 background-color: alpha({surface_container_highest}, {bg_opacity});
                 background: alpha({surface_container_highest}, {bg_opacity});
                 border-radius: {radius_normal}px;
+                border: {border_thin}px solid alpha({outline}, 0.12);
+                box-shadow: 0 {shadow_y1}px {shadow_b1}px alpha({shadow}, 0.20),
+                            0 {shadow_y2}px {shadow_b2}px alpha({shadow}, 0.28);
+                animation: launcher-in 160ms cubic-bezier(0.2, 0, 0, 1);
             }}
 
             .icon-container {{
@@ -84,6 +93,7 @@ pub(crate) fn apply_css(provider: &gtk4::CssProvider, theme: &Theme) {
             .search-input-container:focus-within {{
                 border-color: {primary};
                 border: {border_thick}px solid {primary};
+                box-shadow: 0 0 0 {border_thick}px alpha({primary}, 0.18);
             }}
 
             .launcher-search {{
@@ -140,8 +150,14 @@ pub(crate) fn apply_css(provider: &gtk4::CssProvider, theme: &Theme) {
         on_surface_variant = colors.on_surface_variant,
         primary = colors.primary,
         outline = colors.outline,
+        shadow = colors.shadow,
         bg_opacity = theme.bg_opacity(),
         content_opacity = theme.content_opacity(),
+        shadow_y1 = theme.scaled(2),
+        shadow_b1 = theme.scaled(8),
+        shadow_y2 = theme.scaled(10),
+        shadow_b2 = theme.scaled(28),
+        enter_shift = theme.scaled(8),
         main_font = config.fonts.main,
         icon_font = config.fonts.icon,
         radius_normal = theme.scaled(design::RADIUS),

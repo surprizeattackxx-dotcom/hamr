@@ -1047,12 +1047,14 @@ pub fn result_item_css(theme: &crate::config::Theme) -> String {
             background: linear-gradient(to bottom, rgba(149, 144, 136, 0.08), {surface_dark});
             background-color: {surface_dark};
             border: {border}px solid alpha({outline}, 0.28);
+            box-shadow: inset {accent}px 0 0 0 {primary};
         }}
 
         overlay.result-item.selected:hover {{
             background: linear-gradient(to bottom, rgba(149, 144, 136, 0.08), {surface_dark});
             background-color: {surface_high};
             border: {border}px solid alpha({outline}, 0.28);
+            box-shadow: inset {accent}px 0 0 0 {primary};
         }}
 
         /* Keep selected style during scroll, just no hover enhancement */
@@ -1060,6 +1062,7 @@ pub fn result_item_css(theme: &crate::config::Theme) -> String {
             background: linear-gradient(to bottom, rgba(149, 144, 136, 0.08), {surface_dark});
             background-color: {surface_dark};
             border: {border}px solid alpha({outline}, 0.28);
+            box-shadow: inset {accent}px 0 0 0 {primary};
         }}
 
         /* Icon Container */
@@ -1347,5 +1350,6 @@ pub fn result_item_css(theme: &crate::config::Theme) -> String {
         outline_variant = colors.outline_variant,
         surface_high = colors.surface_container_high,
         surface_dark = colors.surface,
+        accent = theme.scaled(3),
     )
 }
