@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 """
-Units plugin - instant offline unit and number-base conversion.
+Units plugin - instant unit, currency and number-base conversion.
 
 Type in the main search: "100 km to mi", "32 f to c", "5 gb in mb",
-"255 to hex", "0xff to dec", "1h in s". Enter copies the result.
+"100 usd to eur", "255 to hex", "0xff to dec", "1h in s". Enter copies.
+Currency rates are fetched once and cached, so it stays instant/offline.
 """
 
 import json
@@ -11,6 +12,8 @@ import re
 import select
 import signal
 import sys
+import time
+import urllib.request
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent.parent))
@@ -97,6 +100,50 @@ for cat, table in UNITS.items():
 TEMP = {"c", "celsius", "f", "fahrenheit", "k", "kelvin"}
 BASES = {"hex": 16, "dec": 10, "bin": 2, "oct": 8, "decimal": 10,
          "hexadecimal": 16, "binary": 2, "octal": 8}
+
+RATES_CACHE = Path.home() / ".cache" / "hamr" / "rates.json"
+RATES_TTL = 12 * 3600
+RATES_URL = "https://open.er-api.com/v6/latest/USD"
+CURRENCY_ALIASES = {"dollar": "USD", "dollars": "USD", "buck": "USD", "bucks": "USD",
+                    "euro": "EUR", "euros": "EUR", "pound": "GBP", "pounds": "GBP",
+                    "yen": "JPY", "won": "KRW", "yuan": "CNY", "rupee": "INR",
+                    "peso": "MXN", "real": "BRL", "franc": "CHF", "rand": "ZAR"}
+
+
+def get_rates():
+    """USD-based rate table from disk cache, refreshed past TTL. None on total failure."""
+    cached = None
+    try:
+        cached = json.loads(RATES_CACHE.read_text())
+        if time.time() - cached.get("ts", 0) < RATES_TTL:
+            return cached["rates"]
+    except (OSError, ValueError, KeyError):
+        pass
+    try:
+        with urllib.request.urlopen(RATES_URL, timeout=4) as r:
+            data = json.loads(r.read())
+        rates = data["rates"]
+        RATES_CACHE.parent.mkdir(parents=True, exist_ok=True)
+        RATES_CACHE.write_text(json.dumps({"ts": time.time(), "rates": rates}))
+        return rates
+    except Exception:
+        return cached["rates"] if cached else None
+
+
+def currency_code(token):
+    t = token.lower()
+    if t in CURRENCY_ALIASES:
+        return CURRENCY_ALIASES[t]
+    return token.upper()
+
+
+def convert_currency(value, from_u, to_u, num_s):
+    fc, tc = currency_code(from_u), currency_code(to_u)
+    rates = get_rates()
+    if not rates or fc not in rates or tc not in rates:
+        return None
+    out = value / rates[fc] * rates[tc]
+    return f"{out:,.2f} {tc}", f"{num_s.strip()} {fc} → {tc}"
 
 
 def to_celsius(v, unit):
@@ -204,6 +251,12 @@ def convert(query):
         out = value * ff / tf
         return f"{fmt(round(out, 6))} {to_u}", f"{num_s.strip()} {from_u} → {to_u}"
 
+    # currency: 3-letter codes or known names ("100 usd to eur", "5 euro to gbp")
+    if from_n not in ALIAS and to_n not in ALIAS:
+        fc, tc = currency_code(from_u), currency_code(to_u)
+        if len(fc) == 3 and len(tc) == 3 and fc.isalpha() and tc.isalpha():
+            return convert_currency(value, from_u, to_u, num_s)
+
     return None
 
 
@@ -240,10 +293,10 @@ def handle_request(request):
             items = [{"id": result, "name": result, "description": f"{label} · Enter to copy",
                       "icon": "swap_horiz"}]
         else:
-            items = [{"id": "__hint__", "name": "Convert units or bases", "icon": "swap_horiz",
-                      "description": "e.g. 100 km to mi · 32 f to c · 255 to hex · 5 gb in mb"}]
+            items = [{"id": "__hint__", "name": "Convert units, currency or bases", "icon": "swap_horiz",
+                      "description": "e.g. 100 km to mi · 32 f to c · 100 usd to eur · 255 to hex"}]
         emit(HamrPlugin.results(items, input_mode="realtime",
-                                placeholder="100 km to mi  ·  255 to hex"))
+                                placeholder="100 km to mi  ·  100 usd to eur  ·  255 to hex"))
         return
 
     if step == "action":

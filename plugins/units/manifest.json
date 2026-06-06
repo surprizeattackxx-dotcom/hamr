@@ -1,6 +1,6 @@
 {
   "name": "Units",
-  "description": "Convert units and number bases — length, mass, data, time, temperature, hex/bin/dec",
+  "description": "Convert units, currency and number bases — length, mass, data, time, temp, usd/eur, hex/bin/dec",
   "icon": "swap_horiz",
   "frecency": "plugin",
   "handler": {
