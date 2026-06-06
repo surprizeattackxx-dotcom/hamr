@@ -1,0 +1,14 @@
+{
+  "name": "SSH",
+  "description": "Connect to hosts from ~/.ssh/config — opens your terminal and runs ssh",
+  "icon": "dns",
+  "frecency": "item",
+  "handler": {
+    "type": "stdio",
+    "command": "python3 handler.py"
+  },
+  "supportedPlatforms": [
+    "niri",
+    "hyprland"
+  ]
+}

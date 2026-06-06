@@ -188,6 +188,9 @@ enum Commands {
     #[command(name = "reload-plugins")]
     ReloadPlugins,
 
+    /// Check plugin runtime dependencies (which optional tools are installed)
+    Doctor,
+
     /// Install hamr (systemd service, user directories)
     Install {
         /// Check what would be done without making changes
@@ -240,6 +243,7 @@ async fn main() -> Result<()> {
         Some(Commands::Shutdown) => run_shutdown().await,
         Some(Commands::Restart) => run_restart().await,
         Some(Commands::ReloadPlugins) => run_reload_plugins().await,
+        Some(Commands::Doctor) => run_doctor(),
         Some(Commands::Install { check }) => run_install(check),
         Some(Commands::Uninstall { purge }) => run_uninstall(purge),
     }
@@ -1159,6 +1163,54 @@ fn configure_systemd(check: bool) {
     }
     enable_service("hamr-daemon");
     enable_service("hamr-gtk");
+}
+
+/// Report which optional plugin dependencies are installed.
+fn run_doctor() -> Result<()> {
+    // (tool, plugins that use it)
+    let deps: &[(&str, &str)] = &[
+        ("claude", "ai"),
+        ("qalc", "calculate"),
+        ("cliphist", "clipboard"),
+        ("playerctl", "player"),
+        ("fd", "files"),
+        ("fzf", "files"),
+        ("bw", "bitwarden"),
+        ("zoxide", "zoxide"),
+        ("wf-recorder", "screenrecord"),
+        ("grim", "snip, ai (vision)"),
+        ("slurp", "snip, ai (vision)"),
+        ("satty", "snip"),
+        ("tesseract", "screenshot"),
+        ("qrencode", "qrcode"),
+        ("sensors", "sysinfo"),
+        ("wl-copy", "snippet, emoji"),
+    ];
+
+    let mut missing = 0;
+    println!("Plugin runtime dependencies:\n");
+    for (tool, plugins) in deps {
+        let found = Command::new("which")
+            .arg(tool)
+            .output()
+            .map(|o| o.status.success())
+            .unwrap_or(false);
+        if found {
+            println!("  \x1b[0;32m✓\x1b[0m {tool:<14} {plugins}");
+        } else {
+            missing += 1;
+            println!("  \x1b[0;33m✗\x1b[0m {tool:<14} {plugins}");
+        }
+    }
+    println!();
+    if missing == 0 {
+        println!("All optional dependencies are installed.");
+    } else {
+        println!(
+            "{missing} optional tool(s) missing; the listed plugins have reduced functionality."
+        );
+    }
+    Ok(())
 }
 
 fn run_install(check: bool) -> Result<()> {

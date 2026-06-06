@@ -15,6 +15,7 @@ mod preview_window;
 mod rpc;
 mod state;
 mod styles;
+mod themes;
 mod thumbnail_cache;
 mod widgets;
 mod window;

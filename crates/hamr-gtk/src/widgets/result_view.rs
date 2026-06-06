@@ -450,6 +450,24 @@ impl ResultView {
         }
     }
 
+    /// Set the current query for match highlighting in list and grid views.
+    pub fn set_query(&self, query: &str) {
+        if let Some(ref list) = self.list {
+            list.set_query(query);
+        }
+        if let Some(ref grid) = self.grid {
+            grid.set_query(query);
+        }
+    }
+
+    /// Select a result by zero-based index. Returns false if out of range.
+    pub fn select_index(&self, idx: usize) -> bool {
+        match self.mode {
+            ResultViewMode::List => self.list.as_ref().is_some_and(|l| l.select_index(idx)),
+            ResultViewMode::Grid => self.grid.as_ref().is_some_and(|g| g.select_index(idx)),
+        }
+    }
+
     pub fn select_left(&self) {
         if let ResultViewMode::Grid = self.mode
             && let Some(ref grid) = self.grid

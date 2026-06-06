@@ -1,9 +1,5 @@
-> [!IMPORTANT]
-> **Maintenance status:** Hamr is currently in maintenance mode. I recently started a full-time job and no longer use Linux as my daily operating system, so I am not able to work on the project day to day.
->
-> Pull requests for feature requests and bug fixes are still welcome and will be reviewed when I have time. If you would like to challenge yourself by resolving open issues, feel free to open a PR.
->
-> If anyone is interested in taking over maintenance, please let me know. I can add a new maintainer as a code owner.
+> [!NOTE]
+> **This is an actively-developed fork** of [Stewart86/hamr](https://github.com/Stewart86/hamr) (which is in maintenance mode upstream). It tracks upstream while adding a Claude-powered AI plugin, live currency/unit conversion, a process killer, a system dashboard, a world clock, a web-search bang dispatcher, and UI polish. See [What this fork adds](#what-this-fork-adds).
 
 <p align="center">
   <img src="assets/logo.png" alt="Hamr Logo" width="200">
@@ -30,6 +26,42 @@ Hamr learns from your usage patterns to surface what you need, when you need it.
 - **Extensible plugins** - JSON protocol, any language (Python, Bash, Go, Rust)
 - **Live updates** - Plugins emit real-time updates without refreshing the list
 - **Rich UI** - Forms, cards, sliders, gauges, preview panels, grid browsers
+
+## What this fork adds
+
+**New plugins** (all offline unless noted):
+
+| Plugin | What it does | Example |
+|--------|--------------|---------|
+| `ai` | Ask Claude or get smart app suggestions via `claude -p` — streaming, conversational, vision (screenshot/clipboard Q&A), selected-text actions, modes (explain/eli5/code/cmd/tldr/proofread/…) and inline model switch (`opus`/`sonnet`/`haiku`) | `eli5 borrow checker`, `opus refactor this` |
+| `units` | Unit, number-base, and **live currency** conversion (rates cached 12h) | `100 km to mi`, `255 to hex`, `100 usd to eur` |
+| `websearch` | Bang-style dispatcher across 35 engines | `g rust async`, `yt lofi`, `gh hamr`, `aur brave` |
+| `translate` | Instant translation (no LLM), auto-detect source | `tr hola mundo`, `tr hi to french` |
+| `unicode` | Inspect characters, codepoints and names | `char ★`, `u+1f600`, `unicode snowman` |
+| `color` | Convert colors between hex, rgb and hsl | `color #ff5733`, `color tomato` |
+| `ssh` | Connect to hosts from `~/.ssh/config` in your terminal | `ssh myserver` |
+| `kaomoji` | Japanese emoticons searchable by mood | `kao shrug`, `kao table` |
+| `kill` | Find a running process and terminate it (`!` prefix = SIGKILL) | `kill firefox` |
+| `sysinfo` | At-a-glance dashboard card — CPU, RAM, disk, temps, net, uptime | `sys` |
+| `weather` | Current conditions + 3-day forecast card (wttr.in, cached) | `weather`, `weather tokyo` |
+| `worldclock` | Current time in any city or IANA zone | `time tokyo`, `time in london` |
+| `random` | Dice, coin flips, ranges, list picks, lorem ipsum | `roll 2d6`, `pick a, b, c` |
+| `devtools` | Offline encode/decode/hash — base64, url, hex, jwt, uuid, epoch | `base64 hello`, `jwt <token>` |
+| `passgen` | Password and passphrase generator | `pass 24`, `passphrase 5` |
+| `qrcode` | Inline ASCII QR + PNG; decode a QR from the clipboard | `qr https://...`, `qr decode` |
+
+**Core & UI**
+
+- Stdio plugins honor their manifest `command` (e.g. `python3 handler.py`) instead of requiring an executable handler.
+- Matugen theming: both the GTK launcher and the TUI follow your wallpaper palette via `~/.config/hamr/colors.json`.
+- Launcher elevation shadow, focus glow, selection accent bar, and an entrance animation — each toggleable in `appearance` config.
+- **Alt+1…9** jumps to and launches the Nth visible result.
+
+Build from source and install to `~/.local/bin` (then restart the systemd user services):
+
+```bash
+scripts/dev-install.sh
+```
 
 ## Installation
 
@@ -63,8 +95,15 @@ Some bundled plugins depend on extra system tools. Hamr will still install witho
 | `snip` | `grim`, `slurp`, `satty`, `wl-copy` | Screenshot capture, annotation, and clipboard copy |
 | `screenshot` | `tesseract` | OCR search over screenshots |
 | `snippet`, `emoji` | `ydotool` or `wtype` | Optional direct text typing; clipboard copy still works with `wl-copy` |
+| `ai` | `claude` | Claude Code CLI, signed in (`claude -p`); vision modes also use `grim`/`slurp` |
+| `sysinfo` | `lm_sensors` | Temperatures (CPU/RAM/disk/net/uptime work without it) |
+| `qrcode` | `qrencode`, `zbarimg` | `qrencode` generates (ASCII preview works without it); `zbarimg` is needed for `qr decode` |
+| `weather`, `translate` | _network_ | wttr.in / Google gtx lookups (cached) |
+| `units`, `kill`, `worldclock`, `random`, `devtools`, `passgen`, `websearch`, `unicode`, `color`, `ssh`, `kaomoji` | _none_ | Pure-Python, offline (units currency needs network on first fetch; ssh needs a terminal) |
 
-On Arch Linux, common packages are `libqalculate`, `cliphist`, `playerctl`, `fd`, `fzf`, `bitwarden-cli`, `zoxide`, `wf-recorder`, `slurp`, `grim`, `satty`, `wl-clipboard`, `tesseract`, and `ydotool`.
+On Arch Linux, common packages are `libqalculate`, `cliphist`, `playerctl`, `fd`, `fzf`, `bitwarden-cli`, `zoxide`, `wf-recorder`, `slurp`, `grim`, `satty`, `wl-clipboard`, `tesseract`, `ydotool`, `lm_sensors`, and `qrencode`.
+
+Run `hamr doctor` to see which of these optional tools are installed.
 
 ### Manual Download
 

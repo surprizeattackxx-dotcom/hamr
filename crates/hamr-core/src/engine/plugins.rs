@@ -23,7 +23,12 @@ impl HamrCore {
             return Ok(());
         }
 
-        let mut process = PluginProcess::spawn(plugin_id, &plugin.handler_path, &plugin.path)?;
+        let mut process = PluginProcess::spawn(
+            plugin_id,
+            &plugin.handler_path,
+            &plugin.path,
+            plugin.manifest.command(),
+        )?;
 
         let sender = process.sender();
         let receiver = process
@@ -349,7 +354,12 @@ impl HamrCore {
         }
 
         if let Some(plugin) = self.plugins.get(plugin_id) {
-            match PluginProcess::spawn(plugin_id, &plugin.handler_path, &plugin.path) {
+            match PluginProcess::spawn(
+                plugin_id,
+                &plugin.handler_path,
+                &plugin.path,
+                plugin.manifest.command(),
+            ) {
                 Ok(mut process) => {
                     if let Err(e) = process.send_and_close(input).await {
                         error!("Failed to send to plugin {}: {}", plugin_id, e);

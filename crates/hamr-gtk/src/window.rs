@@ -2135,8 +2135,10 @@ impl LauncherWindow {
 
         let event_tx = rpc.event_sender();
         let state = self.state.clone();
+        let result_view_q = self.result_view.clone();
         self.search_entry.connect_changed(move |entry| {
             let query = entry.text().to_string();
+            result_view_q.borrow().set_query(&query);
             let state = state.borrow();
             if state.input_mode == InputMode::Realtime
                 && let Err(e) = event_tx.send_blocking(CoreEvent::QueryChanged { query })
@@ -2260,6 +2262,18 @@ impl LauncherWindow {
         entry_key_controller.connect_key_pressed(move |_, keyval, _keycode, modifier| {
             let ctrl = modifier.contains(gdk::ModifierType::CONTROL_MASK);
             let shift = modifier.contains(gdk::ModifierType::SHIFT_MASK);
+            let alt = modifier.contains(gdk::ModifierType::ALT_MASK);
+
+            // Alt+1..9: jump to and activate the Nth visible result
+            if alt
+                && let Some(digit) = keyval.to_unicode().and_then(|c| c.to_digit(10))
+                && (1..=9).contains(&digit)
+            {
+                if result_view.borrow().select_index(digit as usize - 1) {
+                    search_entry.emit_by_name::<()>("activate", &[]);
+                }
+                return glib::Propagation::Stop;
+            }
 
             match keyval {
                 // Ctrl+C: Toggle compact mode (intercept before entry handles it as copy)

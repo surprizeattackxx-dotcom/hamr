@@ -58,7 +58,7 @@ graph TB
         Core[HamrCore<br/>Platform-Agnostic Core]
         Daemon[HamrDaemon<br/>Socket Server]
         TUI[HamrTUI<br/>Terminal UI]
-        GTK[HamrGTK<br/>Native Linux UI<br/>Planned]
+        GTK[HamrGTK<br/>Native Linux UI]
         CLI[HamrCLI<br/>Control Client]
     end
 
@@ -334,7 +334,7 @@ graph TD
 
     CLI[hamr-cli<br/>Control Client<br/>Command Interface]
 
-    GTK[hamr-gtk<br/>GTK4 UI<br/>Native Linux<br/>TODO]
+    GTK[hamr-gtk<br/>GTK4 UI<br/>Native Linux<br/>Action Execution]
 
     Types --> Core
     Types --> RPC
@@ -350,7 +350,7 @@ graph TD
     style Daemon fill:#f3e5f5
     style TUI fill:#e8f5e8
     style CLI fill:#fff3e0
-    style GTK fill:#ffebee,stroke-dasharray: 5 5
+    style GTK fill:#fce4ec
 ```
 
 This architecture enables Hamr to be fast, extensible, and maintainable while supporting multiple platforms and UI implementations.

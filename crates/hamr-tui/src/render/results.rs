@@ -19,7 +19,7 @@ use ratatui::{
 // UI layout with 10 distinct sections - further splitting would fragment the rendering flow
 #[allow(clippy::too_many_lines, clippy::cast_possible_truncation)]
 pub fn render_results_ui(f: &mut Frame, app: &mut App) {
-    let bg_block = Block::default().style(Style::default().bg(colors::BG));
+    let bg_block = Block::default().style(Style::default().bg(colors::bg()));
     f.render_widget(bg_block, f.area());
 
     let has_ambient = !app.ambient_items_by_plugin.is_empty();
@@ -94,17 +94,17 @@ pub fn render_results_ui(f: &mut Frame, app: &mut App) {
     let input_block = Block::default()
         .borders(Borders::ALL)
         .title(format!("{title}{mode_indicator}"))
-        .style(Style::default().bg(colors::SURFACE))
+        .style(Style::default().bg(colors::surface()))
         .border_style(Style::default().fg(if app.active_plugin.is_some() {
-            colors::PRIMARY
+            colors::primary()
         } else {
-            colors::OUTLINE
+            colors::outline()
         }));
 
     let input_text = if app.input.is_empty() {
-        Span::styled(&app.placeholder, Style::default().fg(colors::OUTLINE))
+        Span::styled(&app.placeholder, Style::default().fg(colors::outline()))
     } else {
-        Span::styled(&app.input, Style::default().fg(colors::ON_SURFACE))
+        Span::styled(&app.input, Style::default().fg(colors::on_surface()))
     };
 
     let input = Paragraph::new(input_text).block(input_block);
@@ -151,8 +151,8 @@ pub fn render_results_ui(f: &mut Frame, app: &mut App) {
     let results_block = Block::default()
         .borders(Borders::ALL)
         .title(format!(" Results ({}) ", app.results.len()))
-        .style(Style::default().bg(colors::SURFACE))
-        .border_style(Style::default().fg(colors::OUTLINE));
+        .style(Style::default().bg(colors::surface()))
+        .border_style(Style::default().fg(colors::outline()));
 
     let results_list = List::new(items).block(results_block);
 
@@ -163,8 +163,8 @@ pub fn render_results_ui(f: &mut Frame, app: &mut App) {
     let help = Paragraph::new(help_text).block(
         Block::default()
             .borders(Borders::ALL)
-            .style(Style::default().bg(colors::SURFACE))
-            .border_style(Style::default().fg(colors::OUTLINE)),
+            .style(Style::default().bg(colors::surface()))
+            .border_style(Style::default().fg(colors::outline())),
     );
     f.render_widget(help, help_chunk);
 
@@ -197,15 +197,17 @@ fn build_result_item<'a>(
     let base_style = if is_pattern_match {
         if is_selected {
             Style::default()
-                .bg(colors::SURFACE_HIGH)
-                .fg(colors::ON_SURFACE)
+                .bg(colors::surface_high())
+                .fg(colors::on_surface())
         } else {
-            Style::default().bg(colors::SURFACE).fg(colors::ON_SURFACE)
+            Style::default()
+                .bg(colors::surface())
+                .fg(colors::on_surface())
         }
     } else if is_selected {
-        Style::default().bg(colors::SURFACE_HIGH)
+        Style::default().bg(colors::surface_high())
     } else {
-        Style::default().bg(colors::SURFACE)
+        Style::default().bg(colors::surface())
     };
 
     let line1_spans = build_result_line1(
@@ -245,11 +247,11 @@ fn build_result_line1<'a>(
     if is_pattern_match {
         let indicator_style = if is_selected {
             Style::default()
-                .fg(colors::ON_SURFACE)
+                .fg(colors::on_surface())
                 .add_modifier(Modifier::BOLD)
         } else {
             Style::default()
-                .fg(colors::PRIMARY)
+                .fg(colors::primary())
                 .add_modifier(Modifier::BOLD)
         };
         line1_left.push(Span::styled("= ", indicator_style));
@@ -258,7 +260,7 @@ fn build_result_line1<'a>(
     if let Some(ref app_id) = result.app_id
         && running_apps.contains(app_id)
     {
-        line1_left.push(Span::styled("|", Style::default().fg(colors::SUCCESS)));
+        line1_left.push(Span::styled("|", Style::default().fg(colors::success())));
         line1_left.push(Span::raw(" "));
     }
 
@@ -266,17 +268,17 @@ fn build_result_line1<'a>(
         line1_left.push(Span::styled(
             "✦ ",
             Style::default()
-                .fg(colors::PRIMARY)
+                .fg(colors::primary())
                 .add_modifier(Modifier::BOLD),
         ));
     }
 
     let name_style = if is_pattern_match || is_selected {
         Style::default()
-            .fg(colors::ON_SURFACE)
+            .fg(colors::on_surface())
             .add_modifier(Modifier::BOLD)
     } else {
-        Style::default().fg(colors::ON_SURFACE)
+        Style::default().fg(colors::on_surface())
     };
     line1_left.push(Span::styled(&result.name, name_style));
 
@@ -361,11 +363,14 @@ fn build_result_line1_right<'a>(
             line1_right.push(Span::styled(
                 "[ON] ",
                 Style::default()
-                    .fg(colors::SUCCESS)
+                    .fg(colors::success())
                     .add_modifier(Modifier::BOLD),
             ));
         } else {
-            line1_right.push(Span::styled("[OFF]", Style::default().fg(colors::OUTLINE)));
+            line1_right.push(Span::styled(
+                "[OFF]",
+                Style::default().fg(colors::outline()),
+            ));
         }
     } else {
         let verb = if is_selected && selected_action > 0 {
@@ -380,7 +385,7 @@ fn build_result_line1_right<'a>(
         if is_selected {
             line1_right.push(Span::styled(
                 format!("[{verb}]"),
-                Style::default().fg(colors::PRIMARY),
+                Style::default().fg(colors::primary()),
             ));
             for (idx, action) in result.actions.iter().take(4).enumerate() {
                 let shortcut = match idx {
@@ -392,10 +397,10 @@ fn build_result_line1_right<'a>(
                 };
                 let action_style = if selected_action == idx + 1 {
                     Style::default()
-                        .fg(colors::PRIMARY)
+                        .fg(colors::primary())
                         .add_modifier(Modifier::BOLD)
                 } else {
-                    Style::default().fg(colors::OUTLINE)
+                    Style::default().fg(colors::outline())
                 };
                 line1_right.push(Span::styled(
                     format!(" {}:{}", shortcut, action.name),
@@ -405,7 +410,7 @@ fn build_result_line1_right<'a>(
         } else {
             line1_right.push(Span::styled(
                 verb.to_string(),
-                Style::default().fg(colors::OUTLINE),
+                Style::default().fg(colors::outline()),
             ));
         }
     }
@@ -428,11 +433,11 @@ fn build_result_line2(
             format!("Query: {truncated}"),
             if is_selected {
                 Style::default()
-                    .fg(colors::ON_SURFACE)
+                    .fg(colors::on_surface())
                     .add_modifier(Modifier::DIM)
             } else {
                 Style::default()
-                    .fg(colors::SUBTEXT)
+                    .fg(colors::subtext())
                     .add_modifier(Modifier::DIM)
             },
         )];
@@ -460,8 +465,8 @@ fn build_result_line2(
             |l| format!(" {l}"),
         );
         return vec![
-            Span::styled(bar, Style::default().fg(colors::PRIMARY)),
-            Span::styled(label_str, Style::default().fg(colors::SUBTEXT)),
+            Span::styled(bar, Style::default().fg(colors::primary())),
+            Span::styled(label_str, Style::default().fg(colors::subtext())),
         ];
     }
 
@@ -474,7 +479,7 @@ fn build_result_line2(
             };
             let mut spans = vec![Span::styled(
                 truncated,
-                Style::default().fg(colors::SUBTEXT),
+                Style::default().fg(colors::subtext()),
             )];
             if let Some(reason) = &result.suggestion_reason
                 && result.is_suggestion
@@ -483,7 +488,7 @@ fn build_result_line2(
                 spans.push(Span::styled(
                     format!("Suggested: {reason}"),
                     Style::default()
-                        .fg(colors::SUBTEXT)
+                        .fg(colors::subtext())
                         .add_modifier(Modifier::DIM),
                 ));
             }
@@ -492,7 +497,7 @@ fn build_result_line2(
             return vec![Span::styled(
                 format!("Suggested: {reason}"),
                 Style::default()
-                    .fg(colors::SUBTEXT)
+                    .fg(colors::subtext())
                     .add_modifier(Modifier::DIM),
             )];
         }
@@ -502,7 +507,7 @@ fn build_result_line2(
         return vec![Span::styled(
             format!("Suggested: {reason}"),
             Style::default()
-                .fg(colors::SUBTEXT)
+                .fg(colors::subtext())
                 .add_modifier(Modifier::DIM),
         )];
     }
@@ -513,55 +518,55 @@ fn build_result_line2(
 /// Build the help bar spans based on current selection and app state.
 fn build_help_spans(app: &App) -> Vec<Span<'_>> {
     let mut help_spans = vec![
-        Span::styled("Esc", Style::default().fg(colors::PRIMARY)),
-        Span::styled(": quit  ", Style::default().fg(colors::SUBTEXT)),
-        Span::styled("Enter", Style::default().fg(colors::PRIMARY)),
-        Span::styled(": select  ", Style::default().fg(colors::SUBTEXT)),
-        Span::styled("Tab", Style::default().fg(colors::PRIMARY)),
-        Span::styled(": action  ", Style::default().fg(colors::SUBTEXT)),
+        Span::styled("Esc", Style::default().fg(colors::primary())),
+        Span::styled(": quit  ", Style::default().fg(colors::subtext())),
+        Span::styled("Enter", Style::default().fg(colors::primary())),
+        Span::styled(": select  ", Style::default().fg(colors::subtext())),
+        Span::styled("Tab", Style::default().fg(colors::primary())),
+        Span::styled(": action  ", Style::default().fg(colors::subtext())),
     ];
 
     if let Some(result) = app.results.get(app.selected) {
         if result.is_slider() {
             help_spans.extend(vec![
-                Span::styled("<-/->", Style::default().fg(colors::PRIMARY)),
-                Span::styled(": adjust  ", Style::default().fg(colors::SUBTEXT)),
+                Span::styled("<-/->", Style::default().fg(colors::primary())),
+                Span::styled(": adjust  ", Style::default().fg(colors::subtext())),
             ]);
         }
 
         if !result.actions.is_empty() {
             help_spans.extend(vec![
-                Span::styled("A-uiop", Style::default().fg(colors::PRIMARY)),
-                Span::styled(": actions  ", Style::default().fg(colors::SUBTEXT)),
+                Span::styled("A-uiop", Style::default().fg(colors::primary())),
+                Span::styled(": actions  ", Style::default().fg(colors::subtext())),
             ]);
         }
 
         if result.preview.is_some() {
             help_spans.extend(vec![
-                Span::styled("p", Style::default().fg(colors::PRIMARY)),
-                Span::styled(": preview  ", Style::default().fg(colors::SUBTEXT)),
+                Span::styled("p", Style::default().fg(colors::primary())),
+                Span::styled(": preview  ", Style::default().fg(colors::subtext())),
             ]);
         }
     }
 
     if !app.ambient_items_by_plugin.is_empty() {
         help_spans.extend(vec![
-            Span::styled("C-Tab", Style::default().fg(colors::PRIMARY)),
-            Span::styled(": ambient  ", Style::default().fg(colors::SUBTEXT)),
-            Span::styled("x", Style::default().fg(colors::PRIMARY)),
-            Span::styled(": dismiss  ", Style::default().fg(colors::SUBTEXT)),
+            Span::styled("C-Tab", Style::default().fg(colors::primary())),
+            Span::styled(": ambient  ", Style::default().fg(colors::subtext())),
+            Span::styled("x", Style::default().fg(colors::primary())),
+            Span::styled(": dismiss  ", Style::default().fg(colors::subtext())),
         ]);
     }
 
     if app.busy {
         help_spans.push(Span::styled(
             " [Loading...] ",
-            Style::default().fg(colors::SUCCESS),
+            Style::default().fg(colors::success()),
         ));
     }
 
     if let Some(msg) = &app.status_message {
-        help_spans.push(Span::styled(msg, Style::default().fg(colors::ERROR)));
+        help_spans.push(Span::styled(msg, Style::default().fg(colors::error())));
     }
 
     help_spans
@@ -583,22 +588,22 @@ fn render_plugin_actions_bar(f: &mut Frame, app: &App, area: Rect) {
         };
         let style = if action.active {
             Style::default()
-                .fg(colors::PRIMARY)
+                .fg(colors::primary())
                 .add_modifier(Modifier::BOLD)
         } else {
-            Style::default().fg(colors::SUBTEXT)
+            Style::default().fg(colors::subtext())
         };
 
         spans.push(Span::styled(
             format!(" [{shortcut}:"),
-            Style::default().fg(colors::OUTLINE),
+            Style::default().fg(colors::outline()),
         ));
         spans.push(Span::styled(&action.name, style));
-        spans.push(Span::styled("]", Style::default().fg(colors::OUTLINE)));
+        spans.push(Span::styled("]", Style::default().fg(colors::outline())));
     }
 
     let line = Line::from(spans);
-    let paragraph = Paragraph::new(line).style(Style::default().bg(colors::SURFACE));
+    let paragraph = Paragraph::new(line).style(Style::default().bg(colors::surface()));
     f.render_widget(paragraph, area);
 }
 
@@ -620,8 +625,8 @@ fn render_confirm_dialog(f: &mut Frame, message: &str) {
     let block = Block::default()
         .borders(Borders::ALL)
         .title(" Confirm ")
-        .style(Style::default().bg(colors::SURFACE_HIGH))
-        .border_style(Style::default().fg(colors::WARNING));
+        .style(Style::default().bg(colors::surface_high()))
+        .border_style(Style::default().fg(colors::warning()));
 
     let inner = block.inner(dialog_area);
     f.render_widget(block, dialog_area);
@@ -629,14 +634,14 @@ fn render_confirm_dialog(f: &mut Frame, message: &str) {
     let text = vec![
         Line::from(Span::styled(
             message,
-            Style::default().fg(colors::ON_SURFACE),
+            Style::default().fg(colors::on_surface()),
         )),
         Line::from(""),
         Line::from(vec![
-            Span::styled("Enter", Style::default().fg(colors::PRIMARY)),
-            Span::styled(": confirm  ", Style::default().fg(colors::SUBTEXT)),
-            Span::styled("Esc", Style::default().fg(colors::ERROR)),
-            Span::styled(": cancel", Style::default().fg(colors::SUBTEXT)),
+            Span::styled("Enter", Style::default().fg(colors::primary())),
+            Span::styled(": confirm  ", Style::default().fg(colors::subtext())),
+            Span::styled("Esc", Style::default().fg(colors::error())),
+            Span::styled(": cancel", Style::default().fg(colors::subtext())),
         ]),
     ];
 

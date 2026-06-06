@@ -57,3 +57,8 @@ venv/
 .ruff_cache/
 
 .opencode/
+
+# Stray tool/MCP runtime artifacts
+log.txt
+*.db
+sqlite_mcp_server.db

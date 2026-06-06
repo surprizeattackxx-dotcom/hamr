@@ -1,0 +1,14 @@
+{
+  "name": "Kill Process",
+  "description": "Find a running process and terminate it — filter by name, ! to force-kill",
+  "icon": "cancel",
+  "frecency": "plugin",
+  "handler": {
+    "type": "stdio",
+    "command": "python3 handler.py"
+  },
+  "supportedPlatforms": [
+    "niri",
+    "hyprland"
+  ]
+}

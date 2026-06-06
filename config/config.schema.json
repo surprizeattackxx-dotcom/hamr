@@ -215,6 +215,21 @@
           "default": "list",
           "description": "Default view mode for search results"
         },
+        "elevationShadow": {
+          "type": "boolean",
+          "default": true,
+          "description": "Drop shadow / elevation under the launcher container"
+        },
+        "openAnimation": {
+          "type": "boolean",
+          "default": true,
+          "description": "Scale + fade entrance animation when the launcher opens"
+        },
+        "selectionAccent": {
+          "type": "boolean",
+          "default": true,
+          "description": "Primary-colored accent bar on the selected result row"
+        },
         "grid": {
           "type": "object",
           "description": "Grid layout settings when using grid view",

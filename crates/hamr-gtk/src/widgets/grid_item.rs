@@ -124,6 +124,7 @@ pub struct GridItem {
     id: String,
     button_actions: RefCell<Vec<RippleButton>>,
     actions_row: gtk4::Box,
+    name_label: gtk4::Label,
 }
 
 impl GridItem {
@@ -179,11 +180,21 @@ impl GridItem {
             id: result.id.clone(),
             button_actions: RefCell::new(buttons),
             actions_row: overlay,
+            name_label,
         }
     }
 
     pub fn widget(&self) -> &gtk4::Box {
         &self.container
+    }
+
+    /// Highlight the subsequence of `query` within the item name.
+    pub fn highlight_name(&self, query: &str, color: &str) {
+        let name = self.name_label.text().to_string();
+        match super::result_item::subsequence_markup(&name, query.trim(), color) {
+            Some(markup) => self.name_label.set_markup(&markup),
+            None => self.name_label.set_text(&name),
+        }
     }
 
     pub fn set_selected(&self, selected: bool) {

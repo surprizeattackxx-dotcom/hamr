@@ -1,0 +1,20 @@
+{
+  "name": "Weather",
+  "description": "Current conditions and a 3-day forecast — weather, weather tokyo, forecast berlin",
+  "icon": "partly_cloudy_day",
+  "frecency": "plugin",
+  "handler": {
+    "type": "stdio",
+    "command": "python3 handler.py"
+  },
+  "match": {
+    "patterns": [
+      "^(weather|forecast|wttr)(\\s|$)"
+    ],
+    "priority": 65
+  },
+  "supportedPlatforms": [
+    "niri",
+    "hyprland"
+  ]
+}

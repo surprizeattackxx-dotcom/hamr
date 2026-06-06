@@ -1,0 +1,20 @@
+{
+  "name": "Units",
+  "description": "Convert units, currency and number bases — length, mass, data, time, temp, usd/eur, hex/bin/dec",
+  "icon": "swap_horiz",
+  "frecency": "plugin",
+  "handler": {
+    "type": "stdio",
+    "command": "python3 handler.py"
+  },
+  "match": {
+    "patterns": [
+      "^\\s*[-+]?[\\d.,]+\\s*[a-zA-Z°µ/0-9]*\\s*(?:to|in|as|>|->)\\s*[a-zA-Z°µ/0-9]+\\s*$"
+    ],
+    "priority": 85
+  },
+  "supportedPlatforms": [
+    "niri",
+    "hyprland"
+  ]
+}

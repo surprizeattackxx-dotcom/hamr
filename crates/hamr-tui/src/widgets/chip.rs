@@ -12,7 +12,7 @@ use ratatui::{
 
 use super::icon::icon_to_str;
 
-/// Default chip color (matches `main.rs` `colors::PRIMARY`)
+/// Default chip color (matches `main.rs` `colors::primary()`)
 const DEFAULT_COLOR: Color = Color::Rgb(0xcb, 0xc4, 0xcb); // #cbc4cb
 
 /// A chip widget - pill-shaped tag with text (renders as `(text)` or `(icon text)`).

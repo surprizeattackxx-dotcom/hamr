@@ -1,0 +1,14 @@
+{
+  "name": "System Info",
+  "description": "Live dashboard — CPU, memory, disk, temperature, network and uptime",
+  "icon": "monitor_heart",
+  "frecency": "plugin",
+  "handler": {
+    "type": "stdio",
+    "command": "python3 handler.py"
+  },
+  "supportedPlatforms": [
+    "niri",
+    "hyprland"
+  ]
+}

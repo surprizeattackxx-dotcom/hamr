@@ -1,0 +1,21 @@
+{
+  "name": "Color",
+  "description": "Convert colors between hex, rgb and hsl — color #ff5733, color tomato, color rgb(255,87,51)",
+  "icon": "palette",
+  "frecency": "plugin",
+  "handler": {
+    "type": "stdio",
+    "command": "python3 handler.py"
+  },
+  "match": {
+    "patterns": [
+      "^(color|colour)\\s+\\S",
+      "^#[0-9a-fA-F]{3}([0-9a-fA-F]{3})?\\s*$"
+    ],
+    "priority": 64
+  },
+  "supportedPlatforms": [
+    "niri",
+    "hyprland"
+  ]
+}

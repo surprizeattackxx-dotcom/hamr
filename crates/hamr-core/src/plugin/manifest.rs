@@ -175,9 +175,10 @@ impl Manifest {
             .is_none_or(|h| matches!(h.handler_type, HandlerType::Stdio))
     }
 
-    /// Get the handler command for socket plugins
+    /// Get the explicit handler command (e.g. `python3 handler.py`), if any.
+    /// Applies to both socket and stdio plugins.
     #[must_use]
-    pub fn socket_command(&self) -> Option<&str> {
+    pub fn command(&self) -> Option<&str> {
         self.handler.as_ref().and_then(|h| h.command.as_deref())
     }
 
@@ -256,31 +257,31 @@ mod tests {
     }
 
     #[test]
-    fn test_socket_command_returns_command() {
+    fn test_command_returns_command() {
         let mut manifest = minimal_manifest("test");
         manifest.handler = Some(Handler {
             handler_type: HandlerType::Socket,
             path: None,
             command: Some("./my-daemon".to_string()),
         });
-        assert_eq!(manifest.socket_command(), Some("./my-daemon"));
+        assert_eq!(manifest.command(), Some("./my-daemon"));
     }
 
     #[test]
-    fn test_socket_command_returns_none_without_handler() {
+    fn test_command_returns_none_without_handler() {
         let manifest = minimal_manifest("test");
-        assert_eq!(manifest.socket_command(), None);
+        assert_eq!(manifest.command(), None);
     }
 
     #[test]
-    fn test_socket_command_returns_none_without_command() {
+    fn test_command_returns_none_without_command() {
         let mut manifest = minimal_manifest("test");
         manifest.handler = Some(Handler {
             handler_type: HandlerType::Socket,
             path: None,
             command: None,
         });
-        assert_eq!(manifest.socket_command(), None);
+        assert_eq!(manifest.command(), None);
     }
 
     #[test]

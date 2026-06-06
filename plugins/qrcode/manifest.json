@@ -1,0 +1,20 @@
+{
+  "name": "QR Code",
+  "description": "Generate a QR code from text or a URL — qr <text>",
+  "icon": "qr_code_2",
+  "frecency": "plugin",
+  "handler": {
+    "type": "stdio",
+    "command": "python3 handler.py"
+  },
+  "match": {
+    "patterns": [
+      "^qr\\s+\\S"
+    ],
+    "priority": 70
+  },
+  "supportedPlatforms": [
+    "niri",
+    "hyprland"
+  ]
+}

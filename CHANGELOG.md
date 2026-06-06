@@ -1,0 +1,58 @@
+# Changelog
+
+This fork tracks [Stewart86/hamr](https://github.com/Stewart86/hamr) and adds
+features on top. Notable changes since forking from upstream `v1.1.0`:
+
+## Unreleased (fork)
+
+### Added
+
+- **AI plugin** (`ai`): Claude-backed assistant via `claude -p` — streaming,
+  conversational follow-ups, vision (screenshot/clipboard Q&A), selected-text
+  actions, modes (`explain`/`eli5`/`code`/`cmd`/`fix`/`grammar`/`proofread`/
+  `rewrite`/`tldr`/`translate`/…) and inline model switching
+  (`opus`/`sonnet`/`haiku <query>`).
+- **units**: unit, number-base and live currency conversion
+  (`100 km to mi`, `255 to hex`, `100 usd to eur`; rates cached 12h).
+- **weather**: current conditions + 3-day forecast card (wttr.in, cached 15m).
+- **translate**: instant no-LLM translation with source auto-detect.
+- **unicode**: inspect characters, codepoints and names; look up by name.
+- **color**: convert between hex / rgb / hsl (plus CSS color names).
+- **ssh**: connect to hosts from `~/.ssh/config` in your terminal.
+- **websearch**: bang-style dispatcher across 35 engines (incl. std, cpp, protondb, gpt, perplexity).
+- **kaomoji**: Japanese emoticons searchable by mood.
+- **sysinfo**: live CPU/RAM/disk/temp/net/uptime dashboard card with top CPU/memory process.
+- **worldclock**: current time in any city or IANA zone.
+- **kill**: find and terminate a process (`!` prefix = SIGKILL).
+- **random**: dice, coin flips, ranges, list picks, lorem ipsum.
+- **devtools**: offline base64/url/hex/jwt/hash/uuid/epoch transforms, plus JSON pretty/minify and slugify.
+- **random**: dice, coin, ranges, list picks, lorem ipsum and a magic 8-ball.
+- **qrcode**: generate (ASCII + PNG) and decode a QR from the clipboard image.
+- **passgen**: password and passphrase generator.
+- **qrcode**: inline ASCII QR + PNG export.
+- **GTK**: launcher elevation shadow, focus glow, selection accent bar and an
+  entrance animation — each toggleable via `appearance` config
+  (`elevationShadow`/`openAnimation`/`selectionAccent`).
+- **GTK**: matched query characters are highlighted in result names.
+- **GTK & TUI**: `Alt+1…9` jumps to and launches the Nth visible result.
+- **CLI**: `hamr doctor` reports which optional plugin dependencies are installed.
+- Matugen theming: both the GTK launcher and the TUI follow the wallpaper
+  palette from `~/.config/hamr/colors.json`.
+- `scripts/dev-install.sh` (build + install to `~/.local/bin` + restart) and
+  `scripts/smoke-test-plugins.sh` (per-plugin JSON smoke tests).
+- GTK: slim themed scrollbar for the result list/grid.
+- CI: runs on the `donnie/features` branch and smoke-tests the plugins.
+
+### Changed
+
+- Stdio plugins honor their manifest `handler.command` (any interpreter, e.g.
+  `python3 handler.py`) and no longer need the executable bit.
+- README reframed as an active fork; plugin docs note `handler.command`.
+
+### Fixed
+
+- Core: `PluginProcess::spawn` parsed the manifest `command` instead of always
+  exec'ing `handler.py` directly (which had required `chmod +x`).
+- Restored the executable bit on all bundled handlers.
+- `weather`: strip wttr.in descriptions so Markdown bold renders.
+- Core: `is_exact_match` now folds non-ASCII case (café/CAFÉ) consistently.

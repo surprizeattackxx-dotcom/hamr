@@ -1,0 +1,20 @@
+{
+  "name": "Translate",
+  "description": "Instant text translation — tr hola mundo, tr good morning to french, tr fr: hello",
+  "icon": "translate",
+  "frecency": "plugin",
+  "handler": {
+    "type": "stdio",
+    "command": "python3 handler.py"
+  },
+  "match": {
+    "patterns": [
+      "^(tr|translate)\\s+\\S"
+    ],
+    "priority": 68
+  },
+  "supportedPlatforms": [
+    "niri",
+    "hyprland"
+  ]
+}

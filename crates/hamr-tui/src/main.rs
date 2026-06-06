@@ -870,6 +870,14 @@ async fn handle_results_mode_key(
         KeyCode::Enter => {
             handle_enter_key(client, app).await?;
         }
+        // Alt+1..9: jump to and activate the Nth visible result
+        KeyCode::Char(c) if alt && c.is_ascii_digit() && c != '0' => {
+            let idx = c.to_digit(10).unwrap_or(0) as usize - 1;
+            if idx < app.results.len() {
+                app.selected = idx;
+                handle_enter_key(client, app).await?;
+            }
+        }
         KeyCode::Down => {
             app.select_next();
         }

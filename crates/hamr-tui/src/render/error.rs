@@ -71,14 +71,14 @@ pub fn render_error(f: &mut Frame, error_state: &ErrorState) {
         .title(" Error ")
         .title_alignment(Alignment::Center)
         .border_type(ratatui::widgets::BorderType::Rounded)
-        .style(Style::default().fg(colors::ERROR));
+        .style(Style::default().fg(colors::error()));
 
     let mut content_lines: Vec<Line> = Vec::new();
 
     content_lines.push(Line::from(Span::styled(
         &error_state.title,
         Style::default()
-            .fg(colors::ERROR)
+            .fg(colors::error())
             .add_modifier(Modifier::BOLD),
     )));
 
@@ -86,7 +86,7 @@ pub fn render_error(f: &mut Frame, error_state: &ErrorState) {
         content_lines.push(Line::from(Span::styled(
             format!("Plugin: {plugin_id}"),
             Style::default()
-                .fg(colors::SUBTEXT)
+                .fg(colors::subtext())
                 .add_modifier(Modifier::DIM),
         )));
     }
@@ -101,7 +101,7 @@ pub fn render_error(f: &mut Frame, error_state: &ErrorState) {
         content_lines.push(Line::from(""));
         content_lines.push(Line::from(Span::styled(
             details,
-            Style::default().fg(colors::SUBTEXT),
+            Style::default().fg(colors::subtext()),
         )));
     }
 
@@ -109,7 +109,7 @@ pub fn render_error(f: &mut Frame, error_state: &ErrorState) {
     content_lines.push(Line::from(Span::styled(
         "[Esc to dismiss]",
         Style::default()
-            .fg(colors::SUBTEXT)
+            .fg(colors::subtext())
             .add_modifier(Modifier::ITALIC),
     )));
 

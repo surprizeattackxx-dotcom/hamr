@@ -1,6 +1,7 @@
 //! Configuration loading and file watching
 
 use crate::colors::Colors;
+use crate::themes;
 use gtk4::glib;
 use gtk4::prelude::*;
 use serde::Deserialize;
@@ -60,6 +61,7 @@ impl GridConfig {
 
 #[derive(Debug, Clone, Deserialize)]
 #[serde(rename_all = "camelCase")]
+#[allow(clippy::struct_excessive_bools)]
 pub struct AppearanceConfig {
     #[serde(default = "default_bg_transparency")]
     pub background_transparency: f64,
@@ -88,6 +90,19 @@ pub struct AppearanceConfig {
     /// Grid layout settings
     #[serde(default)]
     pub grid: GridConfig,
+    /// Drop shadow / elevation under the launcher container
+    #[serde(default = "default_true")]
+    pub elevation_shadow: bool,
+    /// Scale + fade entrance animation when the launcher opens
+    #[serde(default = "default_true")]
+    pub open_animation: bool,
+    /// Primary accent bar on the selected result row
+    #[serde(default = "default_true")]
+    pub selection_accent: bool,
+}
+
+fn default_true() -> bool {
+    true
 }
 
 fn default_bg_transparency() -> f64 {
@@ -133,6 +148,9 @@ impl Default for AppearanceConfig {
             ui_scale: default_ui_scale(),
             default_result_view: default_result_view(),
             grid: GridConfig::default(),
+            elevation_shadow: true,
+            open_animation: true,
+            selection_accent: true,
         }
     }
 }
@@ -239,6 +257,9 @@ pub struct Config {
     pub fonts: FontsConfig,
     #[serde(default)]
     pub behavior: BehaviorConfig,
+    /// Named theme preset (e.g. "catppuccin-mocha", "nord", "dracula").
+    /// When set, overrides colors.json. Use "matugen" or omit to use colors.json.
+    pub theme: Option<String>,
 }
 
 impl Config {
@@ -286,10 +307,24 @@ pub struct Theme {
 
 impl Theme {
     pub fn load() -> Self {
-        Self {
-            colors: Colors::load(),
-            config: Config::load(),
-        }
+        let config = Config::load();
+        let colors = config
+            .theme
+            .as_deref()
+            .filter(|t| *t != "matugen")
+            .and_then(|t| {
+                let preset = themes::get_preset(t);
+                if preset.is_none() {
+                    warn!(
+                        "Unknown theme preset '{}', falling back to colors.json. Available: {}",
+                        t,
+                        themes::preset_names().join(", ")
+                    );
+                }
+                preset
+            })
+            .unwrap_or_else(Colors::load);
+        Self { colors, config }
     }
 
     /// Get background opacity (1.0 - transparency)

@@ -1,0 +1,17 @@
+{
+  "name": "AI",
+  "description": "Ask Claude questions or get smart app suggestions via claude -p",
+  "icon": "neurology",
+  "handler": {
+    "type": "stdio",
+    "command": "python3 handler.py"
+  },
+  "daemon": {
+    "enabled": true,
+    "background": true
+  },
+  "supportedPlatforms": [
+    "hyprland",
+    "niri"
+  ]
+}

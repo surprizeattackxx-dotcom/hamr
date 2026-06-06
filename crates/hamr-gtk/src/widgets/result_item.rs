@@ -759,6 +759,17 @@ impl ResultItem {
         }
     }
 
+    /// Highlight the subsequence of `query` within the result name using the
+    /// given color. Falls back to plain text when the query is empty or the
+    /// name isn't a subsequence match (e.g. the result matched on description).
+    pub fn highlight_name(&self, query: &str, color: &str) {
+        let name = self.name_label.text().to_string();
+        match subsequence_markup(&name, query.trim(), color) {
+            Some(markup) => self.name_label.set_markup(&markup),
+            None => self.name_label.set_text(&name),
+        }
+    }
+
     pub fn set_selected(&self, selected: bool) {
         if selected {
             self.container.add_css_class("selected");
@@ -1011,6 +1022,36 @@ impl AsRef<gtk4::Widget> for ResultItem {
 
 // CSS template - splitting would scatter related style rules
 #[allow(clippy::too_many_lines)]
+/// Build Pango markup highlighting the case-insensitive subsequence of `query`
+/// in `name`. Returns `None` if query is empty or not a full subsequence match.
+pub(crate) fn subsequence_markup(name: &str, query: &str, color: &str) -> Option<String> {
+    if query.is_empty() {
+        return None;
+    }
+    let mut q = query.chars().filter(|c| !c.is_whitespace()).peekable();
+    if q.peek().is_none() {
+        return None;
+    }
+    let mut next = q.next();
+    let mut out = String::with_capacity(name.len() + 32);
+    let span = format!("<span foreground=\"{color}\" weight=\"bold\">");
+    for ch in name.chars() {
+        let matched = next
+            .is_some_and(|n| n.eq_ignore_ascii_case(&ch) || n.to_lowercase().eq(ch.to_lowercase()));
+        let escaped = glib::markup_escape_text(&ch.to_string());
+        if matched {
+            out.push_str(&span);
+            out.push_str(&escaped);
+            out.push_str("</span>");
+            next = q.next();
+        } else {
+            out.push_str(&escaped);
+        }
+    }
+    // Only highlight when the whole query was consumed (a real subsequence match).
+    next.is_none().then_some(out)
+}
+
 pub fn result_item_css(theme: &crate::config::Theme) -> String {
     let colors = &theme.colors;
     let fonts = &theme.config.fonts;
@@ -1029,7 +1070,8 @@ pub fn result_item_css(theme: &crate::config::Theme) -> String {
             /* Fade transition - cubic-bezier heavy on brighter side (slow out) */
             transition: background-color 180ms cubic-bezier(0.25, 0.1, 0.25, 1),
                         background 180ms cubic-bezier(0.25, 0.1, 0.25, 1),
-                        border-color 180ms cubic-bezier(0.25, 0.1, 0.25, 1);
+                        border-color 180ms cubic-bezier(0.25, 0.1, 0.25, 1),
+                        box-shadow 140ms cubic-bezier(0.25, 0.1, 0.25, 1);
         }}
 
         overlay.result-item:hover {{
@@ -1047,12 +1089,14 @@ pub fn result_item_css(theme: &crate::config::Theme) -> String {
             background: linear-gradient(to bottom, rgba(149, 144, 136, 0.08), {surface_dark});
             background-color: {surface_dark};
             border: {border}px solid alpha({outline}, 0.28);
+            box-shadow: inset {accent}px 0 0 0 {primary};
         }}
 
         overlay.result-item.selected:hover {{
             background: linear-gradient(to bottom, rgba(149, 144, 136, 0.08), {surface_dark});
             background-color: {surface_high};
             border: {border}px solid alpha({outline}, 0.28);
+            box-shadow: inset {accent}px 0 0 0 {primary};
         }}
 
         /* Keep selected style during scroll, just no hover enhancement */
@@ -1060,6 +1104,7 @@ pub fn result_item_css(theme: &crate::config::Theme) -> String {
             background: linear-gradient(to bottom, rgba(149, 144, 136, 0.08), {surface_dark});
             background-color: {surface_dark};
             border: {border}px solid alpha({outline}, 0.28);
+            box-shadow: inset {accent}px 0 0 0 {primary};
         }}
 
         /* Icon Container */
@@ -1347,5 +1392,10 @@ pub fn result_item_css(theme: &crate::config::Theme) -> String {
         outline_variant = colors.outline_variant,
         surface_high = colors.surface_container_high,
         surface_dark = colors.surface,
+        accent = if theme.config.appearance.selection_accent {
+            theme.scaled(3)
+        } else {
+            0
+        },
     )
 }

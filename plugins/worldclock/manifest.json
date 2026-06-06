@@ -1,0 +1,20 @@
+{
+  "name": "World Clock",
+  "description": "Current time in any city or timezone — time tokyo, time in london, tz utc",
+  "icon": "schedule",
+  "frecency": "plugin",
+  "handler": {
+    "type": "stdio",
+    "command": "python3 handler.py"
+  },
+  "match": {
+    "patterns": [
+      "^(time|clock|tz)\\s+\\S"
+    ],
+    "priority": 75
+  },
+  "supportedPlatforms": [
+    "niri",
+    "hyprland"
+  ]
+}

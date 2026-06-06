@@ -19,7 +19,7 @@ const SPARK_CHARS: [char; 9] = [
     '\u{2588}', // full block
 ];
 
-/// Default sparkline color (matches `main.rs` `colors::PRIMARY`)
+/// Default sparkline color (matches `main.rs` `colors::primary()`)
 const PRIMARY_COLOR: Color = Color::Rgb(0xcb, 0xc4, 0xcb); // #cbc4cb
 
 /// A sparkline widget for compact data visualization as block characters.

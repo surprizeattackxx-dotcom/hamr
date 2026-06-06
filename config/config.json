@@ -38,6 +38,9 @@
     "fontScale": 1.0,
     "uiScale": 1.0,
     "defaultResultView": "list",
+    "elevationShadow": true,
+    "openAnimation": true,
+    "selectionAccent": true,
     "grid": {
       "columns": 5,
       "itemWidth": 110,

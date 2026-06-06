@@ -7,6 +7,7 @@ Features:
 - Category filtering (All, Development, Graphics, Internet, etc.)
 - Fuzzy search within current category
 - Frecency-based sorting (recently/frequently used apps first)
+- showHiddenApps: include NoDisplay/Hidden entries (set in plugin config.json)
 """
 
 import json
@@ -21,6 +22,23 @@ from pathlib import Path
 # Add parent directory to path to import SDK
 sys.path.insert(0, str(Path(__file__).parent.parent))
 from sdk.hamr_sdk import HamrPlugin
+
+# Plugin config (~/.config/hamr/plugins/apps/config.json)
+_PLUGIN_CONFIG_PATH = (
+    Path(os.environ.get("XDG_CONFIG_HOME", Path.home() / ".config"))
+    / "hamr" / "plugins" / "apps" / "config.json"
+)
+
+def _load_plugin_config() -> dict:
+    if _PLUGIN_CONFIG_PATH.exists():
+        try:
+            return json.loads(_PLUGIN_CONFIG_PATH.read_text())
+        except Exception:
+            pass
+    return {}
+
+PLUGIN_CONFIG = _load_plugin_config()
+SHOW_HIDDEN_APPS: bool = PLUGIN_CONFIG.get("showHiddenApps", False)
 
 # XDG application directories
 APP_DIRS = [
@@ -85,10 +103,11 @@ def parse_desktop_file(path: Path) -> dict | None:
 
         if entry.get("Type", "") != "Application":
             return None
-        if entry.get("NoDisplay", "").lower() == "true":
-            return None
-        if entry.get("Hidden", "").lower() == "true":
-            return None
+        if not SHOW_HIDDEN_APPS:
+            if entry.get("NoDisplay", "").lower() == "true":
+                return None
+            if entry.get("Hidden", "").lower() == "true":
+                return None
 
         name = entry.get("Name", "")
         if not name:

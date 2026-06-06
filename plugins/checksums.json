@@ -1,14 +1,18 @@
 {
   "version": 1,
-  "generated": "2026-01-23T14:32:27+08:00",
+  "generated": "2026-06-06T19:11:31-04:00",
   "plugins": {
     "accentcolor": {
       "manifest.json": "1703b638fa7f035a85398cee8902d6514d15009bc146e54b71a855563f394486",
       "handler.py": "9dcab6f4706616da183740267ba6a7af77a6e74ea15f53a2cf82f92239a6c4c8"
     },
+    "ai": {
+      "manifest.json": "f05f9583427cfdcd541b04149e9e6e1e0bd11593178bb3c0313875a91ffaedc1",
+      "handler.py": "eadab7df5265591cae78e8eeb5a7104c9fc0c791e883ac9386b7b1eb26c8442b"
+    },
     "apps": {
       "manifest.json": "af7a7c32a4031f1a48ed1145713da57beab268aa50c54fcf3e7635b76b8d9e27",
-      "handler.py": "4d24c709c9652d1d887fcd2cdce33775b9adb0c0186d51b82cae8ac89549138a"
+      "handler.py": "ce4d0e51944d7250baf1331177ee897b92e1610728877af9f0d5105177fef0bb"
     },
     "aur": {
       "manifest.json": "ea340522d9f8d38757bd067ab82f95c3f27b2569329373a187d001f706fb364d",
@@ -20,15 +24,27 @@
     },
     "calculate": {
       "manifest.json": "1a38bd8f36ba295f923788b6594c1f68643eec8ecb03cc6e165c96e74e5b59ea",
-      "handler.py": "73331290e3b68a6fb1adc79b0fa4f8233ccc5e188878e6087b5eef58c7341320"
+      "handler.py": "f4f34793d54b5f78facdd8e7fa290caaa0e103baaf75906615bff0b14ef209d0"
     },
     "clipboard": {
       "manifest.json": "85bf8d992551bfc0073c29e209072e608836552265ae1f1dfc4e4e930b32d36a",
       "handler.py": "f0eceffaf59e5c7ce146dc02e5fc962593ee109174566e2e415a28383a6bc062"
     },
+    "color": {
+      "manifest.json": "bc5563540a9c7df64f52984427cfe1a3072b5b4d98e408a7726f597a63110d4b",
+      "handler.py": "bc8a8b24330cc59f2713e4c2c944aca93ed1e2507808175b72d2f063639f6f1a"
+    },
     "colorpick": {
       "manifest.json": "66157d953d02cc1931b5975e8cc11d729a4304b17ac5854cebd4b0043a3fdf5e",
       "handler.py": "ecc77ef05d38b2b974796c7974950385b073c2fe793310eb5d98fa7988d6b961"
+    },
+    "default-apps": {
+      "manifest.json": "ac5b4e6055eec4d5ff3332533c35b88f41d725f6673d4716c322b6547639fe05",
+      "handler.py": "81e9063a07314bc5e86aecca8d8d6755ecde93189bac2fc7875b22292ccd2246"
+    },
+    "devtools": {
+      "manifest.json": "a778bc0758efdd312f41aa0f4478dc46bdff68e5770445b2f469e875750905f1",
+      "handler.py": "8dc5e439d890d17600267d9471c96cc712456fb5be07c0ecd17bb06789550eec"
     },
     "dictionary": {
       "manifest.json": "07e0071f131ad5b171a52f708a7548b8630da04ff24215ef1b1c63a57a779b58",
@@ -51,6 +67,14 @@
       "manifest.json": "a2afec47ecb83ef1c5911fca4ba3ec87771acff461c19d279952a5da875d5a13",
       "handler.py": "49fd90866e5aca956a42cab5071aa4cd4b1f486ab7c87fafd060be23068d0df9"
     },
+    "kaomoji": {
+      "manifest.json": "5287d63f84e7340d8ee83aec7fccaefead89aa778cf68546c53d4a8a59dc1a35",
+      "handler.py": "d08f0b6f4ec2065790ae34451b5cbd77a05488c853056cca0a6506443bb4c837"
+    },
+    "kill": {
+      "manifest.json": "1022bacade0e5e91c71299e6dd202222dc617e6ce6d605aa4945d0ff86099606",
+      "handler.py": "a8b860fc09685b0d7150a977b587e597423bcdbecf545eca4a5452740971a3ca"
+    },
     "niri": {
       "manifest.json": "670bc48d93367c0c2f569650abcb1b8d7a81e7c74e1f332c423f759e8c7921ff",
       "handler.py": "ce962145365dcc850af3a10e2adebe2d0fadc4acf104390a4c24c1edf9aca9c3"
@@ -58,6 +82,10 @@
     "notes": {
       "manifest.json": "db2b4507f411c809c2c1d818edd9f788c9ad07463ac1566da3fc9a60afbcc461",
       "handler.py": "ad86115e371d5c7a34857f8e1353a04b5ff2509aebf91310f9e44cb6b1772c2e"
+    },
+    "passgen": {
+      "manifest.json": "4e6f1552339dcd5e1f4968abe85314955bf56eb63d09c5ec32f3830f10903264",
+      "handler.py": "db787793f16c46f06d7127922bdd6858be960f3ca5e888fb2196700960c3e65f"
     },
     "pictures": {
       "manifest.json": "c1eebaa6d6284368a1b9232faf4f0ad3de230884460a6748cb687abd2c002b65",
@@ -69,11 +97,19 @@
     },
     "power": {
       "manifest.json": "1d527347a130e3181199a7f3527d37f95c61cc7f80882d70809d667372af1b60",
-      "handler.py": "b417b5f2becb5f9cb44cc6a11831d69d7377e03deb371a103fc6d18ece2bad9a"
+      "handler.py": "690c8ed67eccabb41e3ee503525a441ddf512586825a74fe6fe1f00158852a0e"
+    },
+    "qrcode": {
+      "manifest.json": "adf8aee169cc32ef3f7c71cad95eeafef3bdc487d2a2dc10ba4319c7ccb1289d",
+      "handler.py": "660227ff3cf4b2aacfb0660323b4c19aa3aee6111dedf1d3092c608cb62a7682"
     },
     "quicklinks": {
       "manifest.json": "635fd17b428029c7b2ecb640ee61f287c0f59e9384e0f4003e5ba7a660da7102",
       "handler.py": "715284711174dd78d7da85e9d29f8a2f06ad06741deee127c37e8970afbf95ef"
+    },
+    "random": {
+      "manifest.json": "8ccf9e256ded3a9991a183243866e7831d47744c6e068009eb3e794d3273dd9b",
+      "handler.py": "a3501c30898eef7ecc7a1e18e60a8f185c1009bb7b77c46ac117d0b8f85d2d9e"
     },
     "screenrecord": {
       "manifest.json": "249f3eb9f9769bff7ce0f32685fb6486d9bc582956a3876fa88ac24ca84f7120",
@@ -85,7 +121,7 @@
     },
     "settings": {
       "manifest.json": "324c3182e3a1d0b0707e6f2705a6a985348576f83dccde2a5b296a22985e86ef",
-      "handler.py": "01c04a1afe5f7631b66b5d267e40c014ea4f2bf5d2f93d59c4f90b6e52fb5665"
+      "handler.py": "d9fd4b7198f947afd1b3f50c25c671d8bff5e1bebe7a53aced720477b8aa50aa"
     },
     "shell": {
       "manifest.json": "c009340b6d6936511c054e1b06862b295b49b2b62c50e47bb88dcd406ad45e4e",
@@ -103,6 +139,14 @@
       "manifest.json": "3c5af7baf3a6f0b67e00ea2bdb58644f460ba2f551f36f5fdb744c3e35e55315",
       "handler.py": "290fa41b5e5374f038f9809375d90ebdc3251e815e67b18c5871ba924c4bf1e1"
     },
+    "ssh": {
+      "manifest.json": "4609495b042c5ddfffe8db43a26b08d000653152d0dbd06ae528535bd945e4c6",
+      "handler.py": "7c430366ece387d3c5519d58eabd1b2ffa7a2b2e7b78582f6b2d2b548e4e40ee"
+    },
+    "sysinfo": {
+      "manifest.json": "3caa4d33bb3571d642cbca5b11754a526fec9ab6a15238d98a8dd95fa3d6a7ce",
+      "handler.py": "a6169047302445b788f34ac494d2bec3f5ee29ae774b48cf8b4d060f127ddc68"
+    },
     "test-widgets": {
       "manifest.json": "ed881dad493df9ccc849ebaa8eeea91fe49c7b27bdeaa26a7fb800ad59da7983",
       "handler.py": "82c9346b8ed98d9ebd9c7caae34f918dbd6cb3b64bd15aea350fd424c943d66f"
@@ -117,7 +161,7 @@
     },
     "todo": {
       "manifest.json": "f8fce69fc25ef7584f5887e1fa88dd23d61c5060186fd43f9fded7b9dbc44f52",
-      "handler.py": "bc6cebb520fb2e66628de9e1c2b1a1e95164f397911f3d914af9e772676b56b6"
+      "handler.py": "5ff55c1a8de29ea215ed094c57d424898dfd9fa20019573f532fe7a631223945"
     },
     "topcpu": {
       "manifest.json": "10ec4659bf7db77adcadbe6b5c3c5cef3e6d53a96613cc7d48c7b0aeaeac0dc4",
@@ -127,22 +171,46 @@
       "manifest.json": "b2138c90c465d22a5d67dafb5d6161e3ac0413c4741dfafb82600ea7a4f6e053",
       "handler.py": "b0b328ea91eb1cc87810832f3836b56773d5ebd224fe7f4c4096b36c206826db"
     },
+    "translate": {
+      "manifest.json": "4d977cda7677a4c2741b50616f411f05721bbc826ade6da8279789ff3352f2a0",
+      "handler.py": "20789e95e4b4db998b1101fe55b2aaddaee4eacd50f2ea1a6a8695107bdc5d67"
+    },
+    "unicode": {
+      "manifest.json": "41cb3eb62d4c9804801e0dd30e7d5f424fae7af7aa6c498cd5ea8c83f8add63d",
+      "handler.py": "09fee46edd95494aa9ad1a42b06eceb6d47bece8bd621338e6030cc12d41579c"
+    },
+    "units": {
+      "manifest.json": "f223b8eb3cc858be7fd95403a90f9f6f35bc32521930c716b8a873cee9e9ccbc",
+      "handler.py": "d676e709c3e26b283ee0de6a6014e5020c3b05149631ebcd5eb4c1581e2d5ffc"
+    },
     "url": {
       "manifest.json": "f5a131dcbdc40709a8bb98c406fa9bd1cbf4661ae6fd83c141bb48a28ee2aede",
-      "handler.py": "0dd51f64c0df31a73b79b5239f789032c0b0fdd0ff8dad1e8147b4548bea0683"
+      "handler.py": "46052c977036aebc300fc1c1c205110db520ba162e1daf2fc78263894d914589"
     },
     "wallpaper": {
       "manifest.json": "cda579138eb7ed4dea85c8255792ea76f4f3ad3092f1328879ecb9b9ba4d348e",
       "handler.py": "f23f4c7a4e24db6995027179758975123fde987c6d2cb2f00369ae47571f3682"
+    },
+    "weather": {
+      "manifest.json": "8881a76cd3be520402429a76a72e7cdb0b019f0d644477cd14b3189a28f4e85a",
+      "handler.py": "628abaf5d916bd280d91a48dee783052ad42843fff563846fa1a0518504f55e7"
     },
     "webapp": {
       "manifest.json": "6f01838e90f7423078ddec71fc4f79d5ff61799a7b9f5730ab92018678b29c60",
       "handler.py": "ee0aa2f5f1d0e1ff72a68930fe3d24294abd1a604de8d862f2573865f756e51b",
       "launch-webapp": "697f7094b603c757af3a71121d66fbf8bdc4e14f36b3ea8594f9097bdbd307a6"
     },
+    "websearch": {
+      "manifest.json": "0a2af2f68f6106167cd412f9d37870546e48792264e1bdb3124a395ae9e9c213",
+      "handler.py": "09ef1e0356eb43510304ebde2f640390b70fe39c0a26150bab29ccb6a672a4ba"
+    },
     "whats-that-word": {
       "manifest.json": "f27b021de276f26677284198c63e92f1a86b0a521ca814a1040207a12f5ad27e",
-      "handler.py": "3fd3fc418bd192010b481f32c5a169950e8e353cc6d11c1a5ce579df76e3b118"
+      "handler.py": "3d99d9e247c0296316d348c6eb82cda459d300676b6ef81adeb862e575637cce"
+    },
+    "worldclock": {
+      "manifest.json": "f4338d367e165e29e54015132a157b6added86093ef0c7e0bff8fdbc92e2453e",
+      "handler.py": "993fbed252a5d1a9189cdf7fbda1b5a44f889ddc4e8cebd73c1fe955fd2025ba"
     },
     "zoxide": {
       "manifest.json": "0801376be84a7c2a452803a438e10316c0f7aea83dd353c7dae0b6112af85222",
