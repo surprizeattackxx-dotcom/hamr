@@ -38,6 +38,7 @@ Hamr learns from your usage patterns to surface what you need, when you need it.
 | `websearch` | Bang-style dispatcher across 28 engines | `g rust async`, `yt lofi`, `gh hamr`, `aur brave` |
 | `kill` | Find a running process and terminate it (`!` prefix = SIGKILL) | `kill firefox` |
 | `sysinfo` | At-a-glance dashboard card — CPU, RAM, disk, temps, net, uptime | `sys` |
+| `weather` | Current conditions + 3-day forecast card (wttr.in, cached) | `weather`, `weather tokyo` |
 | `worldclock` | Current time in any city or IANA zone | `time tokyo`, `time in london` |
 | `random` | Dice, coin flips, ranges, list picks, lorem ipsum | `roll 2d6`, `pick a, b, c` |
 | `devtools` | Offline encode/decode/hash — base64, url, hex, jwt, uuid, epoch | `base64 hello`, `jwt <token>` |
@@ -47,8 +48,14 @@ Hamr learns from your usage patterns to surface what you need, when you need it.
 **Core & UI**
 
 - Stdio plugins honor their manifest `command` (e.g. `python3 handler.py`) instead of requiring an executable handler.
-- Matugen theming: the GTK launcher follows your wallpaper palette via `~/.config/hamr/colors.json`.
-- Launcher elevation shadow, focus glow, selection accent bar, and an entrance animation.
+- Matugen theming: both the GTK launcher and the TUI follow your wallpaper palette via `~/.config/hamr/colors.json`.
+- Launcher elevation shadow, focus glow, selection accent bar, and an entrance animation — each toggleable in `appearance` config.
+
+Build from source and install to `~/.local/bin` (then restart the systemd user services):
+
+```bash
+scripts/dev-install.sh
+```
 
 ## Installation
 
