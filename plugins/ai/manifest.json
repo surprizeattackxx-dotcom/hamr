@@ -1,0 +1,17 @@
+{
+  "name": "AI",
+  "description": "Ask AI questions or get smart app suggestions via Ollama",
+  "icon": "neurology",
+  "handler": {
+    "type": "stdio",
+    "command": "python3 handler.py"
+  },
+  "daemon": {
+    "enabled": true,
+    "background": true
+  },
+  "supportedPlatforms": [
+    "hyprland",
+    "niri"
+  ]
+}

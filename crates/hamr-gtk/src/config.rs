@@ -1,6 +1,7 @@
 //! Configuration loading and file watching
 
 use crate::colors::Colors;
+use crate::themes;
 use gtk4::glib;
 use gtk4::prelude::*;
 use serde::Deserialize;
@@ -239,6 +240,9 @@ pub struct Config {
     pub fonts: FontsConfig,
     #[serde(default)]
     pub behavior: BehaviorConfig,
+    /// Named theme preset (e.g. "catppuccin-mocha", "nord", "dracula").
+    /// When set, overrides colors.json. Use "matugen" or omit to use colors.json.
+    pub theme: Option<String>,
 }
 
 impl Config {
@@ -286,10 +290,20 @@ pub struct Theme {
 
 impl Theme {
     pub fn load() -> Self {
-        Self {
-            colors: Colors::load(),
-            config: Config::load(),
-        }
+        let config = Config::load();
+        let colors = config
+            .theme
+            .as_deref()
+            .filter(|t| *t != "matugen")
+            .and_then(|t| {
+                let preset = themes::get_preset(t);
+                if preset.is_none() {
+                    warn!("Unknown theme preset '{}', falling back to colors.json. Available: {}", t, themes::preset_names().join(", "));
+                }
+                preset
+            })
+            .unwrap_or_else(Colors::load);
+        Self { colors, config }
     }
 
     /// Get background opacity (1.0 - transparency)
