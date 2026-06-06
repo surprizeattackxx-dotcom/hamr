@@ -1,19 +1,10 @@
 #!/usr/bin/env python3
 """
-AI plugin - Ollama-backed assistant for Hamr.
+AI plugin - Claude-backed assistant for Hamr via `claude -p`.
 
 Modes:
-  - Direct Q&A:       "ai: what is the capital of France?"
-  - App suggestion:   "ai: find me a video editor"
-  - Default prefix:   trigger with the configured prefix (default "ai:")
-
-Config (~/.config/hamr/plugins/ai/config.json):
-  {
-    "model": "qwen3.5:35b-partial",
-    "ollamaUrl": "http://localhost:11434",
-    "maxTokens": 512,
-    "appSuggestionKeywords": ["find", "open", "launch", "suggest", "what app", "which app"]
-  }
+  - Direct Q&A:     ask anything
+  - App suggestion: "find me a video editor" -> ranked installed app list
 """
 
 import json
@@ -22,8 +13,6 @@ import select
 import signal
 import subprocess
 import sys
-import urllib.request
-import urllib.error
 from configparser import ConfigParser
 from pathlib import Path
 
@@ -60,6 +49,23 @@ def load_config() -> dict:
 
 def emit(data: dict) -> None:
     print(json.dumps(data), flush=True)
+
+
+def query_claude(prompt: str) -> str:
+    try:
+        result = subprocess.run(
+            ["claude", "-p", prompt],
+            capture_output=True,
+            text=True,
+            timeout=60,
+        )
+        return result.stdout.strip() or result.stderr.strip() or "No response"
+    except subprocess.TimeoutExpired:
+        return "Request timed out"
+    except FileNotFoundError:
+        return "claude not found — is Claude Code installed?"
+    except Exception as e:
+        return f"Error: {e}"
 
 
 def get_installed_apps() -> list[dict]:
@@ -99,45 +105,20 @@ def is_app_suggestion_query(query: str) -> bool:
     return any(kw in q for kw in APP_SUGGESTION_KEYWORDS)
 
 
-def query_ollama(prompt: str, model: str, base_url: str, max_tokens: int) -> str:
-    payload = json.dumps({
-        "model": model,
-        "messages": [{"role": "user", "content": prompt}],
-        "stream": False,
-        "options": {"num_predict": max_tokens},
-    }).encode()
-
-    req = urllib.request.Request(
-        f"{base_url}/api/chat",
-        data=payload,
-        headers={"Content-Type": "application/json"},
-        method="POST",
-    )
-    try:
-        with urllib.request.urlopen(req, timeout=30) as resp:
-            data = json.loads(resp.read())
-            return data.get("message", {}).get("content", "").strip()
-    except urllib.error.URLError as e:
-        return f"Ollama error: {e}"
-    except Exception as e:
-        return f"Error: {e}"
-
-
-def suggest_apps(query: str, apps: list[dict], model: str, base_url: str, max_tokens: int) -> list[dict]:
+def suggest_apps(query: str, apps: list[dict]) -> list[dict]:
     app_list = "\n".join(
         f"- {a['name']} ({a.get('generic_name') or ', '.join(a['categories'][:2]) or a.get('comment', '')})"
-        for a in apps[:200]
+        for a in apps[:300]
     )
     prompt = (
         f"The user wants to: {query}\n\n"
         f"From this list of installed apps, suggest the 3-5 most relevant ones. "
         f"Reply with ONLY a JSON array of app names, e.g. [\"GIMP\", \"Inkscape\"]. "
-        f"No explanation.\n\nInstalled apps:\n{app_list}"
+        f"No explanation, no markdown, just the JSON array.\n\nInstalled apps:\n{app_list}"
     )
 
-    raw = query_ollama(prompt, model, base_url, max_tokens)
+    raw = query_claude(prompt)
 
-    # Extract JSON array from response
     try:
         start = raw.index("[")
         end = raw.rindex("]") + 1
@@ -157,77 +138,72 @@ def suggest_apps(query: str, apps: list[dict], model: str, base_url: str, max_to
                 "iconType": "system",
             })
 
-    # Sort by suggestion order
     order = {n.lower(): i for i, n in enumerate(suggested_names)}
     results.sort(key=lambda a: order.get(a["name"].lower(), 99))
     return results
 
 
-def handle_request(request: dict, apps: list[dict], cfg: dict) -> None:
+def handle_request(request: dict, apps: list[dict]) -> None:
     step = request.get("step", "search")
     query = request.get("query", "").strip()
     selected_id = request.get("id", "")
 
-    model = cfg.get("model", "qwen3.5:35b-partial")
-    base_url = cfg.get("ollamaUrl", "http://localhost:11434")
-    max_tokens = cfg.get("maxTokens", 512)
-
     if step == "search":
         if not query:
             emit(HamrPlugin.results(
-                [{"id": "__placeholder__", "name": "Ask AI anything...", "icon": "neurology", "description": "Type a question or 'find me a [tool]'"}],
+                [{"id": "__placeholder__", "name": "Ask Claude anything...", "icon": "neurology",
+                  "description": "Type a question or 'find me a [tool]'"}],
                 input_mode="realtime",
-                placeholder="Ask AI or describe what you need...",
+                placeholder="Ask Claude or describe what you need...",
             ))
             return
 
-        # Show a "thinking" result immediately
         emit(HamrPlugin.results(
-            [{"id": "__thinking__", "name": f"Thinking about: {query}", "icon": "sync", "description": "Querying Ollama..."}],
+            [{"id": "__thinking__", "name": f"Thinking: {query}", "icon": "sync",
+              "description": "Asking Claude..."}],
             input_mode="realtime",
-            placeholder="Ask AI or describe what you need...",
+            placeholder="Ask Claude or describe what you need...",
         ))
 
         if is_app_suggestion_query(query):
-            suggested = suggest_apps(query, apps, model, base_url, max_tokens)
+            suggested = suggest_apps(query, apps)
             if suggested:
                 results = [
-                    {"id": "__header__", "name": f"AI suggestions for: {query}", "icon": "neurology", "description": f"via {model}"},
+                    {"id": "__header__", "name": f"Claude suggests for: {query}",
+                     "icon": "neurology", "description": "via claude -p"},
                     *suggested,
                 ]
             else:
-                results = [{"id": "__noresult__", "name": "No matching apps found", "icon": "search_off", "description": query}]
+                results = [{"id": "__noresult__", "name": "No matching apps found",
+                            "icon": "search_off", "description": query}]
         else:
-            answer = query_ollama(query, model, base_url, max_tokens)
-            # Split answer into chunks of ~80 chars for display
+            answer = query_claude(query)
             lines = []
             for para in answer.split("\n"):
                 para = para.strip()
                 if not para:
                     continue
-                while len(para) > 80:
-                    lines.append(para[:80])
-                    para = para[80:]
+                while len(para) > 90:
+                    lines.append(para[:90])
+                    para = para[90:]
                 if para:
                     lines.append(para)
 
             results = [
-                {"id": "__answer__", "name": query, "icon": "neurology", "description": f"via {model}"},
-                *[
-                    {"id": f"__line__{i}", "name": line, "icon": ""}
-                    for i, line in enumerate(lines[:20])
-                ],
+                {"id": "__answer__", "name": query, "icon": "neurology",
+                 "description": "via claude -p"},
+                *[{"id": f"__line__{i}", "name": line, "icon": ""}
+                  for i, line in enumerate(lines[:20])],
             ]
 
         emit(HamrPlugin.results(
             results,
             input_mode="realtime",
-            placeholder="Ask AI or describe what you need...",
+            placeholder="Ask Claude or describe what you need...",
         ))
         return
 
     if step == "action":
-        # Launch app suggestions
         if selected_id.startswith("__"):
             return
         for app in apps:
@@ -242,13 +218,9 @@ def handle_request(request: dict, apps: list[dict], cfg: dict) -> None:
 
 
 def main():
-    def shutdown_handler(signum, frame):
-        sys.exit(0)
+    signal.signal(signal.SIGTERM, lambda *_: sys.exit(0))
+    signal.signal(signal.SIGINT, lambda *_: sys.exit(0))
 
-    signal.signal(signal.SIGTERM, shutdown_handler)
-    signal.signal(signal.SIGINT, shutdown_handler)
-
-    cfg = load_config()
     apps = get_installed_apps()
 
     while True:
@@ -259,7 +231,7 @@ def main():
                 if not line:
                     break
                 request = json.loads(line.strip())
-                handle_request(request, apps, cfg)
+                handle_request(request, apps)
             except (json.JSONDecodeError, ValueError):
                 continue
 
