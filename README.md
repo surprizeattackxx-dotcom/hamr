@@ -39,6 +39,7 @@ Hamr learns from your usage patterns to surface what you need, when you need it.
 | `translate` | Instant translation (no LLM), auto-detect source | `tr hola mundo`, `tr hi to french` |
 | `unicode` | Inspect characters, codepoints and names | `char ★`, `u+1f600`, `unicode snowman` |
 | `color` | Convert colors between hex, rgb and hsl | `color #ff5733`, `color tomato` |
+| `ssh` | Connect to hosts from `~/.ssh/config` in your terminal | `ssh myserver` |
 | `kill` | Find a running process and terminate it (`!` prefix = SIGKILL) | `kill firefox` |
 | `sysinfo` | At-a-glance dashboard card — CPU, RAM, disk, temps, net, uptime | `sys` |
 | `weather` | Current conditions + 3-day forecast card (wttr.in, cached) | `weather`, `weather tokyo` |

@@ -42,6 +42,7 @@ check kill       results '{"step":"search","query":"init"}'
 check sysinfo    card    '{"step":"initial","query":""}'
 check unicode    match   '{"step":"match","query":"char A"}'
 check color      match   '{"step":"match","query":"color #ff5733"}'
+check ssh        results '{"step":"search","query":""}'
 
 if [ "$NET" = 1 ]; then
     echo "Network plugins:"

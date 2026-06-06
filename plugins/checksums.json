@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generated": "2026-06-06T15:19:25-04:00",
+  "generated": "2026-06-06T15:24:12-04:00",
   "plugins": {
     "accentcolor": {
       "manifest.json": "1703b638fa7f035a85398cee8902d6514d15009bc146e54b71a855563f394486",
@@ -134,6 +134,10 @@
     "sound": {
       "manifest.json": "3c5af7baf3a6f0b67e00ea2bdb58644f460ba2f551f36f5fdb744c3e35e55315",
       "handler.py": "290fa41b5e5374f038f9809375d90ebdc3251e815e67b18c5871ba924c4bf1e1"
+    },
+    "ssh": {
+      "manifest.json": "4609495b042c5ddfffe8db43a26b08d000653152d0dbd06ae528535bd945e4c6",
+      "handler.py": "7c430366ece387d3c5519d58eabd1b2ffa7a2b2e7b78582f6b2d2b548e4e40ee"
     },
     "sysinfo": {
       "manifest.json": "3caa4d33bb3571d642cbca5b11754a526fec9ab6a15238d98a8dd95fa3d6a7ce",
