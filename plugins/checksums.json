@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generated": "2026-06-06T19:05:57-04:00",
+  "generated": "2026-06-06T19:07:47-04:00",
   "plugins": {
     "accentcolor": {
       "manifest.json": "1703b638fa7f035a85398cee8902d6514d15009bc146e54b71a855563f394486",
@@ -145,7 +145,7 @@
     },
     "sysinfo": {
       "manifest.json": "3caa4d33bb3571d642cbca5b11754a526fec9ab6a15238d98a8dd95fa3d6a7ce",
-      "handler.py": "b6d8f3607b1c0aee0f3ab7187aaeed7d1247dca0562e2a4ac5cfa5b1574bc7bb"
+      "handler.py": "a6169047302445b788f34ac494d2bec3f5ee29ae774b48cf8b4d060f127ddc68"
     },
     "test-widgets": {
       "manifest.json": "ed881dad493df9ccc849ebaa8eeea91fe49c7b27bdeaa26a7fb800ad59da7983",

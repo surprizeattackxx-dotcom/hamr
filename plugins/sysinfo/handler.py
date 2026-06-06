@@ -121,6 +121,21 @@ def network():
     return (m_dev.group(1) if m_dev else None), (m_src.group(1) if m_src else None)
 
 
+def top_proc(sort_key):
+    try:
+        out = subprocess.run(
+            ["ps", "-eo", "comm,pcpu,pmem", "--sort", sort_key],
+            capture_output=True, text=True, timeout=2,
+        ).stdout.splitlines()
+    except (OSError, subprocess.SubprocessError):
+        return None
+    for line in out[1:]:
+        parts = line.split()
+        if len(parts) >= 3:
+            return parts[0], float(parts[1]), float(parts[2])
+    return None
+
+
 def gather():
     cpu = cpu_percent()
     mt, mu, st, su = meminfo()
@@ -148,6 +163,8 @@ def gather():
         "iface": iface,
         "ip": ip,
         "uptime": uptime_str(),
+        "top_cpu": top_proc("-pcpu"),
+        "top_mem": top_proc("-pmem"),
     }
 
 
@@ -161,6 +178,10 @@ def render_markdown(s):
         f"`RAM  {bar(s['mem_pct'])} {s['mem_pct']:5.1f}%`  {s['mem_used']:.1f}/{s['mem_total']:.1f} GiB",
         f"`DISK {bar(s['disk_pct'])} {s['disk_pct']:5.1f}%`  {s['disk_used']:.0f}/{s['disk_total']:.0f} GiB  (/)",
     ]
+    if s["top_cpu"]:
+        lines.append(f"top cpu: {s['top_cpu'][0]} ({s['top_cpu'][1]:.0f}%)")
+    if s["top_mem"]:
+        lines.append(f"top mem: {s['top_mem'][0]} ({s['top_mem'][2]:.0f}%)")
     if s["swap_total"] > 0.01:
         sp = s["swap_used"] / s["swap_total"] * 100
         lines.append(f"`SWAP {bar(sp)} {sp:5.1f}%`  {s['swap_used']:.1f}/{s['swap_total']:.1f} GiB")
