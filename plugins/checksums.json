@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generated": "2026-06-06T15:15:35-04:00",
+  "generated": "2026-06-06T15:19:25-04:00",
   "plugins": {
     "accentcolor": {
       "manifest.json": "1703b638fa7f035a85398cee8902d6514d15009bc146e54b71a855563f394486",
@@ -29,6 +29,10 @@
     "clipboard": {
       "manifest.json": "85bf8d992551bfc0073c29e209072e608836552265ae1f1dfc4e4e930b32d36a",
       "handler.py": "f0eceffaf59e5c7ce146dc02e5fc962593ee109174566e2e415a28383a6bc062"
+    },
+    "color": {
+      "manifest.json": "bc5563540a9c7df64f52984427cfe1a3072b5b4d98e408a7726f597a63110d4b",
+      "handler.py": "bc8a8b24330cc59f2713e4c2c944aca93ed1e2507808175b72d2f063639f6f1a"
     },
     "colorpick": {
       "manifest.json": "66157d953d02cc1931b5975e8cc11d729a4304b17ac5854cebd4b0043a3fdf5e",
