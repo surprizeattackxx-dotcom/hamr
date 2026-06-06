@@ -102,6 +102,8 @@ Some bundled plugins depend on extra system tools. Hamr will still install witho
 
 On Arch Linux, common packages are `libqalculate`, `cliphist`, `playerctl`, `fd`, `fzf`, `bitwarden-cli`, `zoxide`, `wf-recorder`, `slurp`, `grim`, `satty`, `wl-clipboard`, `tesseract`, `ydotool`, `lm_sensors`, and `qrencode`.
 
+Run `hamr doctor` to see which of these optional tools are installed.
+
 ### Manual Download
 
 ```bash
