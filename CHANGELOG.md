@@ -33,6 +33,7 @@ features on top. Notable changes since forking from upstream `v1.1.0`:
 - **GTK**: launcher elevation shadow, focus glow, selection accent bar and an
   entrance animation — each toggleable via `appearance` config
   (`elevationShadow`/`openAnimation`/`selectionAccent`).
+- **GTK**: matched query characters are highlighted in result names.
 - **GTK & TUI**: `Alt+1…9` jumps to and launches the Nth visible result.
 - **CLI**: `hamr doctor` reports which optional plugin dependencies are installed.
 - Matugen theming: both the GTK launcher and the TUI follow the wallpaper
