@@ -144,7 +144,9 @@ impl SearchEngine {
     #[cfg(test)]
     #[must_use]
     pub fn is_exact_match(query: &str, name: &str) -> bool {
-        query.eq_ignore_ascii_case(name)
+        // ASCII fast path; fall back to Unicode-aware folding so non-ASCII names
+        // ("café" vs "CAFÉ") match consistently with `name_match_bonus`.
+        query.eq_ignore_ascii_case(name) || query.to_lowercase() == name.to_lowercase()
     }
 
     /// Calculate name match bonus based on how well query matches name.
@@ -242,6 +244,10 @@ mod tests {
         assert!(SearchEngine::is_exact_match("firefox", "Firefox"));
         assert!(SearchEngine::is_exact_match("Firefox", "firefox"));
         assert!(!SearchEngine::is_exact_match("fire", "Firefox"));
+        // Unicode-aware: non-ASCII case folding matches name_match_bonus
+        assert!(SearchEngine::is_exact_match("café", "CAFÉ"));
+        assert!(SearchEngine::is_exact_match("ÜBER", "über"));
+        assert!(!SearchEngine::is_exact_match("cafe", "café"));
     }
 
     #[test]
