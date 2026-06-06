@@ -12,6 +12,24 @@ pub(crate) fn apply_css(provider: &gtk4::CssProvider, theme: &Theme) {
     let colors = &theme.colors;
     let config = &theme.config;
 
+    let container_shadow = if config.appearance.elevation_shadow {
+        format!(
+            "box-shadow: 0 {y1}px {b1}px alpha({shadow}, 0.20), 0 {y2}px {b2}px alpha({shadow}, 0.28);",
+            y1 = theme.scaled(2),
+            b1 = theme.scaled(8),
+            y2 = theme.scaled(10),
+            b2 = theme.scaled(28),
+            shadow = colors.shadow,
+        )
+    } else {
+        String::new()
+    };
+    let container_animation = if config.appearance.open_animation {
+        "animation: launcher-in 160ms cubic-bezier(0.2, 0, 0, 1);".to_string()
+    } else {
+        String::new()
+    };
+
     // Base launcher styles
     let base_css = format!(
         r#"
@@ -36,9 +54,8 @@ pub(crate) fn apply_css(provider: &gtk4::CssProvider, theme: &Theme) {
                 background: alpha({surface_container_highest}, {bg_opacity});
                 border-radius: {radius_normal}px;
                 border: {border_thin}px solid alpha({outline}, 0.12);
-                box-shadow: 0 {shadow_y1}px {shadow_b1}px alpha({shadow}, 0.20),
-                            0 {shadow_y2}px {shadow_b2}px alpha({shadow}, 0.28);
-                animation: launcher-in 160ms cubic-bezier(0.2, 0, 0, 1);
+                {container_shadow}
+                {container_animation}
             }}
 
             .icon-container {{
@@ -150,13 +167,8 @@ pub(crate) fn apply_css(provider: &gtk4::CssProvider, theme: &Theme) {
         on_surface_variant = colors.on_surface_variant,
         primary = colors.primary,
         outline = colors.outline,
-        shadow = colors.shadow,
         bg_opacity = theme.bg_opacity(),
         content_opacity = theme.content_opacity(),
-        shadow_y1 = theme.scaled(2),
-        shadow_b1 = theme.scaled(8),
-        shadow_y2 = theme.scaled(10),
-        shadow_b2 = theme.scaled(28),
         enter_shift = theme.scaled(8),
         main_font = config.fonts.main,
         icon_font = config.fonts.icon,

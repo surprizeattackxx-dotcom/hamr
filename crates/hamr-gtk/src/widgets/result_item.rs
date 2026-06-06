@@ -1350,6 +1350,10 @@ pub fn result_item_css(theme: &crate::config::Theme) -> String {
         outline_variant = colors.outline_variant,
         surface_high = colors.surface_container_high,
         surface_dark = colors.surface,
-        accent = theme.scaled(3),
+        accent = if theme.config.appearance.selection_accent {
+            theme.scaled(3)
+        } else {
+            0
+        },
     )
 }

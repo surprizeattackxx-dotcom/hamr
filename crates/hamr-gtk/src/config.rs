@@ -89,6 +89,19 @@ pub struct AppearanceConfig {
     /// Grid layout settings
     #[serde(default)]
     pub grid: GridConfig,
+    /// Drop shadow / elevation under the launcher container
+    #[serde(default = "default_true")]
+    pub elevation_shadow: bool,
+    /// Scale + fade entrance animation when the launcher opens
+    #[serde(default = "default_true")]
+    pub open_animation: bool,
+    /// Primary accent bar on the selected result row
+    #[serde(default = "default_true")]
+    pub selection_accent: bool,
+}
+
+fn default_true() -> bool {
+    true
 }
 
 fn default_bg_transparency() -> f64 {
@@ -134,6 +147,9 @@ impl Default for AppearanceConfig {
             ui_scale: default_ui_scale(),
             default_result_view: default_result_view(),
             grid: GridConfig::default(),
+            elevation_shadow: true,
+            open_animation: true,
+            selection_accent: true,
         }
     }
 }
