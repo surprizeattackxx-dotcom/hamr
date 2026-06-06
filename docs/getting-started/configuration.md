@@ -18,6 +18,16 @@ Hamr is configured via `~/.config/hamr/config.json`. Use the built-in settings p
 |                | `excludedSites`          | `[]`                        | Sites to exclude from web search results                                   |
 |                | `pluginRankingBonus`     | `{}`                        | Per-plugin score boosts (e.g., `{"apps": 200}`)                            |
 | **Action Bar** | `actionBarHints`         | _see below_                 | Customizable action bar shortcuts                                          |
+| **Appearance** | `backgroundTransparency` | `0.2`                       | Launcher background transparency (0 = opaque, 1 = clear)                   |
+|                | `contentTransparency`    | `0.2`                       | Search field / content transparency                                       |
+|                | `backgroundBlur`         | `false`                     | Blur the wallpaper behind the launcher (compositor permitting)            |
+|                | `uiScale`                | `1.0`                       | Scale spacing, padding, margins and icons                                  |
+|                | `fontScale`              | `1.0`                       | Scale font sizes                                                           |
+|                | `launcherXRatio` / `launcherYRatio` | `0.5` / `0.1`    | Launcher position on screen (0-1)                                          |
+|                | `defaultResultView`      | `list`                      | `list` or `grid`                                                          |
+|                | `elevationShadow`        | `true`                      | Drop shadow / elevation under the launcher                                 |
+|                | `openAnimation`          | `true`                      | Scale + fade entrance animation                                           |
+|                | `selectionAccent`        | `true`                      | Primary accent bar on the selected result                                 |
 
 ## Prefix Shortcuts
 
