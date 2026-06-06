@@ -98,8 +98,8 @@ Some bundled plugins depend on extra system tools. Hamr will still install witho
 | `ai` | `claude` | Claude Code CLI, signed in (`claude -p`); vision modes also use `grim`/`slurp` |
 | `sysinfo` | `lm_sensors` | Temperatures (CPU/RAM/disk/net/uptime work without it) |
 | `qrcode` | `qrencode` | Generates the QR PNG (inline ASCII preview works without it) |
-| `weather` | _network_ | wttr.in lookups (cached 15 min) |
-| `units`, `kill`, `worldclock`, `random`, `devtools`, `passgen`, `websearch` | _none_ | Pure-Python, offline (units currency needs network on first fetch) |
+| `weather`, `translate` | _network_ | wttr.in / Google gtx lookups (cached) |
+| `units`, `kill`, `worldclock`, `random`, `devtools`, `passgen`, `websearch`, `unicode`, `color`, `ssh`, `kaomoji` | _none_ | Pure-Python, offline (units currency needs network on first fetch; ssh needs a terminal) |
 
 On Arch Linux, common packages are `libqalculate`, `cliphist`, `playerctl`, `fd`, `fzf`, `bitwarden-cli`, `zoxide`, `wf-recorder`, `slurp`, `grim`, `satty`, `wl-clipboard`, `tesseract`, `ydotool`, `lm_sensors`, and `qrencode`.
 
