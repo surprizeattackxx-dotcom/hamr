@@ -68,7 +68,7 @@ def render(data, location):
     name = " ".join(
         v[0]["value"] for k in ("areaName", "country") if (v := area.get(k))
     ) or (location or "here")
-    desc = cur["weatherDesc"][0]["value"]
+    desc = cur["weatherDesc"][0]["value"].strip()
     icon = pick_icon(desc)
     lines = [
         f"## {icon}  {cur['temp_C']}°C  ·  {name}",
@@ -83,7 +83,7 @@ def render(data, location):
     days = ["Today", "Tomorrow"]
     for i, day in enumerate(data.get("weather", [])[:3]):
         label = days[i] if i < len(days) else day["date"][5:]
-        cond = day["hourly"][len(day["hourly"]) // 2]["weatherDesc"][0]["value"]
+        cond = day["hourly"][len(day["hourly"]) // 2]["weatherDesc"][0]["value"].strip()
         lines.append(
             f"| {label} | {day['mintempC']}° | {day['maxtempC']}° | {pick_icon(cond)} {cond} |"
         )
@@ -92,7 +92,7 @@ def render(data, location):
 
 def plain(data, location):
     cur = data["current_condition"][0]
-    return f"{cur['temp_C']}C, {cur['weatherDesc'][0]['value']} ({location or 'here'})"
+    return f"{cur['temp_C']}C, {cur['weatherDesc'][0]['value'].strip()} ({location or 'here'})"
 
 
 STATE = {"plain": ""}
