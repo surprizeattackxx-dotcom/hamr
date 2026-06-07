@@ -1,0 +1,20 @@
+{
+  "name": "Morse",
+  "description": "Encode text to Morse code or decode dots and dashes back to text",
+  "icon": "graphic_eq",
+  "frecency": "plugin",
+  "handler": {
+    "type": "stdio",
+    "command": "python3 handler.py"
+  },
+  "match": {
+    "patterns": [
+      "^(morse|unmorse|demorse)\\s+\\S"
+    ],
+    "priority": 88
+  },
+  "supportedPlatforms": [
+    "niri",
+    "hyprland"
+  ]
+}

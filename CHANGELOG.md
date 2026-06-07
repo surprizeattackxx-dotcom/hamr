@@ -23,9 +23,13 @@ features on top. Notable changes since forking from upstream `v1.1.0`:
 - **kaomoji**: Japanese emoticons searchable by mood.
 - **sysinfo**: live CPU/RAM/disk/temp/net/uptime dashboard card with top CPU/memory process.
 - **worldclock**: current time in any city or IANA zone.
+- **cron**: explain a cron expression in plain English and preview its next 5
+  run times (`cron 0 9 * * 1-5`, `cron */15 * * * *`, `cron @daily`).
+- **morse**: encode text to Morse and decode dots/dashes back (`morse sos`).
+- **roman**: convert between Roman numerals and Arabic numbers, 1–3999.
 - **kill**: find and terminate a process (`!` prefix = SIGKILL).
 - **random**: dice, coin flips, ranges, list picks, lorem ipsum.
-- **devtools**: offline base64/url/hex/jwt/hash/uuid/epoch transforms, plus JSON pretty/minify and slugify.
+- **devtools**: offline base64/url/hex/jwt/hash/uuid/epoch transforms, plus JSON pretty/minify, slugify and case conversion (`camel`/`pascal`/`snake`/`kebab`/`const`/`title`).
 - **random**: dice, coin, ranges, list picks, lorem ipsum and a magic 8-ball.
 - **qrcode**: generate (ASCII + PNG) and decode a QR from the clipboard image.
 - **passgen**: password and passphrase generator.

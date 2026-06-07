@@ -59,6 +59,36 @@ def _slug(s: str) -> str:
     return out.strip("-")
 
 
+def _words(s: str):
+    s = re.sub(r"([a-z0-9])([A-Z])", r"\1 \2", s.strip())
+    return [w for w in re.split(r"[^A-Za-z0-9]+", s) if w]
+
+
+def _camel(s: str) -> str:
+    w = _words(s)
+    return (w[0].lower() + "".join(p.capitalize() for p in w[1:])) if w else ""
+
+
+def _pascal(s: str) -> str:
+    return "".join(p.capitalize() for p in _words(s))
+
+
+def _snake(s: str) -> str:
+    return "_".join(w.lower() for w in _words(s))
+
+
+def _kebab(s: str) -> str:
+    return "-".join(w.lower() for w in _words(s))
+
+
+def _const(s: str) -> str:
+    return "_".join(w.upper() for w in _words(s))
+
+
+def _title(s: str) -> str:
+    return " ".join(w.capitalize() for w in _words(s))
+
+
 OPS = {
     "base64": ("Base64 encode", lambda s: base64.b64encode(s.encode()).decode()),
     "b64": ("Base64 encode", lambda s: base64.b64encode(s.encode()).decode()),
@@ -84,6 +114,12 @@ OPS = {
     "json": ("JSON pretty-print", lambda s: json.dumps(json.loads(s), indent=2, ensure_ascii=False)),
     "jsonmin": ("JSON minify", lambda s: json.dumps(json.loads(s), separators=(",", ":"), ensure_ascii=False)),
     "slug": ("Slugify", _slug),
+    "camel": ("camelCase", _camel),
+    "pascal": ("PascalCase", _pascal),
+    "snake": ("snake_case", _snake),
+    "kebab": ("kebab-case", _kebab),
+    "const": ("CONSTANT_CASE", _const),
+    "title": ("Title Case", _title),
 }
 
 STANDALONE = {"uuid", "epoch", "now"}

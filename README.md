@@ -46,9 +46,12 @@ Hamr learns from your usage patterns to surface what you need, when you need it.
 | `weather` | Current conditions + 3-day forecast card (wttr.in, cached) | `weather`, `weather tokyo` |
 | `worldclock` | Current time in any city or IANA zone | `time tokyo`, `time in london` |
 | `random` | Dice, coin flips, ranges, list picks, lorem ipsum | `roll 2d6`, `pick a, b, c` |
-| `devtools` | Offline encode/decode/hash — base64, url, hex, jwt, uuid, epoch | `base64 hello`, `jwt <token>` |
+| `devtools` | Offline encode/decode/hash + case convert — base64, url, hex, jwt, uuid, epoch, camel/snake/kebab | `base64 hello`, `snake helloWorld` |
 | `passgen` | Password and passphrase generator | `pass 24`, `passphrase 5` |
 | `qrcode` | Inline ASCII QR + PNG; decode a QR from the clipboard | `qr https://...`, `qr decode` |
+| `cron` | Explain a cron expression and preview its next run times | `cron 0 9 * * 1-5`, `cron @daily` |
+| `morse` | Encode text to Morse and decode dots/dashes back | `morse sos`, `unmorse ... --- ...` |
+| `roman` | Convert between Roman numerals and Arabic numbers | `roman 2024`, `roman MMXXIV` |
 
 **Core & UI**
 
@@ -99,7 +102,7 @@ Some bundled plugins depend on extra system tools. Hamr will still install witho
 | `sysinfo` | `lm_sensors` | Temperatures (CPU/RAM/disk/net/uptime work without it) |
 | `qrcode` | `qrencode`, `zbarimg` | `qrencode` generates (ASCII preview works without it); `zbarimg` is needed for `qr decode` |
 | `weather`, `translate` | _network_ | wttr.in / Google gtx lookups (cached) |
-| `units`, `kill`, `worldclock`, `random`, `devtools`, `passgen`, `websearch`, `unicode`, `color`, `ssh`, `kaomoji` | _none_ | Pure-Python, offline (units currency needs network on first fetch; ssh needs a terminal) |
+| `units`, `kill`, `worldclock`, `random`, `devtools`, `passgen`, `websearch`, `unicode`, `color`, `ssh`, `kaomoji`, `cron`, `morse`, `roman` | _none_ | Pure-Python, offline (units currency needs network on first fetch; ssh needs a terminal) |
 
 On Arch Linux, common packages are `libqalculate`, `cliphist`, `playerctl`, `fd`, `fzf`, `bitwarden-cli`, `zoxide`, `wf-recorder`, `slurp`, `grim`, `satty`, `wl-clipboard`, `tesseract`, `ydotool`, `lm_sensors`, and `qrencode`.
 

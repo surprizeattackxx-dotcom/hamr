@@ -145,5 +145,66 @@ class TestRandom(unittest.TestCase):
         self.assertIn(self.h.handle("pick a, b, c")[0], ["a", "b", "c"])
 
 
+class TestCron(unittest.TestCase):
+    h = load("cron")
+
+    def test_describe(self):
+        self.assertTrue(self.h.describe(self.h.parse("0 9 * * *")).startswith("at 09:00"))
+        self.assertEqual(self.h.describe(self.h.parse("*/15 * * * *")), "every 15 minutes")
+
+    def test_alias(self):
+        self.assertEqual(self.h.parse("@daily"), self.h.parse("0 0 * * *"))
+
+    def test_next_runs_step(self):
+        from datetime import datetime
+        runs = self.h.next_runs(self.h.parse("*/15 * * * *"), datetime(2026, 1, 1, 10, 7))
+        self.assertEqual(runs[0].minute, 15)
+        self.assertEqual(runs[1].minute, 30)
+
+    def test_rejects_garbage(self):
+        with self.assertRaises(ValueError):
+            self.h.parse("not a cron")
+
+
+class TestMorse(unittest.TestCase):
+    h = load("morse")
+
+    def test_roundtrip(self):
+        self.assertEqual(self.h.encode("SOS"), "... --- ...")
+        self.assertEqual(self.h.decode("... --- ..."), "sos")
+
+    def test_words(self):
+        self.assertEqual(self.h.encode("hi yo"), ".... .. / -.-- ---")
+
+
+class TestRoman(unittest.TestCase):
+    h = load("roman")
+
+    def test_to_roman(self):
+        self.assertEqual(self.h.to_roman(2024), "MMXXIV")
+        self.assertEqual(self.h.to_roman(4), "IV")
+
+    def test_from_roman(self):
+        self.assertEqual(self.h.from_roman("MMXXIV"), 2024)
+        self.assertEqual(self.h.from_roman("ix"), 9)
+
+    def test_invalid(self):
+        with self.assertRaises(ValueError):
+            self.h.from_roman("IIII")
+        with self.assertRaises(ValueError):
+            self.h.to_roman(0)
+
+
+class TestDevtools(unittest.TestCase):
+    h = load("devtools")
+
+    def test_case_transforms(self):
+        self.assertEqual(self.h._camel("hello world foo"), "helloWorldFoo")
+        self.assertEqual(self.h._snake("helloWorldFoo"), "hello_world_foo")
+        self.assertEqual(self.h._kebab("Hello World"), "hello-world")
+        self.assertEqual(self.h._const("hello world"), "HELLO_WORLD")
+        self.assertEqual(self.h._pascal("foo_bar"), "FooBar")
+
+
 if __name__ == "__main__":
     unittest.main(verbosity=2)

@@ -1,0 +1,20 @@
+{
+  "name": "Roman",
+  "description": "Convert between Roman numerals and Arabic numbers",
+  "icon": "looks_one",
+  "frecency": "plugin",
+  "handler": {
+    "type": "stdio",
+    "command": "python3 handler.py"
+  },
+  "match": {
+    "patterns": [
+      "^roman\\s+([0-9]+|[ivxlcdmIVXLCDM]+)\\s*$"
+    ],
+    "priority": 88
+  },
+  "supportedPlatforms": [
+    "niri",
+    "hyprland"
+  ]
+}

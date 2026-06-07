@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generated": "2026-06-06T19:11:31-04:00",
+  "generated": "2026-06-07T18:39:54-04:00",
   "plugins": {
     "accentcolor": {
       "manifest.json": "1703b638fa7f035a85398cee8902d6514d15009bc146e54b71a855563f394486",
@@ -38,13 +38,17 @@
       "manifest.json": "66157d953d02cc1931b5975e8cc11d729a4304b17ac5854cebd4b0043a3fdf5e",
       "handler.py": "ecc77ef05d38b2b974796c7974950385b073c2fe793310eb5d98fa7988d6b961"
     },
+    "cron": {
+      "manifest.json": "bb938514dc05ae0a23bc0d04212336276c230fe83d8874be84d0c004995e797e",
+      "handler.py": "2416fa88589f13d51f767b36017435c13bce8b0f2ce79c1cef779c5466468d66"
+    },
     "default-apps": {
       "manifest.json": "ac5b4e6055eec4d5ff3332533c35b88f41d725f6673d4716c322b6547639fe05",
       "handler.py": "81e9063a07314bc5e86aecca8d8d6755ecde93189bac2fc7875b22292ccd2246"
     },
     "devtools": {
-      "manifest.json": "a778bc0758efdd312f41aa0f4478dc46bdff68e5770445b2f469e875750905f1",
-      "handler.py": "8dc5e439d890d17600267d9471c96cc712456fb5be07c0ecd17bb06789550eec"
+      "manifest.json": "caf471cb0c98239f59896b6269ef179958ad2a7946b80b38c3a09d045abe9d64",
+      "handler.py": "763196b974af7c5a55584f5a0962b6f9528ee598ab0a726d490b6cb760b6cd08"
     },
     "dictionary": {
       "manifest.json": "07e0071f131ad5b171a52f708a7548b8630da04ff24215ef1b1c63a57a779b58",
@@ -74,6 +78,10 @@
     "kill": {
       "manifest.json": "1022bacade0e5e91c71299e6dd202222dc617e6ce6d605aa4945d0ff86099606",
       "handler.py": "a8b860fc09685b0d7150a977b587e597423bcdbecf545eca4a5452740971a3ca"
+    },
+    "morse": {
+      "manifest.json": "f96801567d58f388722a70cca2ff546e34b1a74911e7a9ca86f9d97889cad417",
+      "handler.py": "22f8b82880271163d3059cf0add09231975a7f7e31019b59e237cb1458b71264"
     },
     "niri": {
       "manifest.json": "670bc48d93367c0c2f569650abcb1b8d7a81e7c74e1f332c423f759e8c7921ff",
@@ -110,6 +118,10 @@
     "random": {
       "manifest.json": "8ccf9e256ded3a9991a183243866e7831d47744c6e068009eb3e794d3273dd9b",
       "handler.py": "a3501c30898eef7ecc7a1e18e60a8f185c1009bb7b77c46ac117d0b8f85d2d9e"
+    },
+    "roman": {
+      "manifest.json": "0a36e7dd8d65542ad4c1b5dd02050067cd8fb740cd22266ca37cae678de2b6c7",
+      "handler.py": "a1781840669351f80f36d7042f7273344cbb42512010e342222ec1dbe8e3efbb"
     },
     "screenrecord": {
       "manifest.json": "249f3eb9f9769bff7ce0f32685fb6486d9bc582956a3876fa88ac24ca84f7120",

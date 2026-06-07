@@ -44,6 +44,9 @@ check unicode    match   '{"step":"match","query":"char A"}'
 check color      match   '{"step":"match","query":"color #ff5733"}'
 check ssh        results '{"step":"search","query":""}'
 check kaomoji    results '{"step":"search","query":"shrug"}'
+check cron       card    '{"step":"search","query":"cron 0 9 * * 1-5"}'
+check morse      match   '{"step":"match","query":"morse sos"}'
+check roman      match   '{"step":"match","query":"roman 2024"}'
 
 if [ "$NET" = 1 ]; then
     echo "Network plugins:"

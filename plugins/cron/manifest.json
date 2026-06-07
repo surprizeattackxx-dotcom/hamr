@@ -1,0 +1,20 @@
+{
+  "name": "Cron",
+  "description": "Explain a cron expression in plain English and show the next run times",
+  "icon": "schedule",
+  "frecency": "plugin",
+  "handler": {
+    "type": "stdio",
+    "command": "python3 handler.py"
+  },
+  "match": {
+    "patterns": [
+      "^cron\\s+\\S"
+    ],
+    "priority": 88
+  },
+  "supportedPlatforms": [
+    "niri",
+    "hyprland"
+  ]
+}
