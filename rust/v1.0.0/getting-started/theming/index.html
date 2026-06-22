@@ -1343,32 +1343,106 @@
 <h3 id="other-shells-ags-eww-etc">Other Shells (AGS, EWW, etc.)<a class="headerlink" href="#other-shells-ags-eww-etc" title="Permanent link">&para;</a></h3>
 <p>The same approach works for any tool that uses matugen. Add the Hamr template to your config and all tools will receive colors from the same matugen invocation.</p>
 <h2 id="manual-colorsjson">Manual colors.json<a class="headerlink" href="#manual-colorsjson" title="Permanent link">&para;</a></h2>
-<p>If you prefer not to use a color generator, create <code>~/.config/hamr/colors.json</code> manually. The file must use a <strong>flat</strong> format with underscore-separated keys:</p>
+<p>If you prefer not to use a color generator, create <code>~/.config/hamr/colors.json</code> manually. The file uses a <strong>flat</strong> format with underscore-separated keys.</p>
+<p>Hamr reads <strong>only</strong> the keys below. Material 3 generators (matugen, pywal) emit many more — those extra keys are simply ignored. Any key you omit falls back to its built-in dark default, so a partial file is fine.</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Used for</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>background</code></td>
+<td>Window background</td>
+</tr>
+<tr>
+<td><code>surface</code></td>
+<td>Base surface</td>
+</tr>
+<tr>
+<td><code>surface_container_low</code> / <code>surface_container</code> / <code>surface_container_high</code> / <code>surface_container_highest</code></td>
+<td>Layered surface tiers (low = recessed, highest = raised)</td>
+</tr>
+<tr>
+<td><code>on_surface</code></td>
+<td>Primary text</td>
+</tr>
+<tr>
+<td><code>on_surface_variant</code></td>
+<td>Secondary / dimmed text</td>
+</tr>
+<tr>
+<td><code>outline</code> / <code>outline_variant</code></td>
+<td>Borders and separators</td>
+</tr>
+<tr>
+<td><code>primary</code></td>
+<td>Accent — selection, focus, highlights</td>
+</tr>
+<tr>
+<td><code>on_primary</code></td>
+<td>Text/icon on <code>primary</code></td>
+</tr>
+<tr>
+<td><code>primary_container</code> / <code>on_primary_container</code></td>
+<td>Accent container and its text</td>
+</tr>
+<tr>
+<td><code>secondary</code></td>
+<td>Secondary accent</td>
+</tr>
+<tr>
+<td><code>secondary_container</code> / <code>on_secondary_container</code></td>
+<td>Secondary container and its text</td>
+</tr>
+<tr>
+<td><code>shadow</code></td>
+<td>Read for compatibility; not currently used in any styling</td>
+</tr>
+</tbody>
+</table>
+<p>A complete example using the built-in defaults (copy and recolor):</p>
 <div class="language-json highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="p">{</span>
 </span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="w">  </span><span class="nt">&quot;background&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;#141313&quot;</span><span class="p">,</span>
-</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="w">  </span><span class="nt">&quot;on_background&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;#e6e1e1&quot;</span><span class="p">,</span>
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>
 </span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="w">  </span><span class="nt">&quot;surface&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;#141313&quot;</span><span class="p">,</span>
-</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="w">  </span><span class="nt">&quot;primary&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;#cbc4cb&quot;</span><span class="p">,</span>
-</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="w">  </span><span class="nt">&quot;on_primary&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;#322f34&quot;</span><span class="p">,</span>
-</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="w">  </span><span class="nt">&quot;secondary&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;#cac5c8&quot;</span><span class="p">,</span>
-</span><span id="__span-9-8"><a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a><span class="w">  </span><span class="nt">&quot;on_secondary&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;#323032&quot;</span><span class="p">,</span>
-</span><span id="__span-9-9"><a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a><span class="w">  </span><span class="nt">&quot;tertiary&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;#d1c3c6&quot;</span><span class="p">,</span>
-</span><span id="__span-9-10"><a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a><span class="w">  </span><span class="nt">&quot;on_tertiary&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;#372e30&quot;</span><span class="p">,</span>
-</span><span id="__span-9-11"><a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a><span class="w">  </span><span class="nt">&quot;error&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;#ffb4ab&quot;</span><span class="p">,</span>
-</span><span id="__span-9-12"><a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a><span class="w">  </span><span class="nt">&quot;on_error&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;#690005&quot;</span><span class="p">,</span>
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="w">  </span><span class="nt">&quot;surface_container_low&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;#1c1b1c&quot;</span><span class="p">,</span>
+</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="w">  </span><span class="nt">&quot;surface_container&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;#201f20&quot;</span><span class="p">,</span>
+</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="w">  </span><span class="nt">&quot;surface_container_high&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;#2b2a2a&quot;</span><span class="p">,</span>
+</span><span id="__span-9-8"><a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a><span class="w">  </span><span class="nt">&quot;surface_container_highest&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;#363435&quot;</span><span class="p">,</span>
+</span><span id="__span-9-9"><a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a>
+</span><span id="__span-9-10"><a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a><span class="w">  </span><span class="nt">&quot;on_surface&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;#e6e1e1&quot;</span><span class="p">,</span>
+</span><span id="__span-9-11"><a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a><span class="w">  </span><span class="nt">&quot;on_surface_variant&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;#cbc5ca&quot;</span><span class="p">,</span>
+</span><span id="__span-9-12"><a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a>
 </span><span id="__span-9-13"><a id="__codelineno-9-13" name="__codelineno-9-13" href="#__codelineno-9-13"></a><span class="w">  </span><span class="nt">&quot;outline&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;#948f94&quot;</span><span class="p">,</span>
-</span><span id="__span-9-14"><a id="__codelineno-9-14" name="__codelineno-9-14" href="#__codelineno-9-14"></a><span class="w">  </span><span class="nt">&quot;surface_container&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;#201f20&quot;</span><span class="p">,</span>
-</span><span id="__span-9-15"><a id="__codelineno-9-15" name="__codelineno-9-15" href="#__codelineno-9-15"></a><span class="w">  </span><span class="nt">&quot;surface_container_high&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;#2b2a2a&quot;</span>
-</span><span id="__span-9-16"><a id="__codelineno-9-16" name="__codelineno-9-16" href="#__codelineno-9-16"></a><span class="p">}</span>
+</span><span id="__span-9-14"><a id="__codelineno-9-14" name="__codelineno-9-14" href="#__codelineno-9-14"></a><span class="w">  </span><span class="nt">&quot;outline_variant&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;#49464a&quot;</span><span class="p">,</span>
+</span><span id="__span-9-15"><a id="__codelineno-9-15" name="__codelineno-9-15" href="#__codelineno-9-15"></a>
+</span><span id="__span-9-16"><a id="__codelineno-9-16" name="__codelineno-9-16" href="#__codelineno-9-16"></a><span class="w">  </span><span class="nt">&quot;primary&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;#cbc4cb&quot;</span><span class="p">,</span>
+</span><span id="__span-9-17"><a id="__codelineno-9-17" name="__codelineno-9-17" href="#__codelineno-9-17"></a><span class="w">  </span><span class="nt">&quot;on_primary&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;#1c1b1c&quot;</span><span class="p">,</span>
+</span><span id="__span-9-18"><a id="__codelineno-9-18" name="__codelineno-9-18" href="#__codelineno-9-18"></a><span class="w">  </span><span class="nt">&quot;primary_container&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;#2d2a2f&quot;</span><span class="p">,</span>
+</span><span id="__span-9-19"><a id="__codelineno-9-19" name="__codelineno-9-19" href="#__codelineno-9-19"></a><span class="w">  </span><span class="nt">&quot;on_primary_container&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;#bcb6bc&quot;</span><span class="p">,</span>
+</span><span id="__span-9-20"><a id="__codelineno-9-20" name="__codelineno-9-20" href="#__codelineno-9-20"></a>
+</span><span id="__span-9-21"><a id="__codelineno-9-21" name="__codelineno-9-21" href="#__codelineno-9-21"></a><span class="w">  </span><span class="nt">&quot;secondary&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;#cac5c8&quot;</span><span class="p">,</span>
+</span><span id="__span-9-22"><a id="__codelineno-9-22" name="__codelineno-9-22" href="#__codelineno-9-22"></a><span class="w">  </span><span class="nt">&quot;secondary_container&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;#4d4b4d&quot;</span><span class="p">,</span>
+</span><span id="__span-9-23"><a id="__codelineno-9-23" name="__codelineno-9-23" href="#__codelineno-9-23"></a><span class="w">  </span><span class="nt">&quot;on_secondary_container&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;#cbc5c8&quot;</span><span class="p">,</span>
+</span><span id="__span-9-24"><a id="__codelineno-9-24" name="__codelineno-9-24" href="#__codelineno-9-24"></a>
+</span><span id="__span-9-25"><a id="__codelineno-9-25" name="__codelineno-9-25" href="#__codelineno-9-25"></a><span class="w">  </span><span class="nt">&quot;shadow&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;#000000&quot;</span>
+</span><span id="__span-9-26"><a id="__codelineno-9-26" name="__codelineno-9-26" href="#__codelineno-9-26"></a><span class="p">}</span>
+</span></code></pre></div>
+<p>Or download it directly:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>curl<span class="w"> </span>-o<span class="w"> </span>~/.config/hamr/colors.json<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="w">  </span>https://raw.githubusercontent.com/stewart86/hamr/main/docs/templates/colors.example.json
 </span></code></pre></div>
 <p><strong>Note:</strong> Material Theme Builder exports a nested format (<code>schemes.dark.primary</code>) which Hamr cannot read directly. Use matugen or manually flatten the structure.</p>
 <h2 id="custom-colorsjson-path">Custom colors.json Path<a class="headerlink" href="#custom-colorsjson-path" title="Permanent link">&para;</a></h2>
 <p>By default, Hamr reads from <code>~/.config/hamr/colors.json</code>. To use a different path:</p>
-<div class="language-json highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="p">{</span>
-</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="w">  </span><span class="nt">&quot;paths&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="w">    </span><span class="nt">&quot;colorsJson&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;~/.local/state/quickshell/user/generated/colors.json&quot;</span>
-</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="w">  </span><span class="p">}</span>
-</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="p">}</span>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="p">{</span>
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="w">  </span><span class="nt">&quot;paths&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="w">    </span><span class="nt">&quot;colorsJson&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;~/.local/state/quickshell/user/generated/colors.json&quot;</span>
+</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="w">  </span><span class="p">}</span>
+</span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a><span class="p">}</span>
 </span></code></pre></div>
 <h2 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">&para;</a></h2>
 <p><strong>Colors not updating?</strong></p>
