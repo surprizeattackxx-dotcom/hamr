@@ -28,6 +28,8 @@ use crate::config::Theme;
 use crate::widgets::preview_panel::PreviewPanel;
 use crate::widgets::result_list::ResultList;
 
+/// Maximum number of rows rendered at once (type to filter a larger set).
+const MAX_RESULTS: usize = 100;
 /// Maximum bytes read for a text preview.
 const MAX_PREVIEW_BYTES: u64 = 64 * 1024;
 const IMAGE_EXTS: &[&str] = &[
@@ -122,6 +124,59 @@ fn cancel() -> ! {
     std::process::exit(1);
 }
 
+/// Anchor the dmenu window at the launcher's monitor and position, so it opens
+/// in place of the launcher rather than at a fixed spot.
+#[allow(
+    clippy::cast_possible_truncation,
+    clippy::cast_sign_loss,
+    clippy::cast_precision_loss
+)]
+fn position_like_launcher(window: &gtk4::ApplicationWindow, theme: &Theme, width: i32) {
+    let state = crate::state::StateManager::new();
+    let launcher = state.launcher();
+    // Match the launcher's fallback-to-config logic for the position ratios.
+    let x_ratio = if (launcher.x_ratio - 0.5).abs() < 0.001 {
+        theme.config.appearance.launcher_x_ratio
+    } else {
+        launcher.x_ratio
+    };
+    let y_ratio = if (launcher.y_ratio - 0.1).abs() < 0.001 {
+        theme.config.appearance.launcher_y_ratio
+    } else {
+        launcher.y_ratio
+    };
+
+    window.set_anchor(Edge::Top, true);
+    window.set_anchor(Edge::Left, true);
+
+    let monitor = state
+        .last_monitor()
+        .and_then(|name| monitor_by_connector(&name))
+        .or_else(|| {
+            gdk::Display::default()
+                .and_then(|d| d.monitors().item(0).and_downcast::<gdk::Monitor>())
+        });
+
+    if let Some(monitor) = monitor {
+        window.set_monitor(Some(&monitor));
+        let geo = monitor.geometry();
+        let left = ((x_ratio * f64::from(geo.width())) - (f64::from(width) / 2.0)).floor() as i32;
+        let top = (y_ratio * f64::from(geo.height())).floor() as i32;
+        window.set_margin(Edge::Left, left.max(0));
+        window.set_margin(Edge::Top, top.max(0));
+    } else {
+        window.set_margin(Edge::Top, 120);
+    }
+}
+
+/// Find a monitor by its connector name (e.g. "DP-1").
+fn monitor_by_connector(name: &str) -> Option<gdk::Monitor> {
+    let monitors = gdk::Display::default()?.monitors();
+    (0..monitors.n_items())
+        .filter_map(|i| monitors.item(i).and_downcast::<gdk::Monitor>())
+        .find(|m| m.connector().as_deref() == Some(name))
+}
+
 #[allow(clippy::too_many_lines)]
 fn build_window(app: &gtk4::Application, items: &[String], prompt: Option<&str>) {
     let theme = Rc::new(Theme::load());
@@ -174,32 +229,73 @@ fn build_window(app: &gtk4::Application, items: &[String], prompt: Option<&str>)
     window.set_layer(Layer::Overlay);
     window.set_keyboard_mode(KeyboardMode::Exclusive);
     window.set_namespace(Some("hamr-dmenu"));
-    window.set_anchor(Edge::Top, true);
-    window.set_anchor(Edge::Left, true);
-    window.set_anchor(Edge::Right, true);
-    window.set_anchor(Edge::Bottom, true);
     window.set_exclusive_zone(-1);
 
-    let width = theme.config.sizes.search_width;
+    // Wider than the launcher so the result list still has room beside the
+    // preview panel (long file paths otherwise ellipsize to nothing).
+    let width = theme.config.sizes.search_width.max(900);
+
+    // Open where the launcher is (same monitor and position).
+    position_like_launcher(&window, &theme, width);
 
     let outer = gtk4::Box::builder()
         .orientation(gtk4::Orientation::Vertical)
-        .halign(gtk4::Align::Center)
-        .valign(gtk4::Align::Start)
-        .margin_top(120)
         .css_classes(["launcher-container"])
         .build();
     outer.set_size_request(width, -1);
 
+    // Search row: gavel logo + rounded pill entry, mirroring the launcher.
+    let search_row = gtk4::Box::builder()
+        .orientation(gtk4::Orientation::Horizontal)
+        .spacing(8)
+        .margin_start(8)
+        .margin_end(8)
+        .margin_top(8)
+        .margin_bottom(6)
+        .valign(gtk4::Align::Center)
+        .build();
+
+    let icon_container = gtk4::Box::builder()
+        .valign(gtk4::Align::Center)
+        .halign(gtk4::Align::Center)
+        .css_classes(["icon-container"])
+        .build();
+    let icon = gtk4::Label::builder()
+        .label("gavel")
+        .css_classes(["material-icon"])
+        .build();
+    icon_container.append(&icon);
+    // Clicking the dmenu's gavel closes it and reopens the regular launcher.
+    let icon_gesture = gtk4::GestureClick::new();
+    icon_gesture.connect_released(|_, _, _, _| {
+        let _ = std::process::Command::new("hamr").arg("show").spawn();
+        std::process::exit(1);
+    });
+    icon_container.add_controller(icon_gesture);
+    icon_container.set_cursor(gdk::Cursor::from_name("pointer", None).as_ref());
+    search_row.append(&icon_container);
+
+    let search_input_container = gtk4::Box::builder()
+        .hexpand(true)
+        .valign(gtk4::Align::Center)
+        .css_classes(["search-input-container"])
+        .build();
     let search_entry = gtk4::Entry::builder()
         .placeholder_text(prompt.unwrap_or("Select..."))
-        .css_classes(["search-entry"])
+        .hexpand(true)
+        .has_frame(false)
+        .css_classes(["launcher-search"])
         .build();
-    outer.append(&search_entry);
+    search_input_container.append(&search_entry);
+    search_row.append(&search_input_container);
+    outer.append(&search_row);
 
     let body = gtk4::Box::builder()
         .orientation(gtk4::Orientation::Horizontal)
         .spacing(8)
+        .margin_start(8)
+        .margin_end(8)
+        .margin_bottom(8)
         .build();
 
     let result_list = Rc::new(ResultList::new());
@@ -212,8 +308,12 @@ fn build_window(app: &gtk4::Application, items: &[String], prompt: Option<&str>)
     body.append(result_list.widget());
 
     let preview_panel = Rc::new(PreviewPanel::new());
-    preview_panel.set_width(360);
+    preview_panel.set_width(380);
     preview_panel.set_max_height(500);
+    // Keep the preview at a fixed width so it doesn't expand and squeeze the
+    // result list (its inner content is hexpand=true).
+    preview_panel.widget().set_hexpand(false);
+    preview_panel.widget().set_halign(gtk4::Align::End);
     preview_panel.widget().set_visible(false);
     body.append(preview_panel.widget());
 
@@ -229,7 +329,7 @@ fn build_window(app: &gtk4::Application, items: &[String], prompt: Option<&str>)
         let result_list = result_list.clone();
         Rc::new(move |query: &str| {
             let results: Vec<ResultItem> = if query.is_empty() {
-                (*result_items).clone()
+                result_items.iter().take(MAX_RESULTS).cloned().collect()
             } else {
                 engine
                     .borrow_mut()
@@ -241,6 +341,7 @@ fn build_window(app: &gtk4::Application, items: &[String], prompt: Option<&str>)
                         item.name_markup = m.name_markup;
                         Some(item)
                     })
+                    .take(MAX_RESULTS)
                     .collect()
             };
             result_list.set_results(&results, &theme);
@@ -278,13 +379,13 @@ fn build_window(app: &gtk4::Application, items: &[String], prompt: Option<&str>)
         });
     }
 
-    // Activation by mouse click.
+    // Clicking a row selects and previews it (without confirming); Enter
+    // confirms the selection.
     {
-        let result_items = result_items.clone();
-        result_list.connect_select(move |id| {
-            if let Ok(idx) = id.parse::<usize>() {
-                output_and_exit(&result_items[idx].name);
-            }
+        let preview_panel = preview_panel.clone();
+        let result_list_cb = result_list.clone();
+        result_list.connect_select(move |_id| {
+            update_preview(&preview_panel, result_list_cb.selected_result().as_ref());
         });
     }
 

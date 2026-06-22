@@ -557,6 +557,7 @@ impl LauncherWindow {
         launcher.setup_form_handlers();
         launcher.setup_preview_panel_handlers();
         launcher.setup_action_bar_handlers();
+        launcher.setup_gavel_menu();
         launcher.setup_caret_drag();
         launcher.setup_click_catcher();
         launcher.setup_fab_window();
@@ -1109,6 +1110,30 @@ impl LauncherWindow {
                 error!("Failed to send LauncherClosed: {}", e);
             }
         });
+    }
+
+    /// Clicking the top-left hamr gavel logo hides the launcher and opens a
+    /// dmenu listing files under the home directory; the chosen path is copied
+    /// to the clipboard. (The dmenu's own gavel reopens this launcher.)
+    fn setup_gavel_menu(&self) {
+        let window = self.window.clone();
+        let gesture = gtk4::GestureClick::new();
+        gesture.connect_released(move |_, _, _, _| {
+            window.set_visible(false);
+            // List home files relative to ~ (short, readable rows), pick one,
+            // and copy the absolute path. Cancelling copies nothing. Running fd
+            // from $HOME also lets the dmenu resolve the relative paths for
+            // previews.
+            let _ = std::process::Command::new("sh")
+                .arg("-c")
+                .arg(
+                    r#"cd "$HOME" && sel="$(fd --type f . 2>/dev/null | hamr dmenu -p 'Copy path:')" && [ -n "$sel" ] && printf '%s/%s' "$HOME" "$sel" | wl-copy"#,
+                )
+                .spawn();
+        });
+        self.icon_container.add_controller(gesture);
+        self.icon_container
+            .set_cursor(gdk::Cursor::from_name("pointer", None).as_ref());
     }
 
     /// Setup caret button with dual functionality:
