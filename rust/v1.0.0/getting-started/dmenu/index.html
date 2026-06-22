@@ -10,13 +10,13 @@
       
       
       
-        <link rel="canonical" href="https://hamr.run/v1.0.0/getting-started/theming/">
+        <link rel="canonical" href="https://hamr.run/v1.0.0/getting-started/dmenu/">
       
       
-        <link rel="prev" href="../logging/">
+        <link rel="prev" href="../cli/">
       
       
-        <link rel="next" href="../troubleshooting/">
+        <link rel="next" href="../configuration/">
       
       
         
@@ -27,7 +27,7 @@
     
     
       
-        <title>Theming - Hamr</title>
+        <title>dmenu Mode - Hamr</title>
       
     
     
@@ -80,7 +80,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#theming-hamr" class="md-skip">
+        <a href="#dmenu-mode" class="md-skip">
           Skip to content
         </a>
       
@@ -115,7 +115,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Theming
+              dmenu Mode
             
           </span>
         </div>
@@ -423,10 +423,37 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../dmenu/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    dmenu Mode
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -442,6 +469,81 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Usage
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#keys" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Keys
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Examples
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#file-previews" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        File previews
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Notes
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -507,37 +609,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Theming
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../theming/" class="md-nav__link">
         
   
   
@@ -553,148 +628,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#matugen-recommended" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Matugen (Recommended)
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Matugen (Recommended)">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#quick-setup" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Quick Setup
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#using-hamrs-wallpaper-plugin" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Using Hamr's Wallpaper Plugin
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#pywal-wallust" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Pywal / Wallust
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#integration-with-other-tools" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Integration with Other Tools
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Integration with Other Tools">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#dankmaterialshell-dms" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        DankMaterialShell (DMS)
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#other-shells-ags-eww-etc" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Other Shells (AGS, EWW, etc.)
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#manual-colorsjson" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Manual colors.json
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#custom-colorsjson-path" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Custom colors.json Path
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#troubleshooting" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Troubleshooting
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -1140,49 +1073,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#matugen-recommended" class="md-nav__link">
+  <a href="#usage" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Matugen (Recommended)
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Matugen (Recommended)">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#quick-setup" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Quick Setup
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#using-hamrs-wallpaper-plugin" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Using Hamr's Wallpaper Plugin
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#pywal-wallust" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Pywal / Wallust
+        Usage
       
     </span>
   </a>
@@ -1190,49 +1084,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#integration-with-other-tools" class="md-nav__link">
+  <a href="#keys" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Integration with Other Tools
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Integration with Other Tools">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#dankmaterialshell-dms" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        DankMaterialShell (DMS)
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#other-shells-ags-eww-etc" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Other Shells (AGS, EWW, etc.)
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#manual-colorsjson" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Manual colors.json
+        Keys
       
     </span>
   </a>
@@ -1240,10 +1095,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#custom-colorsjson-path" class="md-nav__link">
+  <a href="#examples" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Custom colors.json Path
+        Examples
       
     </span>
   </a>
@@ -1251,10 +1106,21 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#troubleshooting" class="md-nav__link">
+  <a href="#file-previews" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Troubleshooting
+        File previews
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Notes
       
     </span>
   </a>
@@ -1281,207 +1147,83 @@
   
 
 
-<h1 id="theming-hamr">Theming Hamr<a class="headerlink" href="#theming-hamr" title="Permanent link">&para;</a></h1>
-<p>Hamr uses Material Design 3 colors for its UI. This guide explains how to set up dynamic theming so Hamr's colors update automatically when you change your wallpaper.</p>
-<h2 id="matugen-recommended">Matugen (Recommended)<a class="headerlink" href="#matugen-recommended" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/InioX/matugen">Matugen</a> generates Material You colors from images.</p>
-<h3 id="quick-setup">Quick Setup<a class="headerlink" href="#quick-setup" title="Permanent link">&para;</a></h3>
-<ol>
-<li>
-<p><strong>Install matugen:</strong></p>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:3"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><input id="__tabbed_1_3" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Arch</label><label for="__tabbed_1_2">Gentoo</label><label for="__tabbed_1_3">Other</label></div>
-<div class="tabbed-content">
-<div class="tabbed-block">
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>paru<span class="w"> </span>-S<span class="w"> </span>matugen
+<h1 id="dmenu-mode">dmenu Mode<a class="headerlink" href="#dmenu-mode" title="Permanent link">&para;</a></h1>
+<p><code>hamr dmenu</code> turns Hamr into a generic <strong>picker</strong> — the same role as
+<a href="https://tools.suckless.org/dmenu/"><code>dmenu</code></a>, <code>rofi -dmenu</code>, or <code>fuzzel
+--dmenu</code>. Pipe it a list, the user chooses one, and the choice is printed to
+stdout. It runs as a one-shot, daemon-independent process, so it works in
+scripts even when the Hamr launcher isn't running.</p>
+<h2 id="usage">Usage<a class="headerlink" href="#usage" title="Permanent link">&para;</a></h2>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>items<span class="w"> </span><span class="p">|</span><span class="w"> </span>hamr<span class="w"> </span>dmenu<span class="w"> </span><span class="o">[</span>-p/--prompt<span class="w"> </span>&lt;text&gt;<span class="o">]</span>
 </span></code></pre></div>
-</div>
-<div class="tabbed-block">
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>sudo<span class="w"> </span>emerge<span class="w"> </span>x11-misc/matugen
-</span></code></pre></div>
-</div>
-<div class="tabbed-block">
-<p>See <a href="https://github.com/InioX/matugen/releases">matugen releases</a> for binaries or build from source.</p>
-</div>
-</div>
-</div>
-</li>
-<li>
-<p><strong>Download the template:</strong></p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>mkdir<span class="w"> </span>-p<span class="w"> </span>~/.config/matugen/templates
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>curl<span class="w"> </span>-o<span class="w"> </span>~/.config/matugen/templates/hamr-colors.json<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">  </span>https://raw.githubusercontent.com/stewart86/hamr/main/docs/templates/matugen-colors.json
-</span></code></pre></div>
-</li>
-<li>
-<p><strong>Add to your matugen config</strong> (<code>~/.config/matugen/config.toml</code>):</p>
-<div class="language-toml highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="k">[templates.hamr_colors]</span>
-</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="n">input_path</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;~/.config/matugen/templates/hamr-colors.json&#39;</span>
-</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="n">output_path</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;~/.config/hamr/colors.json&#39;</span>
-</span></code></pre></div>
-</li>
-<li>
-<p><strong>Generate colors:</strong>
-    <div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>matugen<span class="w"> </span>image<span class="w"> </span>/path/to/wallpaper.jpg
-</span></code></pre></div></p>
-</li>
-</ol>
-<p>Hamr will automatically pick up the new colors.</p>
-<h3 id="using-hamrs-wallpaper-plugin">Using Hamr's Wallpaper Plugin<a class="headerlink" href="#using-hamrs-wallpaper-plugin" title="Permanent link">&para;</a></h3>
-<p>The easiest way: use Hamr's built-in wallpaper plugin (<code>/wallpaper</code>). It calls matugen automatically when you select a wallpaper, so colors sync without any manual steps.</p>
-<h2 id="pywal-wallust">Pywal / Wallust<a class="headerlink" href="#pywal-wallust" title="Permanent link">&para;</a></h2>
-<p>For <a href="https://github.com/dylanaraps/pywal">pywal</a> or <a href="https://codeberg.org/explosion-mental/wallust">wallust</a> users, a template is provided that maps terminal colors to Material Design tokens.</p>
-<ol>
-<li><strong>Download the template:</strong></li>
-</ol>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="c1"># For pywal</span>
-</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>mkdir<span class="w"> </span>-p<span class="w"> </span>~/.config/wal/templates
-</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>curl<span class="w"> </span>-o<span class="w"> </span>~/.config/wal/templates/hamr-colors.json<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">  </span>https://raw.githubusercontent.com/stewart86/hamr/main/docs/templates/pywal-colors.json
-</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>
-</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="c1"># For wallust</span>
-</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>mkdir<span class="w"> </span>-p<span class="w"> </span>~/.config/wallust/templates
-</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>curl<span class="w"> </span>-o<span class="w"> </span>~/.config/wallust/templates/hamr-colors.json<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="w">  </span>https://raw.githubusercontent.com/stewart86/hamr/main/docs/templates/pywal-colors.json
-</span></code></pre></div>
-<ol>
-<li><strong>Configure output path:</strong></li>
-</ol>
-<p>For pywal, colors are generated to <code>~/.cache/wal/</code>. Point Hamr to this file in <code>~/.config/hamr/config.json</code>:</p>
-<div class="language-json highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="p">{</span>
-</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">  </span><span class="nt">&quot;paths&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">    </span><span class="nt">&quot;colorsJson&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;~/.cache/wal/hamr-colors.json&quot;</span>
-</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="w">  </span><span class="p">}</span>
-</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="p">}</span>
-</span></code></pre></div>
-<p>For wallust, configure the output in <code>~/.config/wallust/wallust.toml</code>:</p>
-<div class="language-toml highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="k">[[entry]]</span>
-</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="n">template</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;hamr-colors.json&quot;</span>
-</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="n">target</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;~/.config/hamr/colors.json&quot;</span>
-</span></code></pre></div>
-<ol>
-<li><strong>Generate colors:</strong>
-   <div class="language-bash highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>wal<span class="w"> </span>-i<span class="w"> </span>/path/to/wallpaper.jpg
-</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="c1"># or</span>
-</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>wallust<span class="w"> </span>run<span class="w"> </span>/path/to/wallpaper.jpg
-</span></code></pre></div></li>
-</ol>
-<h2 id="integration-with-other-tools">Integration with Other Tools<a class="headerlink" href="#integration-with-other-tools" title="Permanent link">&para;</a></h2>
-<h3 id="dankmaterialshell-dms">DankMaterialShell (DMS)<a class="headerlink" href="#dankmaterialshell-dms" title="Permanent link">&para;</a></h3>
-<p>If you use DankMaterialShell with matugen for wallpaper-based theming, simply add the Hamr template to your existing matugen config. When DMS triggers matugen on wallpaper change, Hamr will receive updated colors from the same run.</p>
-<h3 id="other-shells-ags-eww-etc">Other Shells (AGS, EWW, etc.)<a class="headerlink" href="#other-shells-ags-eww-etc" title="Permanent link">&para;</a></h3>
-<p>The same approach works for any tool that uses matugen. Add the Hamr template to your config and all tools will receive colors from the same matugen invocation.</p>
-<h2 id="manual-colorsjson">Manual colors.json<a class="headerlink" href="#manual-colorsjson" title="Permanent link">&para;</a></h2>
-<p>If you prefer not to use a color generator, create <code>~/.config/hamr/colors.json</code> manually. The file uses a <strong>flat</strong> format with underscore-separated keys.</p>
-<p>Hamr reads <strong>only</strong> the keys below. Material 3 generators (matugen, pywal) emit many more — those extra keys are simply ignored. Any key you omit falls back to its built-in dark default, so a partial file is fine.</p>
+<ul>
+<li><strong>Input:</strong> newline-separated items on <strong>stdin</strong> (blank lines are ignored).</li>
+<li><strong>Output:</strong> the chosen line is printed to <strong>stdout</strong>.</li>
+<li><strong>Exit code:</strong> <code>0</code> when an item is chosen or text is typed, <code>1</code> when
+  cancelled with <code>Esc</code>.</li>
+</ul>
+<h2 id="keys">Keys<a class="headerlink" href="#keys" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
 <tr>
 <th>Key</th>
-<th>Used for</th>
+<th>Action</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><code>background</code></td>
-<td>Window background</td>
+<td>Type</td>
+<td>Fuzzy-filter the list (matched letters are highlighted)</td>
 </tr>
 <tr>
-<td><code>surface</code></td>
-<td>Base surface</td>
+<td><code>↑</code> / <code>↓</code></td>
+<td>Move selection</td>
 </tr>
 <tr>
-<td><code>surface_container_low</code> / <code>surface_container</code> / <code>surface_container_high</code> / <code>surface_container_highest</code></td>
-<td>Layered surface tiers (low = recessed, highest = raised)</td>
+<td><code>Enter</code></td>
+<td>Choose the selected item — or, if nothing matches, return exactly what you typed</td>
 </tr>
 <tr>
-<td><code>on_surface</code></td>
-<td>Primary text</td>
-</tr>
-<tr>
-<td><code>on_surface_variant</code></td>
-<td>Secondary / dimmed text</td>
-</tr>
-<tr>
-<td><code>outline</code> / <code>outline_variant</code></td>
-<td>Borders and separators</td>
-</tr>
-<tr>
-<td><code>primary</code></td>
-<td>Accent — selection, focus, highlights</td>
-</tr>
-<tr>
-<td><code>on_primary</code></td>
-<td>Text/icon on <code>primary</code></td>
-</tr>
-<tr>
-<td><code>primary_container</code> / <code>on_primary_container</code></td>
-<td>Accent container and its text</td>
-</tr>
-<tr>
-<td><code>secondary</code></td>
-<td>Secondary accent</td>
-</tr>
-<tr>
-<td><code>secondary_container</code> / <code>on_secondary_container</code></td>
-<td>Secondary container and its text</td>
-</tr>
-<tr>
-<td><code>shadow</code></td>
-<td>Read for compatibility; not currently used in any styling</td>
+<td><code>Esc</code></td>
+<td>Cancel (no output, exit code <code>1</code>)</td>
 </tr>
 </tbody>
 </table>
-<p>A complete example using the built-in defaults (copy and recolor):</p>
-<div class="language-json highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="p">{</span>
-</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="w">  </span><span class="nt">&quot;background&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;#141313&quot;</span><span class="p">,</span>
-</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>
-</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="w">  </span><span class="nt">&quot;surface&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;#141313&quot;</span><span class="p">,</span>
-</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="w">  </span><span class="nt">&quot;surface_container_low&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;#1c1b1c&quot;</span><span class="p">,</span>
-</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="w">  </span><span class="nt">&quot;surface_container&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;#201f20&quot;</span><span class="p">,</span>
-</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="w">  </span><span class="nt">&quot;surface_container_high&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;#2b2a2a&quot;</span><span class="p">,</span>
-</span><span id="__span-9-8"><a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a><span class="w">  </span><span class="nt">&quot;surface_container_highest&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;#363435&quot;</span><span class="p">,</span>
-</span><span id="__span-9-9"><a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a>
-</span><span id="__span-9-10"><a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a><span class="w">  </span><span class="nt">&quot;on_surface&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;#e6e1e1&quot;</span><span class="p">,</span>
-</span><span id="__span-9-11"><a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a><span class="w">  </span><span class="nt">&quot;on_surface_variant&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;#cbc5ca&quot;</span><span class="p">,</span>
-</span><span id="__span-9-12"><a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a>
-</span><span id="__span-9-13"><a id="__codelineno-9-13" name="__codelineno-9-13" href="#__codelineno-9-13"></a><span class="w">  </span><span class="nt">&quot;outline&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;#948f94&quot;</span><span class="p">,</span>
-</span><span id="__span-9-14"><a id="__codelineno-9-14" name="__codelineno-9-14" href="#__codelineno-9-14"></a><span class="w">  </span><span class="nt">&quot;outline_variant&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;#49464a&quot;</span><span class="p">,</span>
-</span><span id="__span-9-15"><a id="__codelineno-9-15" name="__codelineno-9-15" href="#__codelineno-9-15"></a>
-</span><span id="__span-9-16"><a id="__codelineno-9-16" name="__codelineno-9-16" href="#__codelineno-9-16"></a><span class="w">  </span><span class="nt">&quot;primary&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;#cbc4cb&quot;</span><span class="p">,</span>
-</span><span id="__span-9-17"><a id="__codelineno-9-17" name="__codelineno-9-17" href="#__codelineno-9-17"></a><span class="w">  </span><span class="nt">&quot;on_primary&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;#1c1b1c&quot;</span><span class="p">,</span>
-</span><span id="__span-9-18"><a id="__codelineno-9-18" name="__codelineno-9-18" href="#__codelineno-9-18"></a><span class="w">  </span><span class="nt">&quot;primary_container&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;#2d2a2f&quot;</span><span class="p">,</span>
-</span><span id="__span-9-19"><a id="__codelineno-9-19" name="__codelineno-9-19" href="#__codelineno-9-19"></a><span class="w">  </span><span class="nt">&quot;on_primary_container&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;#bcb6bc&quot;</span><span class="p">,</span>
-</span><span id="__span-9-20"><a id="__codelineno-9-20" name="__codelineno-9-20" href="#__codelineno-9-20"></a>
-</span><span id="__span-9-21"><a id="__codelineno-9-21" name="__codelineno-9-21" href="#__codelineno-9-21"></a><span class="w">  </span><span class="nt">&quot;secondary&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;#cac5c8&quot;</span><span class="p">,</span>
-</span><span id="__span-9-22"><a id="__codelineno-9-22" name="__codelineno-9-22" href="#__codelineno-9-22"></a><span class="w">  </span><span class="nt">&quot;secondary_container&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;#4d4b4d&quot;</span><span class="p">,</span>
-</span><span id="__span-9-23"><a id="__codelineno-9-23" name="__codelineno-9-23" href="#__codelineno-9-23"></a><span class="w">  </span><span class="nt">&quot;on_secondary_container&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;#cbc5c8&quot;</span><span class="p">,</span>
-</span><span id="__span-9-24"><a id="__codelineno-9-24" name="__codelineno-9-24" href="#__codelineno-9-24"></a>
-</span><span id="__span-9-25"><a id="__codelineno-9-25" name="__codelineno-9-25" href="#__codelineno-9-25"></a><span class="w">  </span><span class="nt">&quot;shadow&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;#000000&quot;</span>
-</span><span id="__span-9-26"><a id="__codelineno-9-26" name="__codelineno-9-26" href="#__codelineno-9-26"></a><span class="p">}</span>
+<h2 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">&para;</a></h2>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># Basic pick</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="nb">printf</span><span class="w"> </span><span class="s1">&#39;one\ntwo\nthree\n&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>hamr<span class="w"> </span>dmenu
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="c1"># Custom prompt and use the result</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="nv">choice</span><span class="o">=</span><span class="k">$(</span>ls<span class="w"> </span>~/scripts<span class="w"> </span><span class="p">|</span><span class="w"> </span>hamr<span class="w"> </span>dmenu<span class="w"> </span>-p<span class="w"> </span><span class="s1">&#39;Run:&#39;</span><span class="k">)</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">exec</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$HOME</span><span class="s2">/scripts/</span><span class="nv">$choice</span><span class="s2">&quot;</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="c1"># Cancellation handling</span>
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="nv">pick</span><span class="o">=</span><span class="k">$(</span>some-list<span class="w"> </span><span class="p">|</span><span class="w"> </span>hamr<span class="w"> </span>dmenu<span class="k">)</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="o">{</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;cancelled&quot;</span><span class="p">;</span><span class="w"> </span><span class="nb">exit</span><span class="w"> </span><span class="m">0</span><span class="p">;</span><span class="w"> </span><span class="o">}</span>
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="c1"># Create-or-pick: typing a value that isn&#39;t listed returns that text</span>
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="nv">tag</span><span class="o">=</span><span class="k">$(</span>cat<span class="w"> </span>~/.tags<span class="w"> </span><span class="p">|</span><span class="w"> </span>hamr<span class="w"> </span>dmenu<span class="w"> </span>-p<span class="w"> </span><span class="s1">&#39;Tag:&#39;</span><span class="k">)</span><span class="w">   </span><span class="c1"># prints a new tag if you type one</span>
 </span></code></pre></div>
-<p>Or download it directly:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>curl<span class="w"> </span>-o<span class="w"> </span>~/.config/hamr/colors.json<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="w">  </span>https://raw.githubusercontent.com/stewart86/hamr/main/docs/templates/colors.example.json
-</span></code></pre></div>
-<p><strong>Note:</strong> Material Theme Builder exports a nested format (<code>schemes.dark.primary</code>) which Hamr cannot read directly. Use matugen or manually flatten the structure.</p>
-<h2 id="custom-colorsjson-path">Custom colors.json Path<a class="headerlink" href="#custom-colorsjson-path" title="Permanent link">&para;</a></h2>
-<p>By default, Hamr reads from <code>~/.config/hamr/colors.json</code>. To use a different path:</p>
-<div class="language-json highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="p">{</span>
-</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="w">  </span><span class="nt">&quot;paths&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="w">    </span><span class="nt">&quot;colorsJson&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;~/.local/state/quickshell/user/generated/colors.json&quot;</span>
-</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="w">  </span><span class="p">}</span>
-</span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a><span class="p">}</span>
-</span></code></pre></div>
-<h2 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">&para;</a></h2>
-<p><strong>Colors not updating?</strong></p>
+<h2 id="file-previews">File previews<a class="headerlink" href="#file-previews" title="Permanent link">&para;</a></h2>
+<p>When an item is a path to an existing file, the chooser shows a preview panel
+for the selected item — mirroring the behaviour of the <code>files</code> plugin:</p>
 <ul>
-<li>Check that the colors.json file exists at the expected path</li>
-<li>Verify the JSON is valid (use <code>jq . ~/.config/hamr/colors.json</code>)</li>
-<li>Hamr watches the file for changes; updates should apply within seconds</li>
+<li><strong>Images</strong> (<code>png</code>, <code>jpg</code>, <code>jpeg</code>, <code>gif</code>, <code>webp</code>, <code>bmp</code>, <code>svg</code>, <code>ico</code>, <code>avif</code>)
+  render as a thumbnail.</li>
+<li><strong>Text / Markdown</strong> files show their contents (capped at 64 KiB; <code>.md</code> /
+  <code>.markdown</code> render as Markdown).</li>
+<li>Other files show size and path metadata.</li>
 </ul>
-<p><strong>Warning: "Read of colors.json failed"</strong></p>
+<p>Pipe <strong>full paths</strong> to enable this:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>fd<span class="w"> </span>.<span class="w"> </span>~/Pictures<span class="w"> </span><span class="p">|</span><span class="w"> </span>hamr<span class="w"> </span>dmenu<span class="w">          </span><span class="c1"># image previews</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>fd<span class="w"> </span>-e<span class="w"> </span>md<span class="w"> </span>~/notes<span class="w"> </span><span class="p">|</span><span class="w"> </span>hamr<span class="w"> </span>dmenu<span class="w">         </span><span class="c1"># markdown previews</span>
+</span></code></pre></div>
+<p>Bare filenames (e.g. <code>ls *.qml</code>) have no previews because the paths don't
+resolve from the chooser's working directory — use <code>ls "$PWD"/*.qml</code> or <code>fd</code>.</p>
+<h2 id="notes">Notes<a class="headerlink" href="#notes" title="Permanent link">&para;</a></h2>
 <ul>
-<li>This is harmless. Hamr uses built-in dark theme defaults when no colors.json exists.</li>
+<li>Each invocation is its own isolated window; running <code>hamr dmenu</code> while the
+  normal launcher is open does not interfere with it.</li>
+<li>Only the selection is written to stdout; logs go to stderr, so command
+  substitution (<code>$(... | hamr dmenu)</code>) stays clean.</li>
 </ul>
 
 
