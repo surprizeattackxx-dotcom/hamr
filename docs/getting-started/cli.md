@@ -9,6 +9,7 @@ Hamr provides a unified CLI (`hamr`) for controlling the launcher.
 | `hamr` | Start GTK launcher (auto-starts daemon) |
 | `hamr toggle` | Toggle launcher visibility |
 | `hamr plugin <id>` | Open a specific plugin |
+| `... \| hamr dmenu` | Pick from piped stdin, print the choice to stdout |
 | `hamr status` | Check daemon status |
 | `hamr restart` | Restart the daemon or systemd services |
 | `hamr install` | Optional: set up systemd services and user directories |
@@ -36,6 +37,26 @@ hamr hide                # Hide the launcher
 hamr plugin clipboard    # Open specific plugin
 hamr plugin apps         # Open apps plugin
 ```
+
+## dmenu Mode
+
+`hamr dmenu` turns Hamr into a generic picker, like `dmenu`/`rofi`/`fuzzel`. It
+reads newline-separated items from **stdin**, shows a one-shot chooser, and
+prints the selected line to **stdout**. See [dmenu Mode](dmenu.md) for details.
+
+```bash
+# Basic pick
+printf 'one\ntwo\nthree\n' | hamr dmenu
+
+# Custom prompt, and use the result
+choice=$(ls ~/scripts | hamr dmenu -p 'Run:') && exec "$HOME/scripts/$choice"
+
+# Pipe full paths to get file previews (text / markdown / images)
+fd . ~/Pictures | hamr dmenu
+```
+
+Exit code is `0` when an item is chosen (or text is typed), `1` when cancelled
+with `Esc` — so `&&` / `||` work as expected in scripts.
 
 ## Daemon Management
 
