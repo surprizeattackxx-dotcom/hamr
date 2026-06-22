@@ -204,6 +204,11 @@ fn build_window(app: &gtk4::Application, items: &[String], prompt: Option<&str>)
 
     let result_list = Rc::new(ResultList::new());
     result_list.set_max_height(500);
+    // The ResultList container is created hidden; the launcher reveals it via
+    // ResultView, but here we show it ourselves. (An invisible widget reports
+    // zero size, which otherwise collapses the row area.)
+    result_list.widget().set_visible(true);
+    result_list.widget().set_hexpand(true);
     body.append(result_list.widget());
 
     let preview_panel = Rc::new(PreviewPanel::new());
@@ -250,9 +255,18 @@ fn build_window(app: &gtk4::Application, items: &[String], prompt: Option<&str>)
         });
     }
 
-    // Initial population + preview.
-    render("");
-    update_preview(&preview_panel, result_list.selected_result().as_ref());
+    // Initial population is deferred until after the window is mapped (below):
+    // measuring the list height before realization collapses the scrolled
+    // window to a single visible row.
+    let populate = {
+        let render = render.clone();
+        let preview_panel = preview_panel.clone();
+        let result_list = result_list.clone();
+        move || {
+            render("");
+            update_preview(&preview_panel, result_list.selected_result().as_ref());
+        }
+    };
 
     {
         let render = render.clone();
@@ -306,6 +320,9 @@ fn build_window(app: &gtk4::Application, items: &[String], prompt: Option<&str>)
 
     search_entry.grab_focus();
     window.present();
+
+    // Populate once the window is mapped so the list measures its real height.
+    glib::idle_add_local_once(populate);
 }
 
 /// Show the preview panel for the selected item, or hide it when the item has
