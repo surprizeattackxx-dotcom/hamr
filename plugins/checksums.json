@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generated": "2026-01-23T14:32:27+08:00",
+  "generated": "2026-06-22T08:11:25-04:00",
   "plugins": {
     "accentcolor": {
       "manifest.json": "1703b638fa7f035a85398cee8902d6514d15009bc146e54b71a855563f394486",
@@ -8,7 +8,7 @@
     },
     "apps": {
       "manifest.json": "af7a7c32a4031f1a48ed1145713da57beab268aa50c54fcf3e7635b76b8d9e27",
-      "handler.py": "4d24c709c9652d1d887fcd2cdce33775b9adb0c0186d51b82cae8ac89549138a"
+      "handler.py": "a3ae9e61b38eadf88eb68c6bc56d8a682b29962521888dbe3639ded503d85d2e"
     },
     "aur": {
       "manifest.json": "ea340522d9f8d38757bd067ab82f95c3f27b2569329373a187d001f706fb364d",
@@ -20,7 +20,7 @@
     },
     "calculate": {
       "manifest.json": "1a38bd8f36ba295f923788b6594c1f68643eec8ecb03cc6e165c96e74e5b59ea",
-      "handler.py": "73331290e3b68a6fb1adc79b0fa4f8233ccc5e188878e6087b5eef58c7341320"
+      "handler.py": "f4f34793d54b5f78facdd8e7fa290caaa0e103baaf75906615bff0b14ef209d0"
     },
     "clipboard": {
       "manifest.json": "85bf8d992551bfc0073c29e209072e608836552265ae1f1dfc4e4e930b32d36a",
@@ -29,6 +29,10 @@
     "colorpick": {
       "manifest.json": "66157d953d02cc1931b5975e8cc11d729a4304b17ac5854cebd4b0043a3fdf5e",
       "handler.py": "ecc77ef05d38b2b974796c7974950385b073c2fe793310eb5d98fa7988d6b961"
+    },
+    "default-apps": {
+      "manifest.json": "ac5b4e6055eec4d5ff3332533c35b88f41d725f6673d4716c322b6547639fe05",
+      "handler.py": "81e9063a07314bc5e86aecca8d8d6755ecde93189bac2fc7875b22292ccd2246"
     },
     "dictionary": {
       "manifest.json": "07e0071f131ad5b171a52f708a7548b8630da04ff24215ef1b1c63a57a779b58",
@@ -51,6 +55,10 @@
       "manifest.json": "a2afec47ecb83ef1c5911fca4ba3ec87771acff461c19d279952a5da875d5a13",
       "handler.py": "49fd90866e5aca956a42cab5071aa4cd4b1f486ab7c87fafd060be23068d0df9"
     },
+    "killproc": {
+      "manifest.json": "154ce2f7d05dc2c86e5007716a847c06c959c034c38e861da91fa50468a7b146",
+      "handler.py": "43f057f1186cae00c13eb1ec682793545205d1d415b136c130f4a12d16b06627"
+    },
     "niri": {
       "manifest.json": "670bc48d93367c0c2f569650abcb1b8d7a81e7c74e1f332c423f759e8c7921ff",
       "handler.py": "ce962145365dcc850af3a10e2adebe2d0fadc4acf104390a4c24c1edf9aca9c3"
@@ -69,7 +77,7 @@
     },
     "power": {
       "manifest.json": "1d527347a130e3181199a7f3527d37f95c61cc7f80882d70809d667372af1b60",
-      "handler.py": "b417b5f2becb5f9cb44cc6a11831d69d7377e03deb371a103fc6d18ece2bad9a"
+      "handler.py": "690c8ed67eccabb41e3ee503525a441ddf512586825a74fe6fe1f00158852a0e"
     },
     "quicklinks": {
       "manifest.json": "635fd17b428029c7b2ecb640ee61f287c0f59e9384e0f4003e5ba7a660da7102",
@@ -85,7 +93,7 @@
     },
     "settings": {
       "manifest.json": "324c3182e3a1d0b0707e6f2705a6a985348576f83dccde2a5b296a22985e86ef",
-      "handler.py": "01c04a1afe5f7631b66b5d267e40c014ea4f2bf5d2f93d59c4f90b6e52fb5665"
+      "handler.py": "d9fd4b7198f947afd1b3f50c25c671d8bff5e1bebe7a53aced720477b8aa50aa"
     },
     "shell": {
       "manifest.json": "c009340b6d6936511c054e1b06862b295b49b2b62c50e47bb88dcd406ad45e4e",
@@ -117,7 +125,7 @@
     },
     "todo": {
       "manifest.json": "f8fce69fc25ef7584f5887e1fa88dd23d61c5060186fd43f9fded7b9dbc44f52",
-      "handler.py": "bc6cebb520fb2e66628de9e1c2b1a1e95164f397911f3d914af9e772676b56b6"
+      "handler.py": "5ff55c1a8de29ea215ed094c57d424898dfd9fa20019573f532fe7a631223945"
     },
     "topcpu": {
       "manifest.json": "10ec4659bf7db77adcadbe6b5c3c5cef3e6d53a96613cc7d48c7b0aeaeac0dc4",
@@ -129,7 +137,7 @@
     },
     "url": {
       "manifest.json": "f5a131dcbdc40709a8bb98c406fa9bd1cbf4661ae6fd83c141bb48a28ee2aede",
-      "handler.py": "0dd51f64c0df31a73b79b5239f789032c0b0fdd0ff8dad1e8147b4548bea0683"
+      "handler.py": "46052c977036aebc300fc1c1c205110db520ba162e1daf2fc78263894d914589"
     },
     "wallpaper": {
       "manifest.json": "cda579138eb7ed4dea85c8255792ea76f4f3ad3092f1328879ecb9b9ba4d348e",
@@ -142,7 +150,7 @@
     },
     "whats-that-word": {
       "manifest.json": "f27b021de276f26677284198c63e92f1a86b0a521ca814a1040207a12f5ad27e",
-      "handler.py": "3fd3fc418bd192010b481f32c5a169950e8e353cc6d11c1a5ce579df76e3b118"
+      "handler.py": "3d99d9e247c0296316d348c6eb82cda459d300676b6ef81adeb862e575637cce"
     },
     "zoxide": {
       "manifest.json": "0801376be84a7c2a452803a438e10316c0f7aea83dd353c7dae0b6112af85222",

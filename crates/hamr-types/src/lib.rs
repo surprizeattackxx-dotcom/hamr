@@ -369,6 +369,12 @@ pub struct ResultItem {
     pub id: String,
     pub name: String,
 
+    /// Optional Pango markup for the name, used to highlight matched query
+    /// characters (e.g. `chr<b>ome</b>`). When present it is rendered instead
+    /// of `name`; `name` remains the plain-text fallback for tooltips/diffing.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub name_markup: Option<String>,
+
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub description: Option<String>,
 
@@ -488,6 +494,7 @@ impl Default for ResultItem {
         Self {
             id: String::new(),
             name: String::new(),
+            name_markup: None,
             description: None,
             icon: None,
             icon_type: None,
@@ -595,6 +602,8 @@ struct SliderValueInternal {
 struct ResultItemRaw {
     id: String,
     name: String,
+    #[serde(default)]
+    name_markup: Option<String>,
     #[serde(default)]
     description: Option<String>,
     #[serde(default)]
@@ -768,6 +777,7 @@ impl TryFrom<ResultItemRaw> for ResultItem {
         Ok(ResultItem {
             id: raw.id,
             name: raw.name,
+            name_markup: raw.name_markup,
             description: raw.description,
             icon: raw.icon,
             icon_type: raw.icon_type,
@@ -4041,6 +4051,7 @@ mod proptest_roundtrip_tests {
             ResultItem {
                 id,
                 name,
+                name_markup: None,
                 description,
                 icon,
                 icon_type,

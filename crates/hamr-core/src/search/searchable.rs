@@ -67,6 +67,10 @@ pub struct SearchMatch<'a> {
 
     /// Fuzzy match score (0.0 - 1.0)
     pub score: f64,
+
+    /// Pango markup for the name with matched characters bolded, when the
+    /// query matched the name. `None` for keyword-only or history-term matches.
+    pub name_markup: Option<String>,
 }
 
 impl SearchMatch<'_> {
@@ -140,6 +144,7 @@ mod tests {
         let search_match = SearchMatch {
             searchable: &searchable,
             score: 0.95,
+            name_markup: None,
         };
         assert_eq!(search_match.plugin_id(), "test-plugin");
     }
@@ -150,6 +155,7 @@ mod tests {
         let search_match = SearchMatch {
             searchable: &searchable,
             score: 0.8,
+            name_markup: None,
         };
         assert!(!search_match.is_history_term());
     }
@@ -161,6 +167,7 @@ mod tests {
         let search_match = SearchMatch {
             searchable: &searchable,
             score: 0.8,
+            name_markup: None,
         };
         assert!(search_match.is_history_term());
     }
@@ -179,6 +186,7 @@ mod tests {
         let search_match = SearchMatch {
             searchable: &searchable,
             score: 0.75,
+            name_markup: None,
         };
         assert_eq!(search_match.score, 0.75);
         assert_eq!(search_match.plugin_id(), "apps");

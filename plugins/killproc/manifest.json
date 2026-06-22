@@ -1,0 +1,21 @@
+{
+  "name": "Kill Process",
+  "description": "Search and kill any process by name or by port (:3000)",
+  "icon": "dangerous",
+  "handler": {
+    "type": "socket",
+    "command": "python3 handler.py"
+  },
+  "daemon": {
+    "enabled": true,
+    "background": false,
+    "restartOnCrash": true
+  },
+  "frecency": "plugin",
+  "supportedPlatforms": [
+    "niri",
+    "hyprland",
+    "macos",
+    "windows"
+  ]
+}

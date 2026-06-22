@@ -6,6 +6,47 @@ use tracing::debug;
 const EXACT_MATCH_BONUS: f64 = 500.0;
 const PREFIX_MATCH_BASE: f64 = 250.0;
 
+/// Build Pango markup for `name`, wrapping the characters at `indices` in
+/// `<b>` tags so the UI can highlight the matched query characters.
+///
+/// `indices` are character positions (as returned by nucleo) and may be
+/// unsorted or contain duplicates. Returns `None` when nothing matched.
+fn build_name_markup(name: &str, indices: &[u32]) -> Option<String> {
+    if indices.is_empty() {
+        return None;
+    }
+    let mut positions: Vec<u32> = indices.to_vec();
+    positions.sort_unstable();
+    positions.dedup();
+
+    let mut markup = String::with_capacity(name.len() + positions.len() * 7);
+    let mut next = 0; // index into `positions`
+    let mut in_bold = false;
+    for (i, ch) in name.chars().enumerate() {
+        let matched = next < positions.len() && positions[next] as usize == i;
+        if matched {
+            next += 1;
+            if !in_bold {
+                markup.push_str("<b>");
+                in_bold = true;
+            }
+        } else if in_bold {
+            markup.push_str("</b>");
+            in_bold = false;
+        }
+        match ch {
+            '&' => markup.push_str("&amp;"),
+            '<' => markup.push_str("&lt;"),
+            '>' => markup.push_str("&gt;"),
+            _ => markup.push(ch),
+        }
+    }
+    if in_bold {
+        markup.push_str("</b>");
+    }
+    Some(markup)
+}
+
 /// Fuzzy search engine using nucleo
 pub struct SearchEngine {
     matcher: Matcher,
@@ -117,7 +158,11 @@ impl SearchEngine {
         let mut buf = Vec::new();
 
         let name_haystack = Utf32Str::new(&searchable.name, &mut buf);
-        let name_score = pattern.score(name_haystack, &mut self.matcher).unwrap_or(0);
+        // Collect matched character positions so we can highlight them in the UI.
+        let mut name_indices: Vec<u32> = Vec::new();
+        let name_score = pattern
+            .indices(name_haystack, &mut self.matcher, &mut name_indices)
+            .unwrap_or(0);
 
         let keyword_score = if searchable.keywords.is_empty() {
             0
@@ -135,9 +180,19 @@ impl SearchEngine {
             return None;
         }
 
+        // Build Pango markup that bolds the matched characters in the name.
+        // Skip history-term searchables, whose `name` is a past query rather
+        // than the row's displayed text.
+        let name_markup = if searchable.is_history_term {
+            None
+        } else {
+            build_name_markup(&searchable.name, &name_indices)
+        };
+
         Some(SearchMatch {
             searchable,
             score: combined_score,
+            name_markup,
         })
     }
 
@@ -212,6 +267,55 @@ mod tests {
         let results = engine.search("fire", &searchables);
         assert!(!results.is_empty());
         assert_eq!(results[0].searchable.id, "firefox");
+    }
+
+    #[test]
+    fn test_build_name_markup_basics() {
+        // Prefix match bolds the leading run.
+        assert_eq!(
+            build_name_markup("Firefox", &[0, 1, 2, 3]).as_deref(),
+            Some("<b>Fire</b>fox")
+        );
+        // Unsorted/duplicate indices are normalised.
+        assert_eq!(
+            build_name_markup("Chrome", &[2, 0, 1, 0]).as_deref(),
+            Some("<b>Chr</b>ome")
+        );
+        // Pango special characters are escaped, matched or not.
+        assert_eq!(
+            build_name_markup("a<b>&c", &[0]).as_deref(),
+            Some("<b>a</b>&lt;b&gt;&amp;c")
+        );
+        // No indices -> no markup.
+        assert_eq!(build_name_markup("Firefox", &[]), None);
+    }
+
+    #[test]
+    fn test_search_populates_name_markup() {
+        let mut engine = SearchEngine::new();
+        let searchables = vec![make_searchable("chrome", "Chrome", vec!["browser"])];
+
+        // Name match highlights the matched characters.
+        let results = engine.search("chr", &searchables);
+        assert_eq!(results[0].name_markup.as_deref(), Some("<b>Chr</b>ome"));
+
+        // Keyword-only match leaves the name un-highlighted.
+        let results = engine.search("browser", &searchables);
+        assert_eq!(results[0].name_markup, None);
+    }
+
+    #[test]
+    fn test_history_term_match_has_no_markup() {
+        let mut engine = SearchEngine::new();
+        let mut searchable = make_searchable("apps", "Chromium", vec![]);
+        // History terms carry a past query as `name`, not the displayed text.
+        searchable.name = "chr".to_string();
+        searchable.is_history_term = true;
+
+        let searchables = [searchable];
+        let results = engine.search("chr", &searchables);
+        assert!(!results.is_empty());
+        assert_eq!(results[0].name_markup, None);
     }
 
     #[test]

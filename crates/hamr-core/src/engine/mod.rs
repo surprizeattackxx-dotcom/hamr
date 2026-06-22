@@ -1406,6 +1406,7 @@ impl HamrCore {
                     id: id.clone(),
                     name: plugin
                         .map_or_else(|| m.searchable.name.clone(), |p| p.manifest.name.clone()),
+                    name_markup: m.name_markup.clone(),
                     description: plugin.and_then(|p| p.manifest.description.clone()),
                     icon: Some(
                         plugin
@@ -1439,6 +1440,7 @@ impl HamrCore {
                 SearchResult {
                     id: item.id.clone(),
                     name: item.name.clone(),
+                    name_markup: m.name_markup.clone(),
                     description: item.description.clone(),
                     icon: Some(icon),
                     icon_type,

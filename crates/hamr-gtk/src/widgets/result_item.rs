@@ -485,6 +485,11 @@ impl ResultItem {
             .ellipsize(gtk4::pango::EllipsizeMode::End)
             .build();
 
+        // Render highlighted matches via Pango markup when the plugin supplies it.
+        if let Some(markup) = &result.name_markup {
+            name_label.set_markup(markup);
+        }
+
         // Add tooltip for truncated name - show full text if ellipsized
         name_label.set_has_tooltip(true);
         name_label.connect_query_tooltip(|label, _x, _y, _keyboard, tooltip| {
@@ -864,7 +869,15 @@ impl ResultItem {
     #[allow(clippy::too_many_lines)]
     pub fn update(&self, result: &SearchResult, colors: &Colors) {
         let _span = debug_span!("ResultItem::update", id = %result.id).entered();
-        if self.name_label.text() != result.name {
+        if let Some(markup) = &result.name_markup {
+            // Pango markup highlights matched query characters. `Label::label()`
+            // returns the markup string as set, so diffing against it refreshes
+            // the highlight even when the plain text is unchanged (e.g. the query
+            // grew from "ch" to "chr" on the same name).
+            if self.name_label.label() != *markup {
+                self.name_label.set_markup(markup);
+            }
+        } else if self.name_label.text() != result.name || self.name_label.uses_markup() {
             trace!(old = %self.name_label.text(), new = %result.name, "name changed");
             self.name_label.set_text(&result.name);
         }
