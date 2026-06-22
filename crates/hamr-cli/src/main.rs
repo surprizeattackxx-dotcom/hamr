@@ -160,6 +160,14 @@ enum Commands {
         id: String,
     },
 
+    /// Show a dmenu-style picker: read newline-separated items from stdin and
+    /// print the chosen item to stdout (a generic chooser for scripts)
+    Dmenu {
+        /// Prompt/placeholder text shown in the search box
+        #[arg(short, long)]
+        prompt: Option<String>,
+    },
+
     /// Plugin management commands
     Plugins {
         #[command(subcommand)]
@@ -231,6 +239,7 @@ async fn main() -> Result<()> {
         Some(Commands::Show) => run_show().await,
         Some(Commands::Hide) => run_hide().await,
         Some(Commands::Plugin { id }) => run_plugin(id).await,
+        Some(Commands::Dmenu { prompt }) => run_dmenu(prompt),
         Some(Commands::Plugins { command }) => run_plugins_command(command).await,
         Some(Commands::UpdateStatus {
             plugin_id,
@@ -254,6 +263,24 @@ async fn run_gtk_with_daemon() -> Result<()> {
 /// Run GTK UI in foreground (for systemd `ExecStart`)
 fn run_gtk() -> Result<()> {
     run_foreground("hamr-gtk")
+}
+
+/// Run dmenu mode: a one-shot picker. Execs `hamr-gtk --dmenu`, inheriting
+/// stdin/stdout so the piped items and the printed selection flow through
+/// transparently. The child's exit code is forwarded verbatim (0 = chosen,
+/// 1 = cancelled) so scripts can detect cancellation - hence the explicit
+/// `process::exit` instead of returning/bailing.
+fn run_dmenu(prompt: Option<String>) -> Result<()> {
+    let binary = find_binary("hamr-gtk");
+    let mut command = Command::new(&binary);
+    command.arg("--dmenu");
+    if let Some(prompt) = prompt {
+        command.arg("--prompt").arg(prompt);
+    }
+    let status = command
+        .status()
+        .with_context(|| format!("Failed to start {}. Is it installed?", binary.display()))?;
+    std::process::exit(status.code().unwrap_or(1));
 }
 
 /// Start TUI, auto-starting daemon if needed

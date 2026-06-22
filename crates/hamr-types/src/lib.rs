@@ -1393,7 +1393,7 @@ where
 }
 
 /// Preview data for side panel
-#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[derive(Debug, Clone, Default, PartialEq, Eq, Serialize, Deserialize)]
 pub struct PreviewData {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub title: Option<String>,

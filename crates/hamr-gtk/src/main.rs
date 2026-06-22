@@ -7,6 +7,7 @@ mod click_catcher;
 mod colors;
 mod compositor;
 mod config;
+mod dmenu;
 mod fab_window;
 mod keybindings;
 mod niri_blur;
@@ -63,6 +64,22 @@ fn wayland_display_ready() -> bool {
     false
 }
 
+/// Wait up to 10s for the Wayland display to become available.
+/// Shared by the launcher and dmenu mode; neither touches the daemon.
+pub(crate) fn wait_for_display() -> bool {
+    let max_wait = std::time::Duration::from_secs(10);
+    let poll_interval = std::time::Duration::from_millis(100);
+    let start = std::time::Instant::now();
+
+    while !wayland_display_ready() {
+        if start.elapsed() >= max_wait {
+            return false;
+        }
+        std::thread::sleep(poll_interval);
+    }
+    true
+}
+
 fn is_dev_mode() -> bool {
     std::env::current_exe()
         .ok()
@@ -111,23 +128,18 @@ fn setup_logging() {
 }
 
 fn main() -> glib::ExitCode {
+    // dmenu mode is a self-contained, daemon-independent one-shot picker.
+    if let Some(options) = dmenu::parse_args() {
+        return dmenu::run(options);
+    }
+
     setup_logging();
 
     info!("Starting hamr-gtk");
 
-    let max_wait = std::time::Duration::from_secs(10);
-    let poll_interval = std::time::Duration::from_millis(100);
-    let start = std::time::Instant::now();
-
-    while !wayland_display_ready() {
-        if start.elapsed() >= max_wait {
-            error!(
-                "Wayland display not available after {}s",
-                max_wait.as_secs()
-            );
-            return glib::ExitCode::FAILURE;
-        }
-        std::thread::sleep(poll_interval);
+    if !wait_for_display() {
+        error!("Wayland display not available after 10s");
+        return glib::ExitCode::FAILURE;
     }
 
     let compositor = Compositor::detect();
