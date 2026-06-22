@@ -110,25 +110,61 @@ The same approach works for any tool that uses matugen. Add the Hamr template to
 
 ## Manual colors.json
 
-If you prefer not to use a color generator, create `~/.config/hamr/colors.json` manually. The file must use a **flat** format with underscore-separated keys:
+If you prefer not to use a color generator, create `~/.config/hamr/colors.json` manually. The file uses a **flat** format with underscore-separated keys.
+
+Hamr reads **only** the keys below. Material 3 generators (matugen, pywal) emit many more — those extra keys are simply ignored. Any key you omit falls back to its built-in dark default, so a partial file is fine.
+
+| Key | Used for |
+| --- | --- |
+| `background` | Window background |
+| `surface` | Base surface |
+| `surface_container_low` / `surface_container` / `surface_container_high` / `surface_container_highest` | Layered surface tiers (low = recessed, highest = raised) |
+| `on_surface` | Primary text |
+| `on_surface_variant` | Secondary / dimmed text |
+| `outline` / `outline_variant` | Borders and separators |
+| `primary` | Accent — selection, focus, highlights |
+| `on_primary` | Text/icon on `primary` |
+| `primary_container` / `on_primary_container` | Accent container and its text |
+| `secondary` | Secondary accent |
+| `secondary_container` / `on_secondary_container` | Secondary container and its text |
+| `shadow` | Read for compatibility; not currently used in any styling |
+
+A complete example using the built-in defaults (copy and recolor):
 
 ```json
 {
   "background": "#141313",
-  "on_background": "#e6e1e1",
+
   "surface": "#141313",
-  "primary": "#cbc4cb",
-  "on_primary": "#322f34",
-  "secondary": "#cac5c8",
-  "on_secondary": "#323032",
-  "tertiary": "#d1c3c6",
-  "on_tertiary": "#372e30",
-  "error": "#ffb4ab",
-  "on_error": "#690005",
-  "outline": "#948f94",
+  "surface_container_low": "#1c1b1c",
   "surface_container": "#201f20",
-  "surface_container_high": "#2b2a2a"
+  "surface_container_high": "#2b2a2a",
+  "surface_container_highest": "#363435",
+
+  "on_surface": "#e6e1e1",
+  "on_surface_variant": "#cbc5ca",
+
+  "outline": "#948f94",
+  "outline_variant": "#49464a",
+
+  "primary": "#cbc4cb",
+  "on_primary": "#1c1b1c",
+  "primary_container": "#2d2a2f",
+  "on_primary_container": "#bcb6bc",
+
+  "secondary": "#cac5c8",
+  "secondary_container": "#4d4b4d",
+  "on_secondary_container": "#cbc5c8",
+
+  "shadow": "#000000"
 }
+```
+
+Or download it directly:
+
+```bash
+curl -o ~/.config/hamr/colors.json \
+  https://raw.githubusercontent.com/stewart86/hamr/main/docs/templates/colors.example.json
 ```
 
 **Note:** Material Theme Builder exports a nested format (`schemes.dark.primary`) which Hamr cannot read directly. Use matugen or manually flatten the structure.
